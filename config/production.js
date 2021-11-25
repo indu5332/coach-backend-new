@@ -6,5 +6,5 @@ module.exports = {
   "VERSION":"v1",
   secret: process.env.secret,
   imagePath: path.join(__dirname, "../uploads/"),
-  fileUrl: "https://coach-backend-new.herokuapp.com/",
+  fileUrl: "https://coach-backend-new.herokuapp.com",
 };

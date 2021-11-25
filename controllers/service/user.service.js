@@ -52,7 +52,6 @@ module.exports = {
         if (url === "user.png") {
           return `${config.imagePath}/user.png`;
         }
-    
         return `${config.imagePath}/users/${url}`;
       },
 
