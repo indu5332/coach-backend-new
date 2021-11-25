@@ -2,6 +2,7 @@ let mongoose = require("mongoose");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const userModel = require("../../../models/user.model");
+const config=require('config')
 
 //get user Detail
 let getUserDetail = async (req, res, next) => {
@@ -11,10 +12,9 @@ let getUserDetail = async (req, res, next) => {
         console.log(req.params.userId)
         const user=await userModel.find({_id:mongoose.Types.ObjectId(req.decoded._id)})
         if(user.length>0){
-            return res.status(200).json({
-                success:true,
-                user:user[0]
-            })
+            req.data={};
+            req.data.user= JSON.parse(JSON.stringify(user[0]));
+                next()
         }
         else{
             return res.status(404).json({
@@ -27,10 +27,8 @@ let getUserDetail = async (req, res, next) => {
         if (req.decoded.isAdmin===true ) {
             const user=await userModel.find({_id:mongoose.Types.ObjectId(req.params.userId)})
             if (user.length>0) {
-                return res.status(200).json({
-                    success:true,
-                    user:user[0]
-                })
+                req.data.user= JSON.parse(JSON.stringify(user[0]));
+                next()
             } else {
                 return res.status(404).json({
                     success:false,
@@ -48,5 +46,18 @@ let getUserDetail = async (req, res, next) => {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
+let addImage=async(req, res, next)=>{
+    req.data.user.image=await userImage(req.data.user.image);
+    return res.status(200).json({ success: true, message: "Details of the given user as per the user Id.", user: req.data.user });
+}
 
-module.exports = [getUserDetail];
+async function userImage(image){
+    if(image==='profile.png'){
+        return config.fileUrl+'/profile.png';
+    }
+    else {
+        return; 
+    }
+}
+
+module.exports = [getUserDetail,addImage];
