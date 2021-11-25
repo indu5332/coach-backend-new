@@ -2,8 +2,7 @@ let mongoose = require("mongoose");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const userModel = require("../../../models/user.model");
-const config = require("config");
-const { imagePath } = require("../../../config/production");
+const config = require("../../../config/production");
 
 //get user Detail
 let getUserDetail = async (req, res, next) => {
