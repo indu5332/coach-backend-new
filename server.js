@@ -26,4 +26,4 @@ app.use("/api/v1", routes);
 app.use("/admin", Adminroutes);
 
 //Port listen in 3000
-app.listen(4000, console.log("server is listening on 4000"));
+app.listen(process.env.PORT||4000, console.log("server is listening on 4000"));
