@@ -1,7 +1,9 @@
 module.exports = {
-  DB_HOST: process.env.DB_HOST,
+  "hosts": ["https://just-order-api.herokuapp.com/","*"],
+  allowedOrigins: ["https://just-order-api.herokuapp.com/","*"],
+  DB_HOST:"https://just-order-api.herokuapp.com/",
+  "VERSION":"v1",
   secret: process.env.secret,
-  allowedOrigins: ["https://coach-backend-new.herokuapp.com/"],
   imagePath: path.join(__dirname, "../uploads/"),
-  fileUrl: "https://coach-backend-new.herokuapp.com/",
+  fileUrl: "https://just-order-api.herokuapp.com/",
 };
