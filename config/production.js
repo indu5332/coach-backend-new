@@ -1,3 +1,4 @@
+const path=require('path')
 module.exports = {
   "hosts": ["https://coach-backend-new.herokuapp.com/","*"],
   allowedOrigins: ["https://coach-backend-new.herokuapp.com/","*"],
