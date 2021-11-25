@@ -9,11 +9,11 @@ let getUserDetail = async (req, res, next) => {
     //console.log("jgh")
     if(req.params.userId==='me'){
         console.log(req.params.userId)
-        const myDetails=await userModel.find({_id:mongoose.Types.ObjectId(req.decoded._id)})
-        if(myDetails.length>0){
+        const user=await userModel.find({_id:mongoose.Types.ObjectId(req.decoded._id)})
+        if(user.length>0){
             return res.status(200).json({
                 success:true,
-                myDetails:myDetails[0]
+                user:user[0]
             })
         }
         else{
