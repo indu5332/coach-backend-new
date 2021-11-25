@@ -15,6 +15,5 @@ const contactSchema = new Scheam(
     timestamps: true,
   }
 );
-
 contactSchema.plugin(AutoIncrement, { inc_field: "id", id: "contactId" });
 module.exports = mongoose.model("contact", contactSchema);

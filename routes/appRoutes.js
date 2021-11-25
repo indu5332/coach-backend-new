@@ -14,8 +14,9 @@ appRouter.post("/login", appController.app.authentication.login);
 appRouter.post("/verify/username",appController.app.authentication.verifyUsername);
 
 //Reset Password Api
-appRouter.post("/send/reset-mail",appController.app.authentication.sendVerificationMail);
-appRouter.post("/verify/reset-token",appController.app.authentication.verifyResetToken);
+appRouter.post("/forgot/password",appController.app.authentication.sendVerificationMail);
+appRouter.get("/verify/email/:userId",appController.app.authentication.verifyResetToken);
+appRouter.post("/reset/password",appController.app.authentication.verifyResetToken);
 
 const middleware = require("../middleware/verifyToken");
 appRouter.use(middleware);

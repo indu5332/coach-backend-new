@@ -1,4 +1,5 @@
 var createError = require("http-errors");
+const config=require('config')
 const authService = require("../../service/user.service");
 const httpStatus = require("http-status-codes").StatusCodes;
 
@@ -44,6 +45,7 @@ const generateHashPassword = async (req, res, next) => {
   try {
     await authService.hash(req.body.password, (err, hashPassword) => {
       if (err) {
+        //console.log(err)
         return res.status(500).json({
           success: false,
           isError: true,
@@ -68,6 +70,7 @@ const CreateUser = async (req, res, next) => {
       password: req.data.hashPassword,
     };
     const newUser = await authService.createUser(data);
+    console.log(newUser);
     if (newUser) {
       req.data.newUser = newUser;
       next();
@@ -83,6 +86,19 @@ const CreateUser = async (req, res, next) => {
   }
 };
 
+let addImage = async (req,res,next) => {
+  req.data.newUser.imagePath = await userImage(req.data.newUser.imagePath);
+  next()
+};
+
+async function userImage(imagePath) {
+  if (imagePath === "profile.png") {
+    return config.fileUrl + "/profile.png";
+  } else {
+    return;
+  }
+}
+
 const generateToken = async (req, res) => {
   try {
     const payload = {
@@ -94,7 +110,7 @@ const generateToken = async (req, res) => {
     };
     const token = await authService.generateToken(payload);
     if (!token) {
-      console.log(error);
+      //console.log(error);
       return res.status(400).json({
         success: false,
         error: error,
@@ -118,5 +134,6 @@ module.exports = [
   findUserName,
   generateHashPassword,
   CreateUser,
+  addImage,
   generateToken,
 ];

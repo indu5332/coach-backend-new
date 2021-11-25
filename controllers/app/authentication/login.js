@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 var createError = require("http-errors");
+const config=require('config')
 const httpStatus = require("http-status-codes").StatusCodes;
 const authService = require("../../service/user.service");
 
@@ -49,6 +50,20 @@ const comparePassword = async (req, res, next) => {
   }
 };
 
+let addImage = async (req,res,next) => {
+  console.log("kjhg")
+  req.data.user.imagePath = await userImage(req.data.user.imagePath);
+  next()
+};
+
+async function userImage(imagePath) {
+  if (imagePath === "profile.png") {
+    return config.fileUrl + "/profile.png";
+  } else {
+    return;
+  }
+}
+
 //generate token when user login
 const generateToken = async (req, res) => {
   try {
@@ -68,15 +83,20 @@ const generateToken = async (req, res) => {
       });
     } else {
       delete req.data.user.password;
-      return res.status(200).json({
-        success: true,
+      return res
+    .status(200)
+    .json({
+      success: true,
         message: "loged in successfully",
         "x-access-token": token,
         user: req.data.user,
-      });
+    });
     }
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
-module.exports = [findUser, comparePassword, generateToken];
+
+
+
+module.exports = [findUser, comparePassword, addImage,generateToken];

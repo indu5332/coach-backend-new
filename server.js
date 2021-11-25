@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 
-app.use(express.static(__dirname+"./uploads/"));
+app.use(express.static(__dirname+"./api/v1/uploads"));
 
 //Routes
 app.use("/api/v1", routes);

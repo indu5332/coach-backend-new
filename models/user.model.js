@@ -11,7 +11,7 @@ const userSchema = new Scheam(
     lastName: { type: String },
     username: { type: String, required: true },
     email: { type: String, required: true },
-    image: { type: String, default: "profile.png" },
+    imagePath: { type: String, default: "profile.png" },
     password: { type: String, required: true },
     verificationToken:{ type: String },
     Duration:{ type: String }
