@@ -18,13 +18,25 @@ const userList = async (req, res, next) => {
        },
      ];
      const userList = await userModel.aggregate(conditions);
-     return res.status(200).json({
-       success: true,
-       message: "users list",
-       userList: userList,
-     });
-   } catch (error) {
+     req.data={}
+     req.data.userList=userList
+     next()
+     } catch (error) {
       createError(httpStatus.INTERNAL_SERVER_ERROR, error)
    }
  };
-module.exports=userList;
+
+ const totalUser=async(req,res)=>{
+  try {
+    const totalUsers = await userModel.find({});
+    return res.status(200).json({
+      success: true,
+      message: "users list",
+      totalUsers:totalUsers.length,
+      userList: req.data.userList
+    });
+  } catch (error) {
+    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
+  }
+}
+module.exports=[userList,totalUser];

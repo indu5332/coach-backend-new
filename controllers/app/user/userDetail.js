@@ -51,13 +51,11 @@ let getUserDetail = async (req, res, next) => {
 };
 let addImage = async (req, res) => {
   req.data.user.imagePath = await userImage(req.data.user.imagePath);
-  return res
-    .status(200)
-    .json({
-      success: true,
-      message: "Details of the given user as per the user Id.",
-      user: req.data.user,
-    });
+  return res.status(200).json({
+    success: true,
+    message: "Details of the given user as per the user Id.",
+    user: req.data.user,
+  });
 };
 
 async function userImage(imagePath) {
