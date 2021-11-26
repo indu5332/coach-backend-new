@@ -1,25 +1,24 @@
-require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
 
 sgMail.setApiKey(
-  "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"
+  "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"
 );
 
 function sendEmail(data) {
   const msg = {
     to: data.receiver,
-    from: "nairagarg999@gmail.com",
+    from: "support@illfact.com",
     subject: "reset password",
-    templateId: "d-28bf459e021246238048f37aa0db813f",
+    templateId: "d-cebc56d4ab524d6cbb569e6280f91aa1",
     dynamic_template_data: data.templateData,
   };
   sgMail.send(msg, (error, res) => {
     if (error) {
       console.log(error.response.body.errors);
-      return error;
+      return error.response.body.errors;
     } else {
       console.log("sent", res);
     }
   });
 }
-module.exports = { sendEmail };
+exports.sendEmail = sendEmail;

@@ -1,10 +1,12 @@
 const userModel = require("../../../models/user.model");
 const mongoose = require("mongoose");
+var createError = require("http-errors");
+const httpStatus = require("http-status-codes").StatusCodes;
 
 let deleteUser = async (req, res, next) => {
   try {
     let deleteRes = await userModel.deleteOne({
-      _id: mongoose.Types.ObjectId(req.decoded._id),
+      _id: mongoose.Types.ObjectId(req.params.userId),
     });
     if (deleteRes.deletedCount > 0) {
       return res.status(200).json({
@@ -18,12 +20,7 @@ let deleteUser = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      isError: true,
-      error: error,
-    });
+    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
 

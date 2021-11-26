@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 let userModel = require("../../../models/user.model");
+const authService=require('../../service/user.service')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
@@ -24,25 +25,24 @@ const findUserByToken = async (req, res, next) => {
 };
 
 const generateHashPassword = async (req, res, next) => {
-  try {
-    await authService.hash(req.body.password, (err, hashPassword) => {
-      console.log("khjgf");
-      if (err) {
-        return res.status(500).json({
-          success: false,
-          isError: true,
-          error: err.message,
-        });
-      } else {
+    try {
+      await authService.hash(req.body.password, (err, hashPassword) => {
+        if (err) {
+          //console.log(err)
+          return res.status(500).json({
+            success: false,
+            isError: true,
+            error: err.message,
+          });
+        }
         req.data = {};
         req.data.hashPassword = hashPassword;
         next();
-      }
-    });
-  } catch (error) {
-    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
-  }
-};
+      });
+    } catch (error) {
+      createError(httpStatus.INTERNAL_SERVER_ERROR, error);
+    }
+  };
 
 const updateUser = async (req, res) => {
   try {
