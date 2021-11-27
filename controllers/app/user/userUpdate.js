@@ -47,17 +47,32 @@ let updateUser = async (req, res, next) => {
 
 const findUser = async (req, res) => {
   try {
-    const user = await authService.findUser({
-      _id: mongoose.Types.ObjectId(req.params.userId),
-    });
-    if (!user || user.length === 0) {
-      return res.status(404).json({ success: false, message: "No user exits" });
+    if(req.params.userId==='me'){
+      const user = await authService.findUser({
+        _id: mongoose.Types.ObjectId(req.decoded._id),
+      });
+      if (!user || user.length === 0) {
+        return res.status(404).json({ success: false, message: "No user exits" });
+      }
+      return res.status(200).json({
+        success: true,
+        message: "user updated",
+        user: user,
+      });
     }
-    return res.status(200).json({
-      success: true,
-      message: "user updated",
-      user: user,
-    });
+    else{
+      const user = await authService.findUser({
+        _id: mongoose.Types.ObjectId(req.params.userId),
+      });
+      if (!user || user.length === 0) {
+        return res.status(404).json({ success: false, message: "No user exits" });
+      }
+      return res.status(200).json({
+        success: true,
+        message: "user updated",
+        user: user,
+      });
+    }
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
