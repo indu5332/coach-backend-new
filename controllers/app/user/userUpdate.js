@@ -11,8 +11,9 @@ let updateUser = async (req, res, next) => {
         { _id: mongoose.Types.ObjectId(req.decoded._id) },
         { $set: req.body }
       );
+      console.log(updateRes);
       if (updateRes) {
-        next();
+          next()
       } else {
         return res.status(404).json({
           success: false,
@@ -47,7 +48,7 @@ let updateUser = async (req, res, next) => {
 
 const findUser = async (req, res) => {
   try {
-    if(req.params.userId==='me'){
+    if (req.params.userId==='me') {
       const user = await authService.findUser({
         _id: mongoose.Types.ObjectId(req.decoded._id),
       });
@@ -59,8 +60,7 @@ const findUser = async (req, res) => {
         message: "user updated",
         user: user,
       });
-    }
-    else{
+    } else {
       const user = await authService.findUser({
         _id: mongoose.Types.ObjectId(req.params.userId),
       });
