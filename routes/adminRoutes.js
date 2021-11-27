@@ -13,5 +13,6 @@ adminRouter.post("/add/program", adminController.admin.programm.addProgramm);
 adminRouter.get("/all-programs", adminController.admin.programm.listProgramm);
 adminRouter.delete("/delete/program/:programId", adminController.admin.programm.deleteProgramm);
 adminRouter.put("/update/program/:programId", adminController.admin.programm.editProgramm);
+adminRouter.get("/detail/program/:programId", adminController.admin.programm.detailProgramm);
 
 module.exports = adminRouter;

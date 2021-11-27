@@ -50,7 +50,7 @@ const updateUser = async (req, res) => {
       { _id: mongoose.Types.ObjectId(req.body.userId) },
       {
         $set: {
-          verificationOtp: null,
+          verificationToken: null,
           Duration: null,
           password: req.data.hashPassword,
         },

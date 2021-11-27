@@ -4,7 +4,6 @@ const httpStatus = require("http-status-codes").StatusCodes;
 const userModel = require("../../models/user.model");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-
 const saltRounds = 10;
 
 module.exports = {
@@ -67,5 +66,3 @@ module.exports.checkHashPassword = (password, hash, next) => {
     next(err, res);
   });
 };
-//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     //killingspii
-// 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    //nairagarg

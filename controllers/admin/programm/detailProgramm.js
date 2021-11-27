@@ -3,24 +3,24 @@ const programModel = require("../../../models/programm.model");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
-let deleteProgram = async (req, res, next) => {
+let detailPRogram = async (req, res, next) => {
   try {
-    const deleteProgram = await programModel.deleteOne({
+    const program = await programModel.find({
       _id: mongoose.Types.ObjectId(req.params.programId),
     });
     console.log(req.params.programId);
-    if (deleteProgram.deletedCount > 0) {
+    if (program.length > 0) {
       return res
         .status(200)
-        .json({ success: true, message: "program deleted successfully" });
+        .json({ success: true, message: "program details" ,program:program});
     } else {
       return res
-        .status(500)
-        .json({ message: "Failed to delete program", success: false });
+        .status(404)
+        .json({ message: "no program found", success: false });
     }
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
 
-module.exports = [deleteProgram];
+module.exports = [detailPRogram];

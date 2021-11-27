@@ -11,7 +11,6 @@ let updateUser = async (req, res, next) => {
         { _id: mongoose.Types.ObjectId(req.decoded._id) },
         { $set: req.body }
       );
-      console.log(updateRes);
       if (updateRes) {
         next();
       } else {
