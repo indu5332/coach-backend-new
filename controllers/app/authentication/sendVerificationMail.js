@@ -27,7 +27,7 @@ const sendEmailToUser = async (req, res) => {
     const data = {
       receiver: req.data.user.email,
       templateData: {
-        url: link,
+        link,
         subject: "reset password",
       },
     };

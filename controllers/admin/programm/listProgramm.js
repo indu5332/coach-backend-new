@@ -12,12 +12,10 @@ const programList = async (req, res, next) => {
         },
       },
       {
-        $skip:
-          (req.query.page ? Number(req.query.page) : 0) *
-          (req.query.limit ? Number(req.query.limit) : 10),
+        $skip: ((req.query.page ? Number(req.query.page) : 0) * (req.query.limit ? Number(req.query.limit) : 10)),
       },
       {
-        $limit: req.query.limit ? Number(req.query.limit) : 10,
+        $limit: (req.query.limit ? Number(req.query.limit) : 10),
       },
     ];
     const programList = await programModel.aggregate(conditions);

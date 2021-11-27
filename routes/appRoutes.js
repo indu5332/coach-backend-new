@@ -23,7 +23,7 @@ appRouter.use(middleware);
 
 //user Api
 appRouter.post("/change/password",appController.app.authentication.change_paassword);
-appRouter.post("/update/user/:userId", appController.app.user.userUpdate);
+appRouter.put("/update/user/:userId", appController.app.user.userUpdate);
 appRouter.get("/user/detail/:userId", appController.app.user.userDetail);
 
 module.exports = appRouter;

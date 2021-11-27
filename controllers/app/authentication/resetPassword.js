@@ -57,7 +57,7 @@ const updateUser = async (req, res) => {
       }
     );
     if (updateResult) {
-      return res.status(200).json({ success: true, message: "Email verified" });
+      return res.status(200).json({ success: true, message: "Email verified" ,user:req.data.user});
     }
     if (!updateResult) {
       return res.status(500).json({

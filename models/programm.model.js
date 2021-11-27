@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 
-const Scheam = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const programSchema = new Scheam(
+const programSchema = new Schema(
   {
     id: { type: Number },
     name: { type: String, required: true },
