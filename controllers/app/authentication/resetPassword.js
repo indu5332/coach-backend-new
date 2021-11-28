@@ -66,7 +66,7 @@ const updateUser = async (req, res) => {
       });
     }
   } catch (error) {
-    return res
+    return ress
       .status(500)
       .json({ success: false, isError: true, error: error.message });
   }

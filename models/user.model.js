@@ -9,13 +9,18 @@ const userSchema = new Scheam(
     isAdmin: { type: Boolean, default: false },
     firstName: { type: String, required: true },
     lastName: { type: String },
-    username: { type: String, required: true },
-    email: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
     imagePath: { type: String, default: "profile.png" },
     password: { type: String, required: true },
-    verificationToken:{ type: String },
-    Duration:{ type: String }
-    },
+    phone: { type: Number, required: true },
+    instagramLink: { type: String },
+    facebookLink: { type: String },
+    linkdinLink: { type: String },
+    twitterLink: { type: String },
+    verificationToken: { type: String },
+    Duration: { type: String },
+  },
   {
     timestamps: true,
   }

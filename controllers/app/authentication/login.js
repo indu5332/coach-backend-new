@@ -51,7 +51,6 @@ const comparePassword = async (req, res, next) => {
 };
 
 let addImage = async (req, res, next) => {
-  console.log("kjhg");
   req.data.user.imagePath = await userImage(req.data.user.imagePath);
   next();
 };

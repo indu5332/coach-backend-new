@@ -11,9 +11,8 @@ let updateUser = async (req, res, next) => {
         { _id: mongoose.Types.ObjectId(req.decoded._id) },
         { $set: req.body }
       );
-      console.log(updateRes);
       if (updateRes) {
-          next()
+        next();
       } else {
         return res.status(404).json({
           success: false,
@@ -48,12 +47,14 @@ let updateUser = async (req, res, next) => {
 
 const findUser = async (req, res) => {
   try {
-    if (req.params.userId==='me') {
+    if (req.params.userId === "me") {
       const user = await authService.findUser({
         _id: mongoose.Types.ObjectId(req.decoded._id),
       });
       if (!user || user.length === 0) {
-        return res.status(404).json({ success: false, message: "No user exits" });
+        return res
+          .status(404)
+          .json({ success: false, message: "No user exits" });
       }
       return res.status(200).json({
         success: true,
@@ -65,7 +66,9 @@ const findUser = async (req, res) => {
         _id: mongoose.Types.ObjectId(req.params.userId),
       });
       if (!user || user.length === 0) {
-        return res.status(404).json({ success: false, message: "No user exits" });
+        return res
+          .status(404)
+          .json({ success: false, message: "No user exits" });
       }
       return res.status(200).json({
         success: true,

@@ -50,7 +50,7 @@ module.exports = {
     if (url === "profile.png") {
       return `${config.imagePath}/profile.png`;
     }
-    return `${config.imagePath}/users/${url}`;
+    return `${config.imagePath}/${url}`;
   },
 };
 module.exports.hash = (password, callback) => {

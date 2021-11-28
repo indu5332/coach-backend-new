@@ -1,5 +1,16 @@
 const appRouter = require("express").Router();
 const appController = require("../controllers");
+const path=require('path');
+const multer=require('multer');
+const storage = multer.diskStorage({
+    destination: (req, res, cb) => { cb(null, path.join(`${__dirname}/../uploads/${req.params.folder}`)); },
+    filename: (req, file, cb) => {
+      cb(null, `${file.originalname}`);
+    },
+  });
+  const upload = multer({ storage:storage });
+  
+  appRouter.post("/file/upload/:folder", upload.single("file"), appController.file.upload);
 
 appRouter.get("/", appController.app.home.home);
 
