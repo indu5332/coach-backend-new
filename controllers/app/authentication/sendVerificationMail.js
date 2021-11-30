@@ -3,6 +3,7 @@ const authService = require("../../service/user.service");
 const { sendEmail } = require("../../service/mail.service");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
+const config=require('config')
 
 const findUser = async (req, res, next) => {
   try {
@@ -23,7 +24,8 @@ const sendEmailToUser = async (req, res) => {
   try {
     const verificationToken = crypto.randomBytes(100).toString("hex");
     const Duration = Date.now() + 3 * 24 * 60 * 60 * 1000;
-    const link = `http://localhost:4000/verify/email/${verificationToken}/${req.data.user._id}`;
+    const link = `${config.HOST}/email/${verificationToken}/${req.data.user._id}`;
+    console.log(link)
     const data = {
       receiver: req.data.user.email,
       templateData: {

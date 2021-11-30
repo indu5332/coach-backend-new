@@ -86,18 +86,6 @@ const CreateUser = async (req, res, next) => {
   }
 };
 
-let addImage = async (req,res,next) => {
-  req.data.newUser.imagePath = await userImage(req.data.newUser.imagePath);
-  next()
-};
-
-async function userImage(imagePath) {
-  if (imagePath === "profile.png") {
-    return config.fileUrl + "/profile.png";
-  } else {
-    return;
-  }
-}
 
 const generateToken = async (req, res) => {
   try {
@@ -117,11 +105,14 @@ const generateToken = async (req, res) => {
       });
     } else {
       delete req.data.hashPassword;
+      let createdUser=JSON.parse(JSON.stringify(req.data.newUser));
+      console.log(authService.userImage(createdUser.imagePath))
+      createdUser.imagePath=authService.userImage(createdUser.imagePath)
       return res.status(200).json({
         success: true,
         message: "loged in successfully",
         "x-access-token": token,
-        user: req.data.newUser,
+        user: createdUser,
       });
     }
   } catch (error) {
@@ -134,6 +125,5 @@ module.exports = [
   findUserName,
   generateHashPassword,
   CreateUser,
-  addImage,
   generateToken,
 ];
