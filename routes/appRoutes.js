@@ -2,10 +2,9 @@ const appRouter = require("express").Router();
 const appController = require("../controllers");
 
 
-
 appRouter.get("/", appController.app.home.home);
 
-appRouter.get("/upload", appController.file.file ,appController.file.upload );
+appRouter.post("/upload", appController.file.file ,appController.file.upload );
 
 //contact page Api
 appRouter.post("/contact-us", appController.app.contact.addContact);

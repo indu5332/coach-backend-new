@@ -7,4 +7,10 @@ module.exports=async (req, res) => {
           file: req.file.filename
       })
   }
+  else{
+    return res.status(200).json({
+      success: false,
+      message: 'error'
+  })
+  }
 }

@@ -43,16 +43,10 @@ module.exports = {
       createError(httpStatus.INTERNAL_SERVER_ERROR, error);
     }
   },
-  userImage(url) {
-    if (url === undefined || url === null) {
-      return `${config.imagePath}/profile.png`;
-    }
-    if (url === "profile.png") {
-      return `${config.imagePath}/profile.png`;
-    }
-    return `${config.imagePath}/${url}`;
-  },
-};
+  userImage: function (url){
+    return config.fileUrl+"/users/" + url;
+}
+}
 module.exports.hash = (password, callback) => {
   bcrypt.genSalt(saltRounds, (err, salt) => {
     bcrypt.hash(password, salt, (error, hash) => {
