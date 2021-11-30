@@ -13,7 +13,6 @@ const userSchema = new Scheam(
     email: { type: String, required: true, unique: true },
     imagePath: { type: String, default: "profile.png" },
     password: { type: String, required: true },
-    phone: { type: Number, required: true },
     instagramLink: { type: String },
     facebookLink: { type: String },
     linkdinLink: { type: String },
