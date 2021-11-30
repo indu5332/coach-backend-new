@@ -82,6 +82,7 @@ const generateToken = async (req, res) => {
       });
     } else {
       delete req.data.user.password;
+      console.log(req.data.user)
       return res.status(200).json({
         success: true,
         message: "loged in successfully",
