@@ -3,7 +3,7 @@ var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const userModel = require("../../models/user.model");
 const jwt = require("jsonwebtoken");
-const config = require("config");
+const config = require('config');
 const saltRounds = 10;
 
 module.exports = {

@@ -63,7 +63,6 @@ const findUser = async (req, res) => {
            delete user.password
            delete user.verificationToken
            delete user.Duration
-           delete user.email
            delete user.phone
       return res.status(200).json({
         success: true,
@@ -85,7 +84,6 @@ const findUser = async (req, res) => {
            delete user.password
            delete user.verificationToken
            delete user.Duration
-           delete user.email
            delete user.phone
       return res.status(200).json({
         success: true,
