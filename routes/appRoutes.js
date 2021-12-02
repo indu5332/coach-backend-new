@@ -1,10 +1,27 @@
 const appRouter = require("express").Router();
 const appController = require("../controllers");
 
+const multer = require("multer");
+const Path = require("path");
+
+const p = Path.join(`${__dirname}../../uploads/`);
+
+const storage = multer.diskStorage({
+  destination: (req, res, cb) => {
+    cb(null, p + req.query.folder);
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${file.originalname}`);
+  },
+});
 
 appRouter.get("/", appController.app.home.home);
 
-appRouter.post("/upload", appController.file.file ,appController.file.upload );
+appRouter.get("/about", appController.app.about.aboutDetail);
+
+appRouter.get("/list/gallery", appController.admin.gallery.list);
+
+appRouter.post("/upload", multer({ storage: storage }).single("file"),appController.file.upload );
 
 //contact page Api
 appRouter.post("/contact-us", appController.app.contact.addContact);

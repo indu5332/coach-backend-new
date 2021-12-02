@@ -49,7 +49,6 @@ const comparePassword = async (req, res, next) => {
   }
 };
 
-
 //generate token when user login
 const generateToken = async (req, res) => {
   try {
@@ -68,10 +67,12 @@ const generateToken = async (req, res) => {
         error: error,
       });
     } else {
-      delete req.data.user.password;
-      let createdUser=req.data.user
-      createdUser.imagePath=authService.userImage(createdUser.imagePath)
-      console.log(createdUser)
+      let createdUser = req.data.user;
+      createdUser.imagePath = authService.userImage(createdUser.imagePath);
+      delete createdUser.password
+      delete createdUser.verificationToken
+      delete createdUser.Duration
+      console.log(createdUser);
       return res.status(200).json({
         success: true,
         message: "loged in successfully",

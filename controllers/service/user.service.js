@@ -37,7 +37,7 @@ module.exports = {
 
   generateToken: async (payload) => {
     try {
-      const token = await jwt.sign(payload, config.secret);
+      const token = await jwt.sign(payload, config.secret,{expiresIn: `${config.tokenDuration}`});
       return token;
     } catch (error) {
       createError(httpStatus.INTERNAL_SERVER_ERROR, error);

@@ -12,7 +12,7 @@ const createContact = async (req, res) => {
     if (newContact) {
       res.status(200).json({
         success: true,
-        message: "Query submitted successfully",
+        message: "Query submitted successfully"
       });
     } else {
       return res.status(500).json({

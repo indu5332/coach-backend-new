@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
-const programModel = require("../../../models/programm.model");
+const programService = require("../../service/program.service");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
 let detailPRogram = async (req, res, next) => {
   try {
-    const program = await programModel.find({
+    let program = await programService.findprogram({
       _id: mongoose.Types.ObjectId(req.params.programId),
     });
-    console.log(req.params.programId);
     if (program.length > 0) {
       return res
         .status(200)

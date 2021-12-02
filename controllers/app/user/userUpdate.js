@@ -7,6 +7,7 @@ const httpStatus = require("http-status-codes").StatusCodes;
 let updateUser = async (req, res, next) => {
   try {
     if (req.params.userId === "me") {
+      console.log(req.body);
       const updateRes = await authService.updateUser(
         { _id: mongoose.Types.ObjectId(req.decoded._id) },
         { $set: req.body }
@@ -56,10 +57,15 @@ const findUser = async (req, res) => {
           .status(404)
           .json({ success: false, message: "No user exits" });
       }
+      delete user[0].password;
+      delete user[0].email;
+      delete user[0].verificationToken;
+      delete user[0].Duration;
+      delete user[0].phone;
       return res.status(200).json({
         success: true,
         message: "user updated",
-        user: user,
+        user: user[0],
       });
     } else {
       const user = await authService.findUser({
@@ -70,10 +76,15 @@ const findUser = async (req, res) => {
           .status(404)
           .json({ success: false, message: "No user exits" });
       }
+      delete user[0].password;
+      delete user[0].email;
+      delete user[0].verificationToken;
+      delete user[0].Duration;
+      delete user[0].phone;
       return res.status(200).json({
         success: true,
         message: "user updated",
-        user: user,
+        user: user[0],
       });
     }
   } catch (error) {

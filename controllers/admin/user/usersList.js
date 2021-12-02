@@ -16,6 +16,18 @@ const userList = async (req, res, next) => {
        {
          $limit: (req.query.limit ? Number(req.query.limit) : 10),
        },
+       {
+        $project: {
+          _id: 1,
+          id: 1,
+          firstName: 1,
+          lastName: 1,
+          username:1,
+          email: 1,
+          phone: 1,
+          createdAt: 1,
+        },
+      },
      ];
      const userList = await userModel.aggregate(conditions);
      req.data={}

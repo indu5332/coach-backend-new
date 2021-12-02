@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 let userModel = require("../../../models/user.model");
-const authService=require('../../service/user.service')
+const authService = require("../../service/user.service");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
@@ -25,24 +25,23 @@ const findUserByToken = async (req, res, next) => {
 };
 
 const generateHashPassword = async (req, res, next) => {
-    try {
-      await authService.hash(req.body.password, (err, hashPassword) => {
-        if (err) {
-          //console.log(err)
-          return res.status(500).json({
-            success: false,
-            isError: true,
-            error: err.message,
-          });
-        }
-        req.data = {};
-        req.data.hashPassword = hashPassword;
-        next();
-      });
-    } catch (error) {
-      createError(httpStatus.INTERNAL_SERVER_ERROR, error);
-    }
-  };
+  try {
+    await authService.hash(req.body.password, (err, hashPassword) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          isError: true,
+          error: err.message,
+        });
+      }
+      req.data = {};
+      req.data.hashPassword = hashPassword;
+      next();
+    });
+  } catch (error) {
+    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
+  }
+};
 
 const updateUser = async (req, res) => {
   try {
@@ -57,7 +56,11 @@ const updateUser = async (req, res) => {
       }
     );
     if (updateResult) {
-      return res.status(200).json({ success: true, message: "Email verified" ,user:req.data.user});
+      return res.status(200).json({
+        success: true,
+        message: "Email verified",
+        user: req.data.user,
+      });
     }
     if (!updateResult) {
       return res.status(500).json({
@@ -66,7 +69,7 @@ const updateUser = async (req, res) => {
       });
     }
   } catch (error) {
-    return ress
+    return res
       .status(500)
       .json({ success: false, isError: true, error: error.message });
   }

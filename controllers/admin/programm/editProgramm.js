@@ -38,7 +38,7 @@ const findPogram = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "program updated successfully",
-      program: program,
+      program: program[0],
     });
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);

@@ -1,12 +1,12 @@
 const userModel = require("../../../models/user.model");
+const config = require("config");
 
 const findUser = async (req, res, next) => {
   try {
-    console.log("kjhg")
     if (req.params.userId) {
       const user = await userModel.findById(req.params.userId);
       if (user) {
-        const link = `http://192.168.1.18:3001/api/v1/user/verify/${user.verificationToken}/${user._id}`;
+        const link = `${config.HOST}/user/verify/${user.verificationToken}/${user._id}`;
         return res.status(200).json({
           success: true,
           message: "Hit this api to verify user",

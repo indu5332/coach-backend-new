@@ -1,5 +1,5 @@
 var createError = require("http-errors");
-const config=require('config')
+const config = require("config");
 const authService = require("../../service/user.service");
 const httpStatus = require("http-status-codes").StatusCodes;
 
@@ -86,7 +86,6 @@ const CreateUser = async (req, res, next) => {
   }
 };
 
-
 const generateToken = async (req, res) => {
   try {
     const payload = {
@@ -104,10 +103,9 @@ const generateToken = async (req, res) => {
         error: error,
       });
     } else {
-      delete req.data.hashPassword;
-      let createdUser=JSON.parse(JSON.stringify(req.data.newUser));
-      console.log(authService.userImage(createdUser.imagePath))
-      createdUser.imagePath=authService.userImage(createdUser.imagePath)
+      let createdUser = JSON.parse(JSON.stringify(req.data.newUser));
+      createdUser.imagePath = authService.userImage(createdUser.imagePath);
+      delete createdUser.password;
       return res.status(200).json({
         success: true,
         message: "loged in successfully",

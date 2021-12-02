@@ -1,7 +1,8 @@
 const sgMail = require("@sendgrid/mail");
 
 sgMail.setApiKey(
-  "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"
+  "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" 
+  //"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"   killingspirit5332@gmail.com
 );
 
 function sendEmail(data) {
