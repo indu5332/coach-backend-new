@@ -49,7 +49,7 @@ let updateUser = async (req, res, next) => {
 const findUser = async (req, res) => {
   try {
     if (req.params.userId === "me") {
-      const user = await authService.findUser({
+      let user = await authService.findUser({
         _id: mongoose.Types.ObjectId(req.decoded._id),
       });
       if (!user || user.length === 0) {
@@ -57,18 +57,21 @@ const findUser = async (req, res) => {
           .status(404)
           .json({ success: false, message: "No user exits" });
       }
-      delete user[0].password;
-      delete user[0].email;
-      delete user[0].verificationToken;
-      delete user[0].Duration;
-      delete user[0].phone;
+      user=JSON.parse(JSON.stringify(user[0]))
+           user.imagePath = authService.userImage(user.imagePath)
+           console.log(user)
+           delete user.password
+           delete user.verificationToken
+           delete user.Duration
+           delete user.email
+           delete user.phone
       return res.status(200).json({
         success: true,
         message: "user updated",
-        user: user[0],
+        user: user,
       });
     } else {
-      const user = await authService.findUser({
+      let user = await authService.findUser({
         _id: mongoose.Types.ObjectId(req.params.userId),
       });
       if (!user || user.length === 0) {
@@ -76,15 +79,18 @@ const findUser = async (req, res) => {
           .status(404)
           .json({ success: false, message: "No user exits" });
       }
-      delete user[0].password;
-      delete user[0].email;
-      delete user[0].verificationToken;
-      delete user[0].Duration;
-      delete user[0].phone;
+      user=JSON.parse(JSON.stringify(user[0]))
+           user.imagePath = authService.userImage(user.imagePath)
+           console.log(user)
+           delete user.password
+           delete user.verificationToken
+           delete user.Duration
+           delete user.email
+           delete user.phone
       return res.status(200).json({
         success: true,
         message: "user updated",
-        user: user[0],
+        user: user,
       });
     }
   } catch (error) {
