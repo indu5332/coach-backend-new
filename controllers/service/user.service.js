@@ -28,8 +28,8 @@ module.exports = {
 
   updateUser: async (conditions, dataToUpdate) => {
     try {
-      const updateResult = await userModel.updateOne(conditions, dataToUpdate);
-      return updateResult.modifiedCount > 0;
+      const updateResult = await userModel.findByIdAndUpdate(conditions, dataToUpdate,{new:true});
+      return updateResult
     } catch (error) {
       createError(httpStatus.INTERNAL_SERVER_ERROR, error);
     }
