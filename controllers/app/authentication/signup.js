@@ -65,12 +65,11 @@ const generateHashPassword = async (req, res, next) => {
 const CreateUser = async (req, res, next) => {
   try {
     let user = req.body;
-    const data = {
+    let data = {
       ...user,
       password: req.data.hashPassword,
     };
     const newUser = await authService.createUser(data);
-    console.log(newUser);
     if (newUser) {
       req.data.newUser = newUser;
       next();
@@ -93,6 +92,7 @@ const generateToken = async (req, res) => {
       email: req.data.newUser.email,
       firstName: req.data.newUser.firstName,
       lastName: req.data.newUser.lastName,
+      userna: req.data.newUser.username,
       isAdmin: req.data.newUser.isAdmin,
     };
     const token = await authService.generateToken(payload);

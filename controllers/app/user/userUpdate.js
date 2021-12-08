@@ -6,15 +6,15 @@ const httpStatus = require("http-status-codes").StatusCodes;
 //user update
 let updateUser = async (req, res, next) => {
   try {
-    console.log(req.body)
     if (req.params.userId === "me") {
       const updateRes = await authService.updateUser(
         { _id: mongoose.Types.ObjectId(req.decoded._id) },
         { $set: req.body }
       );
+      console.log(updateRes)
       if (updateRes) {
         updateRes.imagePath = authService.userImage(updateRes.imagePath);
-        delete updateRes.password
+        delete updateRes.password;
         return res.status(200).json({
           success: true,
           message: "user updated",
@@ -34,7 +34,7 @@ let updateUser = async (req, res, next) => {
         );
         if (updateRes) {
           updateRes.imagePath = authService.userImage(updateRes.imagePath);
-          delete updateRes.password
+          delete updateRes.password;
           return res.status(200).json({
             success: true,
             message: "user updated",
@@ -57,5 +57,4 @@ let updateUser = async (req, res, next) => {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
-
 module.exports = [updateUser];

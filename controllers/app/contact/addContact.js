@@ -17,7 +17,6 @@ const createContact = async (req, res) => {
     } else {
       return res.status(500).json({
         success: false,
-
         error: err.message,
       });
     }

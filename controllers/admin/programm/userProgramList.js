@@ -8,7 +8,7 @@ const programList = async (req, res, next) => {
     const conditions = [
       {
         $match: {
-          isPublic: true,
+          isPublic: false,
         }
       },
       {
@@ -24,12 +24,13 @@ const programList = async (req, res, next) => {
       },
     ];
     const programList = await programModel.aggregate(conditions);
+    console.log(programList.length)
     return res.status(200).json({
-      success: true,
-      message: "program list",
-      totalPrograms: programList.length,
-      programList: programList,
-    });
+        success: true,
+        message: "program list",
+        totalPrograms: programList.length,
+        programList: programList,
+      });
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }

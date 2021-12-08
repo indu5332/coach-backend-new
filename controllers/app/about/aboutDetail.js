@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const aboutModel = require("../../../models/aboutUs.model");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;

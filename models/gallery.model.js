@@ -7,7 +7,7 @@ const gallerySchema = new Scheam(
   {
     id: { type: Number },
     image: { type: String },
-    video: { type: String }
+    video: { type: String },
   },
   {
     timestamps: true,

@@ -1,16 +1,15 @@
 const sgMail = require("@sendgrid/mail");
 
 sgMail.setApiKey(
-  "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" 
-  //"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"   killingspirit5332@gmail.com
+  "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"  
 );
 
 function sendEmail(data) {
   const msg = {
     to: data.receiver,
-    from: "support@illfact.com",
+    from: "killingspirit5332@gmail.com",
     subject: "reset password",
-    templateId: "d-cebc56d4ab524d6cbb569e6280f91aa1",
+    templateId:"d-3a1855f16b96476fbce9d9f3aa76e4c0",
     dynamic_template_data: data.templateData,
   };
   sgMail.send(msg, (error, res) => {

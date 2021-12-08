@@ -3,6 +3,8 @@ const adminController = require("../controllers");
 
 adminRouter.get("/", adminController.admin.home.home);
 
+adminRouter.get("/all-programs", adminController.admin.programm.listProgramm);
+
 const AdminMiddleware = require("../middleware/verifyAdminToken");
 adminRouter.use(AdminMiddleware);
 
@@ -20,10 +22,11 @@ adminRouter.delete("/user/delete/:userId", adminController.admin.user.userDelete
 
 //programm
 adminRouter.post("/add/program", adminController.admin.programm.addProgramm);
-adminRouter.get("/all-programs", adminController.admin.programm.listProgramm);
 adminRouter.delete("/delete/program/:programId", adminController.admin.programm.deleteProgramm);
 adminRouter.put("/update/program/:programId", adminController.admin.programm.editProgramm);
 adminRouter.get("/detail/program/:programId", adminController.admin.programm.detailProgramm);
+
+adminRouter.get("/user/list/program", adminController.admin.programm.listProgramm);
 
 //about-us
 adminRouter.post("/about-us", adminController.admin.about.create);

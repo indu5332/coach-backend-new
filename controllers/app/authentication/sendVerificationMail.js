@@ -25,7 +25,6 @@ const sendEmailToUser = async (req, res) => {
     const verificationToken = crypto.randomBytes(100).toString("hex");
     const Duration = Date.now() + 3 * 24 * 60 * 60 * 1000;
     const link = `${config.HOST}/email/${verificationToken}/${req.data.user._id}`;
-    console.log(link);
     const data = {
       receiver: req.data.user.email,
       templateData: {

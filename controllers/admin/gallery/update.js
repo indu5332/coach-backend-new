@@ -3,11 +3,13 @@ const mongoose=require('mongoose')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
-
 let updategallery = async (req, res) => {
   try {
-    const updatedRes=await galleryService.updategallery({_id:mongoose.Types.ObjectId(req.params.galleryId)},{$set:req.body})
+    let updatedRes=await galleryService.updategallery({_id:mongoose.Types.ObjectId(req.params.galleryId)},{$set:req.body})
     if(updatedRes){
+      console.log(updatedRes)
+      updatedRes.image = galleryService.galleryImage(updatedRes.image)
+      updatedRes.video = galleryService.galleryImage(updatedRes.video)
         return res.status(200).json({
             status:true,
             message:"gallery updated successfully",

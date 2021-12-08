@@ -57,6 +57,7 @@ const generateToken = async (req, res) => {
       email: req.data.user.email,
       firstName: req.data.user.firstName,
       lastName: req.data.user.lastName,
+      username: req.data.username,
       isAdmin: req.data.user.isAdmin,
     };
     const token = await authService.generateToken(payload);

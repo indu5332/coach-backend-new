@@ -35,8 +35,8 @@ module.exports = {
 
   updategallery: async (conditions, dataToUpdate) => {
     try {
-      const updateResult = await galleryModel.updateOne(conditions, dataToUpdate);
-      return updateResult.modifiedCount > 0;
+      const updateResult = await galleryModel.findByIdAndUpdate(conditions, dataToUpdate,{new:true});
+      return updateResult
     } catch (error) {
       createError(httpStatus.INTERNAL_SERVER_ERROR, error);
     }

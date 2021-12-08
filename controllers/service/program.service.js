@@ -1,8 +1,7 @@
-const bcrypt = require("bcryptjs");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const programModel = require("../../models/programm.model");
-const config = require("config");
+const config = require("config")
 
 module.exports = {
   async findprogram(data) {
@@ -26,15 +25,18 @@ module.exports = {
 
   updateProgram: async (conditions, dataToUpdate) => {
     try {
-      const updateResult = await programModel.updateOne(conditions, dataToUpdate);
-      return updateResult.modifiedCount > 0;
+      const updateResult = await programModel.findByIdAndUpdate(
+        conditions,
+        dataToUpdate,
+        {new:true}
+      );
+      return updateResult
     } catch (error) {
       createError(httpStatus.INTERNAL_SERVER_ERROR, error);
     }
   },
 
-  programImage: function (url){
-    return config.fileUrl+"/programs/" + url;
-}
-}
-
+  programImage: function (url) {
+    return config.fileUrl + "/programs/" + url;
+  }
+};

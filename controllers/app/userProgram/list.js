@@ -2,15 +2,17 @@ var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const programModel = require("../../../models/programm.model");
 var createError = require("http-errors");
+const mongoose=require('mongoose')
 
 const programList = async (req, res, next) => {
   try {
     const conditions = [
-      {
-        $match: {
-          isPublic: true,
-        }
-      },
+        {
+            $match: {
+                isPublic:false,
+                userId: mongoose.Types.ObjectId(req.decoded._id),
+              }
+        },
       {
         $sort: {
           createdAt: -1,
@@ -25,11 +27,11 @@ const programList = async (req, res, next) => {
     ];
     const programList = await programModel.aggregate(conditions);
     return res.status(200).json({
-      success: true,
-      message: "program list",
-      totalPrograms: programList.length,
-      programList: programList,
-    });
+        success: true,
+        message: "program list",
+        totalPrograms: programList.length,
+        programList: programList,
+      });
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
