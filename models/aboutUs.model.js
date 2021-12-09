@@ -6,8 +6,8 @@ const Scheam = mongoose.Schema;
 const aboutSchema = new Scheam(
   {
     id: { type: Number },
-    email:{type:String},
-    phone:{type:String},
+    email: { type: String },
+    phone: { type: String },
     instagramLink: { type: String },
     facebookLink: { type: String },
     linkdinLink: { type: String },

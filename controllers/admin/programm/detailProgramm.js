@@ -8,6 +8,7 @@ let detailPRogram = async (req, res, next) => {
     let program = await programService.findprogram({
       _id: mongoose.Types.ObjectId(req.params.programId),
     });
+    console.log(program.pdfUrl)
     if (program.length > 0) {
       return res
         .status(200)
