@@ -6,11 +6,7 @@ const Schema = mongoose.Schema;
 const programSchema = new Schema(
   {
     id: { type: Number },
-    username: { type: String },
-    firstName: { type: String },
-    lastName: { type: String },
     userId: { type: Schema.Types.ObjectId, ref: "user" },
-    email: { type: String },
     name: { type: String, required: true },
     date: { type: Date },
     location: { type: String, required: true },
@@ -21,6 +17,7 @@ const programSchema = new Schema(
     detail_3: { type: String },
     detail_4: { type: String },
     description: { type: String, required: true },
+    pdfUrl:{type:String}
   },
   {
     timestamps: true,
