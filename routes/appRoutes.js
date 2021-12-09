@@ -49,7 +49,6 @@ appRouter.post("/change/password",appController.app.authentication.change_paassw
 appRouter.put("/update/user/:userId", appController.app.user.userUpdate);
 appRouter.get("/user/detail/:userId", appController.app.user.userDetail);
 
-appRouter.get("/user/all-programs", appController.app.userProgram.list);
 appRouter.get("/user/program/detail/:programId", appController.app.userProgram.detail);
 
 module.exports = appRouter;

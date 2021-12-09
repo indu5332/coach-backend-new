@@ -7,6 +7,7 @@ const findUser = async (req, res, next) => {
       const user = await userModel.findById(req.params.userId);
       if (user) {
         const link = `${config.HOST}/user/verify/${user.verificationToken}/${user._id}`;
+        console.log(link)
         return res.status(200).json({
           success: true,
           message: "Hit this api to verify user",

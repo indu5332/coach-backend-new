@@ -6,11 +6,11 @@ const mongoose=require('mongoose')
 
 const programList = async (req, res, next) => {
   try {
+    console.log(req.params.userId)
     const conditions = [
         {
             $match: {
-                isPublic:false,
-                userId: mongoose.Types.ObjectId(req.decoded._id),
+                userId: mongoose.Types.ObjectId(req.params.userId),
               }
         },
       {
@@ -26,6 +26,7 @@ const programList = async (req, res, next) => {
       },
     ];
     const programList = await programModel.aggregate(conditions);
+    console.log(programList)
     return res.status(200).json({
         success: true,
         message: "program list",
@@ -36,5 +37,4 @@ const programList = async (req, res, next) => {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
-
 module.exports = [programList];

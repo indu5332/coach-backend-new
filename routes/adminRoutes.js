@@ -27,6 +27,7 @@ adminRouter.put("/update/program/:programId", adminController.admin.programm.edi
 adminRouter.get("/detail/program/:programId", adminController.admin.programm.detailProgramm);
 
 adminRouter.get("/user/list/program", adminController.admin.programm.userProgramList);
+adminRouter.get("/user/all-programs/:userId", adminController.app.userProgram.list);
 
 //about-us
 adminRouter.post("/about-us", adminController.admin.about.create);
