@@ -6,10 +6,7 @@ const httpStatus = require("http-status-codes").StatusCodes;
 
 const findUserByToken = async (req, res, next) => {
   try {
-    const conditions = {
-      _id: mongoose.Types.ObjectId(req.body.userId),
-    };
-    const user = await userModel.find(conditions);
+    const user = await userModel.find({_id:mongoose.Types.ObjectId(req.body.userId)});
     if (user.length > 0) {
       req.data = {};
       req.data.user = user[0];
@@ -53,6 +50,8 @@ const updateUser = async (req, res) => {
         },
       }
     );
+    console.log(req.body)
+    console.log(updateResult)
     if (updateResult) {
       return res.status(200).json({
         success: true,

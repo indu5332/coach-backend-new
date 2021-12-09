@@ -73,7 +73,6 @@ const generateToken = async (req, res) => {
       delete createdUser.password
       delete createdUser.verificationToken
       delete createdUser.Duration
-      console.log(createdUser);
       return res.status(200).json({
         success: true,
         message: "loged in successfully",

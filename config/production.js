@@ -4,7 +4,7 @@ module.exports = {
   allowedOrigins: ["https://coach-backend-new.herokuapp.com/"],
   DB_HOST:process.env.DB_HOST,
   HOST:"https://coach-backend-new.herokuapp.com",
-  host:"http://localhost:3001",
+  host:"https://coach-champion-admin.web.app",
   secret: process.env.secret,
   tokenDuration: "30d",
   fileUrl: "https://coach-backend-new.herokuapp.com",
