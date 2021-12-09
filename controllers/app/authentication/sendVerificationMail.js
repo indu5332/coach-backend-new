@@ -24,7 +24,7 @@ const sendEmailToUser = async (req, res) => {
   try {
     const verificationToken = crypto.randomBytes(100).toString("hex");
     const Duration = Date.now() + 3 * 24 * 60 * 60 * 1000;
-    const link = `${config.HOST}/reset/password/${verificationToken}/${req.data.user._id}`;
+    const link = `${config.host}/reset/password/${verificationToken}/${req.data.user._id}`;
     const data = {
       receiver: req.data.user.email,
       templateData: {
