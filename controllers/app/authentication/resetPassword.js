@@ -7,8 +7,6 @@ const httpStatus = require("http-status-codes").StatusCodes;
 const findUserByToken = async (req, res, next) => {
   try {
     const conditions = {
-      verificationToken: req.body.resetToken,
-      Duration: { $gt: Date.now() },
       _id: mongoose.Types.ObjectId(req.body.userId),
     };
     const user = await userModel.find(conditions);
