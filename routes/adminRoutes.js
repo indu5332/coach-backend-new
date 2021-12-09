@@ -26,7 +26,7 @@ adminRouter.delete("/delete/program/:programId", adminController.admin.programm.
 adminRouter.put("/update/program/:programId", adminController.admin.programm.editProgramm);
 adminRouter.get("/detail/program/:programId", adminController.admin.programm.detailProgramm);
 
-adminRouter.get("/user/list/program", adminController.admin.programm.listProgramm);
+adminRouter.get("/user/list/program", adminController.admin.programm.userProgramList);
 
 //about-us
 adminRouter.post("/about-us", adminController.admin.about.create);

@@ -24,6 +24,7 @@ const programList = async (req, res, next) => {
       },
     ];
     const programList = await programModel.aggregate(conditions);
+    
     return res.status(200).json({
       success: true,
       message: "program list",
