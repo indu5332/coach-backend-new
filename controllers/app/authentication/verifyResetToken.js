@@ -1,29 +1,28 @@
+const mongoose = require("mongoose");
 const userModel = require("../../../models/user.model");
-const config = require("config");
 
-const findUser = async (req, res, next) => {
+const verifyToken = async (req, res) => {
   try {
-    if (req.params.userId) {
-      const user = await userModel.findById(req.params.userId);
-      if (user) {
-        const link = `${config.HOST}/user/verify/${user.verificationToken}/${user._id}`;
-        console.log(link)
-        return res.status(200).json({
-          success: true,
-          message: "Hit this api to verify user",
-          link,
-        });
-      }
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
+    const user = await userModel.findOne(
+      {
+        verificationToken: req.body.token,
+        Duration: { $gt: Date.now() },
+        _id: mongoose.Types.ObjectId(req.body.userId),
+      },
+    );
+    if (user) {
+      return res.status(200).json({
+        success: true,
+        message: "User verified successfully",
+        userId: req.body.userId,
       });
     }
     return res.status(404).json({
-      success: false,
-      message: "UserId not found",
+      success: true,
+      message: "Invalid token detected",
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       isError: true,
@@ -32,4 +31,6 @@ const findUser = async (req, res, next) => {
   }
 };
 
-module.exports = [findUser];
+module.exports = [
+  verifyToken,
+];
