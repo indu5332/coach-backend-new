@@ -7,8 +7,7 @@ let galleries = async (req, res) => {
   try {
     const galleryList = await galleryService.listgallery({});
     await Promise.all(galleryList.map(async gallery=>{
-        gallery.image=config.fileUrl+"/gallery/"+gallery.image
-        gallery.video=config.fileUrl+"/gallery/"+gallery.video
+        gallery.file=config.fileUrl+"/gallery/"+gallery.file
     }))
     console.log(galleryList)
       return res.status(200).json({

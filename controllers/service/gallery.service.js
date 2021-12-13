@@ -2,6 +2,7 @@ var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const galleryModel = require("../../models/gallery.model");
 const config = require("config");
+const path = require("path");
 
 module.exports = {
   async findgallery(data) {
@@ -44,5 +45,43 @@ module.exports = {
 
   galleryImage: function (url){
     return config.fileUrl+"/gallery/" + url;
-}
+  },
+
+  getExtension(file) {
+    const parts = file.split(".");
+    return parts[parts.length - 1];
+  },
+  
+  isImage(file) {
+    if (file === null || file === undefined) {
+      return false;
+    }
+
+    const ext = this.getExtension(file);
+    switch (ext.toLowerCase()) {
+      case "jpg":
+      case "gif":
+      case "bmp":
+      case "png":
+      case "jpeg":
+        return true;
+    }
+    return false;
+  },
+  isVideo(file) {
+    if (file === null || file === undefined) {
+      return false;
+    }
+    const ext = this.getExtension(file);
+    switch (ext.toLowerCase()) {
+      case "m4v":
+      case "avi":
+      case "mpg":
+      case "mp4":
+      case "MOV":
+      case "mov":
+        return true;
+    }
+    return false;
+  },
 }

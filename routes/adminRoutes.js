@@ -3,7 +3,7 @@ const adminController = require("../controllers");
 
 adminRouter.get("/", adminController.admin.home.home);
 
-adminRouter.get("/all-programs", adminController.admin.programm.listProgramm);
+adminRouter.get("/all-programs", adminController.admin.programm.listPublicPrograms);
 
 const AdminMiddleware = require("../middleware/verifyAdminToken");
 adminRouter.use(AdminMiddleware);
@@ -27,7 +27,7 @@ adminRouter.put("/update/program/:programId", adminController.admin.programm.edi
 adminRouter.get("/detail/program/:programId", adminController.admin.programm.detailProgramm);
 
 adminRouter.get("/user/list/program", adminController.admin.programm.userProgramList);
-adminRouter.get("/user/all-programs/:userId", adminController.app.userProgram.list);
+adminRouter.get("/user/all-programs/:userId", adminController.admin.programm.userProgramDetail);
 
 //about-us
 adminRouter.post("/about-us", adminController.admin.about.create);

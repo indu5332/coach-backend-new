@@ -12,7 +12,7 @@ const findUserByToken = async (req, res, next) => {
       req.data.user = user[0];
       next();
     } else {
-      return res.status(404).json({ status: false, message: "Invalid token" });
+      return res.status(404).json({ status: false, message: "no user found" });
     }
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);

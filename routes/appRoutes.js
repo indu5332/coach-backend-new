@@ -5,12 +5,10 @@ const multer = require("multer");
 const Path = require("path");
 
 const p = Path.join(`${__dirname}../../uploads/`);
-console.log(p)
 
 const storage = multer.diskStorage({
   destination: (req, res, cb) => {
     cb(null, p + req.query.folder);
-    console.log(p+req.query.folder)
   },
   filename: (req, file, cb) => {
     cb(null, `${file.originalname}`);
@@ -24,7 +22,7 @@ appRouter.get("/about", appController.app.about.aboutDetail);
 
 appRouter.get("/list/gallery", appController.admin.gallery.list);
 
-appRouter.post("/upload", multer({ storage: storage }).single("file"),appController.file.upload );
+appRouter.post("/upload", multer({ storage:storage }).single("file"),appController.file.upload );
 
 //contact page Api
 appRouter.post("/contact-us", appController.app.contact.addContact);
@@ -50,5 +48,6 @@ appRouter.put("/update/user/:userId", appController.app.user.userUpdate);
 appRouter.get("/user/detail/:userId", appController.app.user.userDetail);
 
 appRouter.get("/user/program/detail/:programId", appController.app.userProgram.detail);
+appRouter.get("/user/program/list", appController.app.userProgram.list);
 
 module.exports = appRouter;

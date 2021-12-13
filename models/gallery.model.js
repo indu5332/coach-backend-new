@@ -6,8 +6,9 @@ const Scheam = mongoose.Schema;
 const gallerySchema = new Scheam(
   {
     id: { type: Number },
-    image: { type: String },
-    video: { type: String },
+    file: { type: String },
+    isImage:{type:Boolean,default:true},
+    isVideo:{type:Boolean,default:false}
   },
   {
     timestamps: true,

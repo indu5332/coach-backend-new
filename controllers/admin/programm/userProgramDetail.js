@@ -10,7 +10,7 @@ const programList = async (req, res, next) => {
     const conditions = [
         {
             $match: {
-                userId: mongoose.Types.ObjectId(req.decoded._id),
+                userId: mongoose.Types.ObjectId(req.params.userId),
               }
         },
       {
