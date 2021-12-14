@@ -8,15 +8,17 @@ const httpStatus = require("http-status-codes").StatusCodes;
 let checkusername=async(req,res,next)=>{
   try {
     if(req.body.username){
-      const find=await authService.findUser(req.body.username)
-      if(console.log(!find || find.length === 0)){
+      const find=await authService.findUser({username:req.body.username})
+      if(!find || find.length === 0){
         next()
       }
       else{
-        if(req.body.username===req.body.username){
+        if(req.body.username===req.decoded.username){
+          
           next()
         }
         else{
+          console.log(req.body.username)
           return res.status(400).json({
             success: false,
             message: "username already exists",
@@ -44,7 +46,6 @@ let updateUser = async (req, res, next) => {
         delete updateRes.password
         delete updateRes.verificationToken;
         delete updateRes.Duration;
-        console.log(updateRes)
         return res.status(200).json({
           success: true,
           message: "user updated",
