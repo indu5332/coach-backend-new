@@ -9,14 +9,19 @@ let checkusername=async(req,res,next)=>{
   try {
     if(req.body.username){
       const find=await authService.findUser(req.body.username)
-      if(find.length>0){
-        return res.status(400).json({
-          success: false,
-          message: "username already exists",
-        });
+      if(console.log(!find || find.length === 0)){
+        next()
       }
       else{
-        next()
+        if(req.body.username===req.body.username){
+          next()
+        }
+        else{
+          return res.status(400).json({
+            success: false,
+            message: "username already exists",
+          });
+        }
       }
     }
     else{
