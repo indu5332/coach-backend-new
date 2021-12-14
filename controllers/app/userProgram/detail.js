@@ -10,11 +10,12 @@ let detailuserProgram = async (req, res, next) => {
     });
     if (userProgram.length > 0) {
       if (userProgram[0].userId === req.decoded._id) {
+        userProgram=JSON.parse(JSON.stringify(userProgram[0]))
         userProgram.pdfUrl=await programService.programImage(userProgram.pdfUrl)
         return res.status(200).json({
             success: true,
             message: "userProgram details",
-            userProgram: userProgram[0],
+            userProgram: userProgram,
           });
       } else {
         return res
