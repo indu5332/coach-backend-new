@@ -4,9 +4,31 @@ var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
 //user update
+
+let checkusername=async(req,res,next)=>{
+  try {
+    if(req.body.username){
+      const find=await authService.findUser(req.body.username)
+      if(find.length>0){
+        next()
+      }
+      else{
+        return res.status(404).json({
+          success: false,
+          message: "no username exists",
+        });
+      }
+    }
+    else{
+      next()
+    }
+  } catch (error) {
+    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
+  }
+}
+
 let updateUser = async (req, res, next) => {
   try {
-    console.log(req.body)
     if (req.params.userId === "me") {
       const updateRes = await authService.updateUser(
         { _id: mongoose.Types.ObjectId(req.decoded._id) },
@@ -14,7 +36,10 @@ let updateUser = async (req, res, next) => {
       );
       if (updateRes) {
         updateRes.imagePath = authService.userImage(updateRes.imagePath);
-        delete updateRes.password;
+        delete updateRes.password
+        delete updateRes.verificationToken;
+        delete updateRes.Duration;
+        console.log(updateRes)
         return res.status(200).json({
           success: true,
           message: "user updated",
@@ -57,4 +82,4 @@ let updateUser = async (req, res, next) => {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
-module.exports = [updateUser];
+module.exports = [checkusername,updateUser];
