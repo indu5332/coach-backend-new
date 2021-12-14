@@ -92,7 +92,7 @@ const generateToken = async (req, res) => {
       email: req.data.newUser.email,
       firstName: req.data.newUser.firstName,
       lastName: req.data.newUser.lastName,
-      userna: req.data.newUser.username,
+      username: req.data.newUser.username,
       isAdmin: req.data.newUser.isAdmin,
     };
     const token = await authService.generateToken(payload);

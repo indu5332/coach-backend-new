@@ -14,11 +14,11 @@ let checkusername=async(req,res,next)=>{
       }
       else{
         if(req.body.username===req.decoded.username){
-          
+          console.log(req.body.username)
           next()
         }
         else{
-          console.log(req.body.username)
+          console.log(req.decoded)
           return res.status(400).json({
             success: false,
             message: "username already exists",
