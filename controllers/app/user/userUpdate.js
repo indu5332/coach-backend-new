@@ -10,13 +10,13 @@ let checkusername=async(req,res,next)=>{
     if(req.body.username){
       const find=await authService.findUser(req.body.username)
       if(find.length>0){
-        next()
+        return res.status(400).json({
+          success: false,
+          message: "username already exists",
+        });
       }
       else{
-        return res.status(404).json({
-          success: false,
-          message: "no username exists",
-        });
+        next()
       }
     }
     else{
