@@ -22,5 +22,5 @@ app.use("/api/v1", routes);
 app.use("/api/v1/admin", Adminroutes);
 
 //Port listen in 3000
-const port = process.env.PORT||2000
-app.listen(port, console.log("server is listening on 2000"));
+const port = process.env.PORT||3001
+app.listen(port, console.log("server is listening on 3001"));
