@@ -1,6 +1,7 @@
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const programModel = require("../../../models/programm.model");
+const programService=require('../../service/program.service')
 var createError = require("http-errors");
 const mongoose=require('mongoose')
 
@@ -26,6 +27,7 @@ const programList = async (req, res, next) => {
       },
     ];
     const programList = await programModel.aggregate(conditions);
+    programList.pdfUrl=await programService.programImage(programList.pdfUrl)
     console.log(programList)
     return res.status(200).json({
         success: true,
