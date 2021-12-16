@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
         return res.status(200).json({
             success:true,
             message:"image uploaded successfully",
-            file:req.file
+            file:req.file.filename
         });
     }
     else {

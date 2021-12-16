@@ -21,7 +21,7 @@ module.exports = {
     console.log(`User with id ${userId} is offline now`);
   },
 
-  async msgWithoutFile(data, userId, io) {
+  async sendMsg(data, userId, io) {
     data.userId = userId;
     data.key = null;
     lastMessage.id = data.id;

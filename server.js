@@ -21,7 +21,7 @@ const io = require("socket.io")(server, {
     },
 });
 
-//const socketOperation = require("./controller/app/io/operation");
+//const socketOperation = require("./controllers/app/io/operation");
 
 const client = redis.createClient(config.redisClient, {
     no_ready_check: true,
@@ -47,22 +47,9 @@ app.use(express.static(path.join(__dirname,"./uploads")));
 const verifyToken = require("./middleware/verifyToken");
 
 io.on("connection", (socket) => {
-    const userData = verifyToken.authentication(socket.request.headers["x-api-key"]);
-    if (userData.length > 0) {
-      socketOperation.joinSocket(socket, userData[0]._id, userData[0].id);
-      socket.on("send_message", async (msg) => {
-        if (msg.file) {
-          socketOperation.msgWithFile(msg, userData[0]._id, io, "private");
-        } else if (msg.file || msg.message) {
-          socketOperation.msgWithoutFile(msg, userData[0]._id, io);
-        } else if (!msg.file && !msg.message) {
-          socketOperation.sendBackMessageToClient(io, { message: "Empty message" }, socket.id, "invalid-message");
-        }
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
       });
-      socket.on("disconnect", (reason) => {
-        socketOperation.disconnectServer(socket, userData[0]._id, reason);
-      });
-    }
   });
 
 //Routes

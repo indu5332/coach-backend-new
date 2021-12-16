@@ -56,7 +56,6 @@ module.exports = {
     if (file === null || file === undefined) {
       return false;
     }
-
     const ext = this.getExtension(file);
     switch (ext.toLowerCase()) {
       case "jpg":
@@ -75,6 +74,7 @@ module.exports = {
     const ext = this.getExtension(file);
     switch (ext.toLowerCase()) {
       case "m4v":
+      case "mp3":
       case "avi":
       case "mpg":
       case "mp4":
@@ -84,4 +84,8 @@ module.exports = {
     }
     return false;
   },
+
+  totalGallery:async function(){
+    return await galleryModel.countDocuments({});
+},
 }

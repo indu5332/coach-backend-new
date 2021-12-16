@@ -1,58 +1,106 @@
 const programService = require("../../service/program.service");
+const programModel = require("../../../models/programm.model");
+const mongoose = require("mongoose");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
-let addProgram = async (req, res) => {
+const createProgram = async (req, res, next) => {
   try {
-    const program = await programService.createProgram({ ...req.body });
-    if (program) {
+    var file = [];
+    var durationDetail=[]
+    const coverfile = {
+      url: req.body.coverfile.url,
+      isImage: programService.isImage(req.body.coverfile.url),
+      isVideo: programService.isVideo(req.body.coverfile.url),
+    };
+
+    for (let i = 0; i < req.body.file.length; i++) {
+      const element = req.body.file[i];
+      const files = {
+        url:element.url,
+        isImage: programService.isImage(element.url),
+        isVideo: programService.isVideo(element.url),
+      };
+      file.push(files);
+    }
+    
+    for (let i = 0; i < req.body.durationDetail.length; i++) {
+      const element = req.body.durationDetail[i];
+      const durationCover = {
+        title:element.title,
+        description:element.description,
+        day:element.day,
+        //url:element.durationCoverImage.url,
+        durationCoverImage:{
+          url: element.durationCoverImage.url,
+          isImage: programService.isImage(element.durationCoverImage.url),
+          isVideo: programService.isVideo(element.durationCoverImage.url),
+        }
+      };
+      durationDetail.push(durationCover)
+      const durationEvent=[]
+      for (let j = 0; j < req.body.durationDetail[i].durationEvent.length; j++) {
+        const arr = req.body.durationDetail[i].durationEvent[j];
+        const file=[]
+        for (let k = 0; k < arr.file.length; k++) {
+          const arr2 = arr.file[k];
+          const file1={
+            url:arr2.url,
+            isImage:programService.isImage(arr2.url),
+            isVideo:programService.isImage(arr2.url)
+          }
+          file.push(file1)
+          console.log(file1)
+        }
+        durationEvent.push(file)
+        //console.log(file)
+      }
+      durationDetail.push(durationEvent)
+      //console.log(durationEvent)
+    }
+    //console.log(durationDetail)
+    req.body.coverfile = coverfile;
+    req.body.file = file;
+    req.body.durationDetail=durationDetail
+    const newProgram = await programService.createProgram({
+      ...coverfile,
+      ...file,
+      ...durationDetail,
+      ...req.body,
+    });
+    if (newProgram) {
+      newProgram.coverfile.url = programService.programImage(req.body.coverfile.url)
+
+      for (let i = 0; i < newProgram.file.length; i++) {
+        const element = newProgram.file[i];
+        element.url=programService.programImage(element.url)
+      }
+
+      for (let i = 0; i < newProgram.durationDetail.length; i++) {
+        const element = newProgram.durationDetail[i];
+        element.durationCoverImage.url=programService.programImage(element.durationCoverImage.url)
+      }
+
       return res.status(200).json({
         success: true,
-        message: "programm added successfully",
-        program: program[0],
+        message: "program created",
+        program: newProgram,
+      });
+    }
+    else{
+      return res.status(500).json({
+        success: false,
+        message: "failed to create program",
       });
     }
   } catch (error) {
-    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
-  }
-};
-
-const addNotification = async (req, res, next) => {
-  try {
-    const userProgram = await user.findUserById(req.body.userId).then((user) => user);
-    const isfriend = await isFriend.isFriend(req.decoded._id, req.data.user);
-    if (!isfriend) {
-      req.data.commentUser = userProgram[0];
-      next();
-    } else {
-      const userToInform = await user.findUserById(req.data.user).then((user) => user);
-      req.data.commentUser = userProgram[0];
-      const data = {
-        to: userToInform[0],
-        title: "One new comment",
-        body: `${userProgram[0].firstname} ${userProgram[0].lastname} comment on your story`,
-        linkTo: "story",
-        type: "story",
-        payload: {
-          user: userProgram[0],
-          userId: req.decoded._id,
-          title: "One new comment",
-          body: `${userProgram[0].firstname} ${userProgram[0].lastname}, comment on your story`,
-          message: `${req.body.message}`,
-          type: "story",
-          storyId: req.body.storyId,
-          linkTo: "story",
-        },
-        seen: false,
-      };
-      const io = req.app.get("io");
-      await notificationModel.createNotification(data, io, "story");
-      next();
-    }
-  } catch (error) {
     console.log(error);
-    return res.status(500).json({ success: false, isError: true, error });
+    return res.status(500).json({
+      success: false,
+      error: error,
+    });
   }
 };
 
-module.exports = [addProgram];
+
+module.exports = [createProgram];

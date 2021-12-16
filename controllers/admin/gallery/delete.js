@@ -1,10 +1,11 @@
 const galleryModel = require("../../../models/gallery.model");
+const mongoose=require('mongoose')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
 let deleteGallery = async (req, res) => {
   try {
-    const deletedRes = await galleryModel.deleteOne({ ...req.body });
+    const deletedRes = await galleryModel.deleteOne({_id:mongoose.Types.ObjectId(req.params.galleryId) });
     if (deletedRes.deletedCount>0) {
       return res.status(200).json({
         success: true,

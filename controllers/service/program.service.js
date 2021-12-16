@@ -38,5 +38,45 @@ module.exports = {
 
   programImage: function (url) {
     return config.fileUrl + "/programs/" + url;
-  }
+  },
+  
+  getExtension(url) {
+    const parts = url.split(".");
+    return parts[parts.length - 1];
+  },
+  
+  isImage(url) {
+    if (url === null || url === undefined) {
+      return false;
+    }
+    const ext = this.getExtension(url);
+    switch (ext.toLowerCase()) {
+      case "jpg":
+      case "gif":
+      case "bmp":
+      case "png":
+      case "jpeg":
+        return true;
+    }
+    return false;
+  },
+  isVideo(url) {
+    if (url === null || url === undefined) {
+      return false;
+    }
+    const ext = this.getExtension(url);
+    switch (ext.toLowerCase()) {
+      case "m4v":
+      case "avi":
+      case "mpg":
+      case "mp4":
+      case "MOV":
+      case "mov":
+      case "mp3":
+        return true;
+    }
+    return false;
+  },
+
+
 };
