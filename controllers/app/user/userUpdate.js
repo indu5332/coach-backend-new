@@ -14,7 +14,6 @@ let checkusername=async(req,res,next)=>{
       }
       else{
         if(req.body.username===req.decoded.username){
-          console.log(req.body.username)
           next()
         }
         else{
@@ -66,6 +65,8 @@ let updateUser = async (req, res, next) => {
         if (updateRes) {
           updateRes.imagePath = authService.userImage(updateRes.imagePath);
           delete updateRes.password;
+          delete updateRes.verificationToken;
+          delete updateRes.Duration;
           return res.status(200).json({
             success: true,
             message: "user updated",

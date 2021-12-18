@@ -33,34 +33,7 @@ const programSchema = new Schema(
         isImage: { type: Boolean, default: true },
         isVideo: { type: Boolean, default: false },
       },
-    ],
-    totalDuration: { type: Number },
-    durationDetail: [
-      {
-        title: { type: String },
-        description: { type: String },
-        day: { type: Number },
-        durationCoverImage: {
-          url: { type: String },
-          isImage: { type: Boolean, default: true },
-          isVideo: { type: Boolean, default: false },
-        },
-        durationEvent: [
-          {
-            durationTitle: { type: String },
-            file: [
-              {
-                url: { type: String },
-                isImage: { type: Boolean, default: true },
-                isVideo: { type: Boolean, default: false },
-                title: { type: String },
-                description: { type: String },
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    ]
   },
   {
     timestamps: true,

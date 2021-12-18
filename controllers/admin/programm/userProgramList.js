@@ -23,7 +23,19 @@ const programList = async (req, res, next) => {
         $limit: (req.query.limit ? Number(req.query.limit) : 10),
       },
     ];
-    const programList = await programModel.aggregate(conditions);
+    let programList = await programModel.aggregate(conditions);
+    await Promise.all(programList.map(async programs=>{
+      programs.coverfile.url= programService.programImage(programs.coverfile.url)
+     }))
+
+     await Promise.all(programList.map(async programs=>{
+      for (let i = 0; i < programs.file.length; i++) {
+        const element = programs.file[i];
+        element.url= programService.programImage(element.url)
+        console.log(element.url)
+      }
+     }))
+
     console.log(programList.length)
     return res.status(200).json({
         success: true,

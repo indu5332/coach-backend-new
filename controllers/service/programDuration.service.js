@@ -1,33 +1,33 @@
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
-const programModel = require("../../models/programm.model");
+const programDurationModel = require("../../models/programDuration");
 const config = require("config")
 
 module.exports = {
-  async findprogram(data) {
+  async findprogramDuration(data) {
     try {
-      const program = await programModel.find(data);
-      return JSON.parse(JSON.stringify(program));
+      const programDuration = await programDurationModel.find(data);
+      return JSON.parse(JSON.stringify(programDuration));
     } catch (error) {
       createError(500, error);
     }
   },
 
-  createProgram: async (program) => {
+  createprogramDuration: async (programDuration) => {
     try {
-      const newProgram = await programModel.create(program);
-      return newProgram;
+      const newprogramDuration = await programDurationModel.create(programDuration);
+      return newprogramDuration;
     } catch (error) {
       console.log(error);
       createError(httpStatus.INTERNAL_SERVER_ERROR, error);
     }
   },
 
-  updateProgram: async (_id, data) => {
+  updateprogramDuration: async (conditions, dataToUpdate) => {
     try {
-      const updateResult = await programModel.findByIdAndUpdate(
-        _id,
-        data,
+      const updateResult = await programDurationModel.findByIdAndUpdate(
+        conditions,
+        dataToUpdate,
         {new:true}
       );
       return updateResult
@@ -36,8 +36,8 @@ module.exports = {
     }
   },
 
-  programImage: function (url) {
-    return config.fileUrl + "/programs/" + url;
+  programDurationImage: function (url) {
+    return config.fileUrl + "/program/" + url;
   },
   
   getExtension(url) {
@@ -77,23 +77,6 @@ module.exports = {
     }
     return false;
   },
-  updateFiles: async function (id, data) {
-    try {
-        let updated = await programModel.findOneAndUpdate(
-            id,
-            data, { new: true });
-        return updated;
-    } catch (err) {
-        throw new Error(err);
-    }
-  },
-  getFiles: async function (id) {
-    try {
-        let program = await programModel.findById({_id:mongoose.Types.ObjectId(id)});
-        const files=program.files;
-        return files;
-    } catch (err) {
-        throw new Error(err);
-    }
-}
+
+
 };

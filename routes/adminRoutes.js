@@ -16,7 +16,6 @@ adminRouter.put("/update/contact/:contactId", adminController.admin.contact.edit
 adminRouter.delete("/delete/contact/:contactId", adminController.admin.contact.deleteContact);
 adminRouter.get("/detail/contact/:contactId", adminController.admin.contact.detailContact);
 
-
 adminRouter.delete("/user/delete/:userId", adminController.admin.user.userDelete);
 
 
@@ -25,6 +24,12 @@ adminRouter.post("/add/program", adminController.admin.programm.addProgramm);
 adminRouter.delete("/delete/program/:programId", adminController.admin.programm.deleteProgramm);
 adminRouter.put("/update/program/:programId", adminController.admin.programm.editProgramm);
 adminRouter.get("/detail/program/:programId", adminController.admin.programm.detailProgramm);
+
+//programDuration
+adminRouter.post("/add/program/duration", adminController.admin.programDuration.add);
+adminRouter.get("/detail/program/duration/:programDurationId", adminController.admin.programDuration.detail);
+adminRouter.get("/list/program/duration", adminController.admin.programDuration.list);
+adminRouter.delete("/delete/program/duration/:programDurationId", adminController.admin.programDuration.delete);
 
 adminRouter.get("/user/list/program", adminController.admin.programm.userProgramList);
 adminRouter.get("/user/all-programs/:userId", adminController.admin.programm.userProgramDetail);

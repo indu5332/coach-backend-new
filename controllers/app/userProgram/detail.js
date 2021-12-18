@@ -12,6 +12,12 @@ let detailuserProgram = async (req, res, next) => {
       if (userProgram[0].userId === req.decoded._id) {
         userProgram=JSON.parse(JSON.stringify(userProgram[0]))
         userProgram.pdfUrl=await programService.programImage(userProgram.pdfUrl)
+
+        userProgram[0].coverfile.url= programService.programImage(userProgram[0].coverfile.url)
+
+        await Promise.all(userProgram[0].file.map(async files=>{
+            files.url= programService.programImage(files.url)
+        }))
         return res.status(200).json({
             success: true,
             message: "userProgram details",

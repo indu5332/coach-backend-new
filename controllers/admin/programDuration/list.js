@@ -1,17 +1,12 @@
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
-const programModel = require("../../../models/programm.model");
-const programService=require('../../service/program.service')
+const programDurationModel = require("../../../models/programDuration");
+const programDurationService=require('../../service/programDuration.service')
 var createError = require("http-errors");
 
-const programList = async (req, res, next) => {
+const programDurationList = async (req, res, next) => {
   try {
     const conditions = [
-      {
-        $match: {
-          isPublic: true,
-        }
-      },
       {
         $sort: {
           createdAt: -1,
@@ -24,17 +19,10 @@ const programList = async (req, res, next) => {
         $limit: (req.query.limit ? Number(req.query.limit) : 10),
       },
     ];
-    let programList = await programModel.aggregate(conditions);
+    let programList = await programDurationModel.aggregate(conditions);
+    console.log(programList)
     await Promise.all(programList.map(async programs=>{
-      programs.coverfile.url= programService.programImage(programs.coverfile.url)
-     }))
-
-     await Promise.all(programList.map(async programs=>{
-      for (let i = 0; i < programs.file.length; i++) {
-        const element = programs.file[i];
-        element.url= programService.programImage(element.url)
-        console.log(element.url)
-      }
+      programs.durationCoverImage.url= programDurationService.programDurationImage(programs.durationCoverImage.url)
      }))
 
      //console.log(programList)
@@ -49,4 +37,4 @@ const programList = async (req, res, next) => {
   }
 };
 
-module.exports = [programList];
+module.exports = [programDurationList];
