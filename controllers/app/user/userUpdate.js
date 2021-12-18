@@ -13,7 +13,7 @@ let checkusername=async(req,res,next)=>{
         next()
       }
       else{
-        if(req.body.username===req.decoded.username){
+        if(req.body.username===find[0].username){
           next()
         }
         else{
