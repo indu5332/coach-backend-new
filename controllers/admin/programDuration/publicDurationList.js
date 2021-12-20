@@ -7,6 +7,11 @@ var createError = require("http-errors");
 const programDurationList = async (req, res, next) => {
   try {
     const conditions = [
+        {
+            $match: {
+              isPublic: true,
+            }
+          },
       {
         $sort: {
           createdAt: -1,
@@ -19,11 +24,11 @@ const programDurationList = async (req, res, next) => {
         $limit: (req.query.limit ? Number(req.query.limit) : 10),
       },
     ];
-    let programList = await programDurationModel.aggregate(conditions);
+    let programDurationList = await programDurationModel.aggregate(conditions);
     await Promise.all(programList.map(async programs=>{
       programs.durationCoverImage.url= programDurationService.programDurationImage(programs.durationCoverImage.url)
      }))
-     await Promise.all(programList.map(async programs=>{
+     await Promise.all(programDurationList.map(async programs=>{
       for (let i = 0; i < programs.durationEvent.length; i++) {
         const element = programs.durationEvent[i];
         await Promise.all(element.file.map(async program=>{
@@ -31,13 +36,13 @@ const programDurationList = async (req, res, next) => {
          }))
       }
      }))
-     const totalPrograms= await programDurationModel.find({})
+     const totalDurationPrograms= await programDurationModel.find({})
      //console.log(programList)
     return res.status(200).json({
       success: true,
       message: "program list",
-      totalPrograms: totalPrograms.length,
-      programList: programList,
+      totalProgramDuration: totalDurationPrograms.length,
+      programDurationList: programDurationList,
     });
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
