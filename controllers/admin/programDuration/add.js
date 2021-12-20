@@ -1,3 +1,4 @@
+const  mongoose  = require("mongoose");
 const programDurationService = require("../../service/programDuration.service");
 
 const createProgram = async (req, res, next) => {
@@ -26,27 +27,30 @@ const createProgram = async (req, res, next) => {
       formatedProgram.push(element);
     }
     req.body.durationEvent=formatedProgram
-    let program=await programDurationService.createprogramDuration(req.body)
-    if(program){
-      program.durationCoverImage.url=programDurationService.programDurationImage(program.durationCoverImage.url)
-      await Promise.all(program.durationEvent.map(async programs=>{
-        for (let i = 0; i < programs.file.length; i++) {
-          const element = programs.file[i];
-          element.url= programDurationService.programDurationImage(element.url)
-        }
+    const checkday=await programDurationService.findprogramDuration({programId:mongoose.Types.ObjectId(req.body.programId)})
+    //console.log(checkday)
+    for (let i = 0; i < checkday.length; i++) {
+      const element = checkday[i];
+      if(element.day===req.body.day){
+        return res.status(400).json({
+          success: false,
+          message: "program for day is already registered",
+        });
+      }
+   }
+   let program=await programDurationService.createprogramDuration(req.body)
+        program.durationCoverImage.url=programDurationService.programDurationImage(program.durationCoverImage.url)
+        await Promise.all(program.durationEvent.map(async programs=>{
+          for (let i = 0; i < programs.file.length; i++) {
+            const element = programs.file[i];
+            element.url= programDurationService.programDurationImage(element.url)
+          }
        }))
-      return res.status(200).json({
+       return res.status(200).json({
         success: true,
         message: "program created",
-        program,
+        program:program
       });
-    }
-    else{
-      return res.status(400).json({
-        success: false,
-        message: "failed to create program",
-      });
-    }
     } catch (error) {
     console.log(error);
     return res.status(500).json({

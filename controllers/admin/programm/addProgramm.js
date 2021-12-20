@@ -3,7 +3,7 @@ const programService = require("../../service/program.service");
 const createProgram = async (req, res, next) => {
   try {
     var file = [];
-    console.log(req.body)
+    console.log("program",req.body)
     const coverfile = {
       url: req.body.coverfile.url,
       isImage: programService.isImage(req.body.coverfile.url),
@@ -19,7 +19,6 @@ const createProgram = async (req, res, next) => {
       };
       file.push(files);
     }
-    
     req.body.coverfile = coverfile;
     req.body.file = file;
     const newProgram = await programService.createProgram({
@@ -27,10 +26,12 @@ const createProgram = async (req, res, next) => {
     });
     if (newProgram) {
       newProgram.coverfile.url = programService.programImage(req.body.coverfile.url)
+      newProgram.pdfUrl=programService.programImage(newProgram.pdfUrl)
       for (let i = 0; i < newProgram.file.length; i++) {
         const element = newProgram.file[i];
         element.url=programService.programImage(element.url)
       }
+      console.log("newProgram",newProgram)
       return res.status(200).json({
         success: true,
         message: "program created",

@@ -10,7 +10,7 @@ let detailPRogram = async (req, res, next) => {
     });
     if (program.length > 0) {
       program[0].coverfile.url= programService.programImage(program[0].coverfile.url)
-
+      program.pdfUrl=programService.programImage(program.pdfUrl)
      await Promise.all(program[0].file.map(async files=>{
         files.url= programService.programImage(files.url)
      }))

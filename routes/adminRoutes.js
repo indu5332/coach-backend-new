@@ -25,6 +25,7 @@ adminRouter.post("/add/program", adminController.admin.programm.addProgramm);
 adminRouter.delete("/delete/program/:programId", adminController.admin.programm.deleteProgramm);
 adminRouter.put("/update/program/:programId", adminController.admin.programm.editProgramm);
 adminRouter.get("/detail/program/:programId", adminController.admin.programm.detailProgramm);
+//adminRouter.put("/program/push/file/:programId", adminController.admin.programm.pushFile);
 
 //programDuration
 adminRouter.post("/add/program/duration", adminController.admin.programDuration.add);
@@ -37,6 +38,7 @@ adminRouter.get("/user/list/program", adminController.admin.programm.userProgram
 adminRouter.get("/user/all-programs/:userId", adminController.admin.programm.userProgramDetail);
 
 //list programDurations
+adminRouter.get("/list/program/duration/:programId", adminController.admin.programDurationLists.listprogramDuration);
 adminRouter.get("/list/user/program/duration", adminController.admin.programDuration.userDurationList);
 adminRouter.get("/list/user/program/duration/:userId", adminController.admin.programDuration.userDurationDetail);
 

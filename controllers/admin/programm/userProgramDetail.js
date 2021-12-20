@@ -6,7 +6,6 @@ const mongoose=require('mongoose')
 
 const programList = async (req, res, next) => {
   try {
-    console.log(req.params.userId)
     const conditions = [
         {
             $match: {
@@ -26,6 +25,18 @@ const programList = async (req, res, next) => {
       },
     ];
     const programList = await programModel.aggregate(conditions);
+    await Promise.all(programList.map(async programs=>{
+      programs.coverfile.url= programService.programImage(programs.coverfile.url)
+      programs.pdfUrl=programService.programImage(programs.pdfUrl)
+     }))
+
+     await Promise.all(programList.map(async programs=>{
+      for (let i = 0; i < programs.file.length; i++) {
+        const element = programs.file[i];
+        element.url= programService.programImage(element.url)
+        console.log(element.url)
+      }
+     }))
     const total = await programModel.find({userId: mongoose.Types.ObjectId(req.params.userId)});
     console.log(programList)
     return res.status(200).json({

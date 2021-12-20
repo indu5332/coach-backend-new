@@ -3,6 +3,7 @@ const Path = require("path");
 module.exports = async (req, res) => {
   try {
     if(req.file){
+        console.log(req.body)
         return res.status(200).json({
             success:true,
             message:"image uploaded successfully",

@@ -25,7 +25,8 @@ const programDurationList = async (req, res, next) => {
       },
     ];
     let programDurationList = await programDurationModel.aggregate(conditions);
-    await Promise.all(programList.map(async programs=>{
+    console.log(programDurationList)
+    await Promise.all(programDurationList.map(async programs=>{
       programs.durationCoverImage.url= programDurationService.programDurationImage(programs.durationCoverImage.url)
      }))
      await Promise.all(programDurationList.map(async programs=>{
@@ -36,7 +37,7 @@ const programDurationList = async (req, res, next) => {
          }))
       }
      }))
-     const totalDurationPrograms= await programDurationModel.find({})
+     const totalDurationPrograms= await programDurationModel.find({isPublic:true})
      //console.log(programList)
     return res.status(200).json({
       success: true,

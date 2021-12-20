@@ -3,13 +3,14 @@ const httpStatus = require("http-status-codes").StatusCodes;
 const programDurationModel = require("../../../models/programDuration.model");
 const programDurationService=require('../../service/programDuration.service')
 var createError = require("http-errors");
+const mongoose=require('mongoose')
 
-const programDurationList = async (req, res, next) => {
+const programDurationsList = async (req, res, next) => {
   try {
     const conditions = [
         {
             $match: {
-              isPublic: false,
+              programId: mongoose.Types.ObjectId(req.params.programId),
             }
           },
       {
@@ -24,11 +25,11 @@ const programDurationList = async (req, res, next) => {
         $limit: (req.query.limit ? Number(req.query.limit) : 10),
       },
     ];
-    let programList = await programDurationModel.aggregate(conditions);
-    await Promise.all(programList.map(async programs=>{
+    let programDurationList = await programDurationModel.aggregate(conditions);
+    await Promise.all(programDurationList.map(async programs=>{
       programs.durationCoverImage.url= programDurationService.programDurationImage(programs.durationCoverImage.url)
      }))
-     await Promise.all(programList.map(async programs=>{
+     await Promise.all(programDurationList.map(async programs=>{
       for (let i = 0; i < programs.durationEvent.length; i++) {
         const element = programs.durationEvent[i];
         await Promise.all(element.file.map(async program=>{
@@ -36,17 +37,17 @@ const programDurationList = async (req, res, next) => {
          }))
       }
      }))
-     const totalPrograms= await programDurationModel.find({isPublic:false})
+     const totalDurationPrograms= await programDurationModel.find({programId: mongoose.Types.ObjectId(req.params.programId)})
      //console.log(programList)
     return res.status(200).json({
       success: true,
       message: "program list",
-      totalPrograms: totalPrograms.length,
-      programList: programList,
+      totalProgramDuration: totalDurationPrograms.length,
+      programDurationList: programDurationList,
     });
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
 
-module.exports = [programDurationList];
+module.exports = [programDurationsList];

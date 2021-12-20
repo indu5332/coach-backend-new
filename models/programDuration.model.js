@@ -7,12 +7,11 @@ const programDuration = new Schema(
   {
     id: { type: Number },
     userId: { type: Schema.Types.ObjectId, ref: "user" },
-    totalDuration: { type: Number },
-    title: { type: String },
-    description: { type: String },
+    durationTitle: { type: String },
+    durationDescription: { type: String },
+    programId: {type: Schema.Types.ObjectId, ref: "program",required:true},
     isPublic:{type:Boolean},
-    programId: {type: Schema.Types.ObjectId, ref: "program"},
-    day: { type: Number },
+    day: { type: Number},
     durationCoverImage: {
       url: { type: String },
       isImage: { type: Boolean, default: true },
