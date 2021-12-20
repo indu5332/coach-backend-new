@@ -10,6 +10,7 @@ const programDuration = new Schema(
     totalDuration: { type: Number },
     title: { type: String },
     description: { type: String },
+    isPublic:{type:Boolean},
     programId: {type: Schema.Types.ObjectId, ref: "program"},
     day: { type: Number },
     durationCoverImage: {
