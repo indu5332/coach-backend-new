@@ -26,11 +26,12 @@ const programList = async (req, res, next) => {
       },
     ];
     const programList = await programModel.aggregate(conditions);
+    const total = await programModel.find({userId: mongoose.Types.ObjectId(req.params.userId)});
     console.log(programList)
     return res.status(200).json({
         success: true,
         message: "program list",
-        totalPrograms: programList.length,
+        totalPrograms: total.length,
         programList: programList,
       });
   } catch (error) {

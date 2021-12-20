@@ -42,11 +42,11 @@ const programList = async (req, res, next) => {
       console.log(element.url)
     }
    }))
-   const totalPrograms= await programModel.countDocuments({})
+   const totalPrograms= await programModel.find({userId: mongoose.Types.ObjectId(req.decoded._id)})
     return res.status(200).json({
         success: true,
         message: "program list",
-        totalPrograms: totalPrograms,
+        totalPrograms: totalPrograms.length,
         programList: programList,
       });
   } catch (error) {

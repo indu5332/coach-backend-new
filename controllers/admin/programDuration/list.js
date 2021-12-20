@@ -31,13 +31,12 @@ const programDurationList = async (req, res, next) => {
          }))
       }
      }))
-     const totalPrograms= await programDurationModel.countDocuments({})
-
+     const totalPrograms= await programDurationModel.find({})
      //console.log(programList)
     return res.status(200).json({
       success: true,
       message: "program list",
-      totalPrograms: totalPrograms,
+      totalPrograms: totalPrograms.length,
       programList: programList,
     });
   } catch (error) {

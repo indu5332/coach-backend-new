@@ -35,17 +35,34 @@ const programList = async (req, res, next) => {
         console.log(element.url)
       }
      }))
-     const totalUserPrograms= await programModel.countDocuments({})
-    console.log(programList.length)
-    return res.status(200).json({
-        success: true,
-        message: "program list",
-        totalPrograms: totalUserPrograms,
-        programList: programList,
-      });
+    req.data={}
+    req.data.programList=programList
+    next()
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
+const total=async(req,res)=>{
+  try {
+    const find=await programModel.find({isPublic:false})
+    console.log(find)
+    if(find.length>0){
+      return res.status(200).json({
+        success: true,
+        message: "program list",
+        totalPrograms: find.length,
+        programList: req.data.programList,
+      });
+    }
+    else{
+      return res.status(404).json({
+        success: false,
+        message: "no user programs"
+      });
+    }
+  } catch (error) {
+    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
+  }
+}
 
-module.exports = [programList];
+module.exports = [programList,total];
