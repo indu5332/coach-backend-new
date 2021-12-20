@@ -4,7 +4,6 @@ const cors = require("cors");
 const path=require('path')
 const config=require('config')
 var bodyParser = require("body-parser");
-const redis = require("redis");
 require("./database/database");
 const routes = require("./routes/appRoutes");
 const Adminroutes = require("./routes/adminRoutes");
@@ -12,27 +11,22 @@ const Adminroutes = require("./routes/adminRoutes");
 const app = express();
 const server = require("http").createServer(app);
 
-const io = require("socket.io")(server, {
-    cors: {
-      origin: config.hosts,
-      methods: ["GET", "POST"],
-      allowedHeaders: ["x-api-key"],
-      credentials: true,
-    },
-});
+const io = require("socket.io")(server)
 
-//const socketOperation = require("./controllers/app/io/operation");
+io.on("connection", socket => {
 
-const client = redis.createClient(config.redisClient, {
-    no_ready_check: true,
-    auth_pass: config.redisPass,
+  socket.send("Hello!");
+
+  socket.emit("greetings", "Hey!");
+
+  socket.on("message", (data) => {
+    console.log(data);
   });
 
-client.on("error", (error) => {
-    console.error(error);
+  socket.on("salutations", (elem1, elem2, elem3) => {
+    console.log(elem1, elem2, elem3);
+  });
 });
-
-app.set("io", io);
 
 app.use(bodyParser.json());
 
@@ -43,14 +37,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use(express.static(path.join(__dirname,"./uploads")));
-
-const verifyToken = require("./middleware/verifyToken");
-
-io.on("connection", (socket) => {
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-      });
-  });
 
 //Routes
 app.use("/api/v1", routes);

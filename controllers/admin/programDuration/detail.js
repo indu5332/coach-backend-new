@@ -10,6 +10,12 @@ let detailProgram = async (req, res, next) => {
     });
     if (program.length > 0) {
       program[0].durationCoverImage.url= programDurationService.programDurationImage(program[0].durationCoverImage.url)
+      await Promise.all(program[0].durationEvent.map(async programs=>{
+        for (let i = 0; i < programs.file.length; i++) {
+          const element = programs.file[i];
+          element.url= programDurationService.programDurationImage(element.url)
+        }
+       }))
       return res
         .status(200)
         .json({ success: true, message: "program details" ,program:program[0]});

@@ -1,6 +1,6 @@
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
-const programDurationModel = require("../../models/programDuration");
+const programDurationModel = require("../../models/programDuration.model");
 const config = require("config")
 
 module.exports = {
@@ -19,7 +19,6 @@ module.exports = {
       return newprogramDuration;
     } catch (error) {
       console.log(error);
-      createError(httpStatus.INTERNAL_SERVER_ERROR, error);
     }
   },
 

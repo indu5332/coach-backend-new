@@ -1,6 +1,6 @@
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
-const programDurationModel = require("../../../models/programDuration");
+const programDurationModel = require("../../../models/programDuration.model");
 const programDurationService=require('../../service/programDuration.service')
 var createError = require("http-errors");
 
@@ -20,16 +20,24 @@ const programDurationList = async (req, res, next) => {
       },
     ];
     let programList = await programDurationModel.aggregate(conditions);
-    console.log(programList)
     await Promise.all(programList.map(async programs=>{
       programs.durationCoverImage.url= programDurationService.programDurationImage(programs.durationCoverImage.url)
      }))
+     await Promise.all(programList.map(async programs=>{
+      for (let i = 0; i < programs.durationEvent.length; i++) {
+        const element = programs.durationEvent[i];
+        await Promise.all(element.file.map(async program=>{
+          program.url=programDurationService.programDurationImage(program.url)
+         }))
+      }
+     }))
+     const totalPrograms= await programDurationModel.countDocuments({})
 
      //console.log(programList)
     return res.status(200).json({
       success: true,
       message: "program list",
-      totalPrograms: programList.length,
+      totalPrograms: totalPrograms,
       programList: programList,
     });
   } catch (error) {

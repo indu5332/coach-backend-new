@@ -76,24 +76,5 @@ module.exports = {
         return true;
     }
     return false;
-  },
-  updateFiles: async function (id, data) {
-    try {
-        let updated = await programModel.findOneAndUpdate(
-            id,
-            data, { new: true });
-        return updated;
-    } catch (err) {
-        throw new Error(err);
-    }
-  },
-  getFiles: async function (id) {
-    try {
-        let program = await programModel.findById({_id:mongoose.Types.ObjectId(id)});
-        const files=program.files;
-        return files;
-    } catch (err) {
-        throw new Error(err);
-    }
-}
+  }
 };

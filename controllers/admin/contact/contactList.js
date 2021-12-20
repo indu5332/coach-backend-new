@@ -20,26 +20,17 @@ const contactList = async (req, res, next) => {
       },
     ];
     const contactList = await contactModel.aggregate(conditions);
-    req.data = {};
-    req.data.contactList = contactList;
-    next();
-  } catch (error) {
-    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
-  }
-};
-
-const totalContacts = async (req, res) => {
-  try {
-    const contacts = await contactModel.find({});
+    const totalContacts= await contactModel.countDocuments({})
     return res.status(200).json({
       success: true,
       message: "contact list",
-      totalContacts: contacts.length,
-      contacts: req.data.contactList,
+      totalContacts: totalContacts,
+      contacts: contactList,
     });
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
 
-module.exports = [contactList, totalContacts];
+
+module.exports = [contactList];

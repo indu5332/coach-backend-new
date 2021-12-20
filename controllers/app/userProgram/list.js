@@ -42,11 +42,11 @@ const programList = async (req, res, next) => {
       console.log(element.url)
     }
    }))
-
+   const totalPrograms= await programModel.countDocuments({})
     return res.status(200).json({
         success: true,
         message: "program list",
-        totalPrograms: programList.length,
+        totalPrograms: totalPrograms,
         programList: programList,
       });
   } catch (error) {

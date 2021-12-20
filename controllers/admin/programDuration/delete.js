@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const programDurationModel = require("../../../models/programDuration");
+const programDurationModel = require("../../../models/programDuration.model");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 

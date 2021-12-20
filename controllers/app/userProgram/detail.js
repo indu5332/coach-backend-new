@@ -10,26 +10,33 @@ let detailuserProgram = async (req, res, next) => {
     });
     if (userProgram.length > 0) {
       if (userProgram[0].userId === req.decoded._id) {
-        userProgram=JSON.parse(JSON.stringify(userProgram[0]))
-        userProgram.pdfUrl=await programService.programImage(userProgram.pdfUrl)
+        userProgram = JSON.parse(JSON.stringify(userProgram[0]));
+        userProgram.pdfUrl = await programService.programImage(
+          userProgram.pdfUrl
+        );
+        userProgram[0].coverfile.url = programService.programImage(
+          userProgram[0].coverfile.url
+        );
 
-        userProgram[0].coverfile.url= programService.programImage(userProgram[0].coverfile.url)
-
-        await Promise.all(userProgram[0].file.map(async files=>{
-            files.url= programService.programImage(files.url)
-        }))
+        await Promise.all(
+          userProgram[0].file.map(async (files) => {
+            files.url = programService.programImage(files.url);
+          })
+        );
         return res.status(200).json({
-            success: true,
-            message: "userProgram details",
-            userProgram: userProgram,
-          });
+          success: true,
+          message: "userProgram details",
+          userProgram: userProgram,
+        });
       } else {
         return res
           .status(404)
           .json({ message: "no user for this program found", success: false });
       }
     } else {
-      return res.status(404).json({ message: "no details found", success: false });
+      return res
+        .status(404)
+        .json({ message: "no details found", success: false });
     }
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);

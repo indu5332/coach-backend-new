@@ -30,6 +30,7 @@ adminRouter.post("/add/program/duration", adminController.admin.programDuration.
 adminRouter.get("/detail/program/duration/:programDurationId", adminController.admin.programDuration.detail);
 adminRouter.get("/list/program/duration", adminController.admin.programDuration.list);
 adminRouter.delete("/delete/program/duration/:programDurationId", adminController.admin.programDuration.delete);
+adminRouter.put("/update/program/duration/:programDurationId", adminController.admin.programDuration.update)
 
 adminRouter.get("/user/list/program", adminController.admin.programm.userProgramList);
 adminRouter.get("/user/all-programs/:userId", adminController.admin.programm.userProgramDetail);
