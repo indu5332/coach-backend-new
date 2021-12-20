@@ -4,24 +4,13 @@ const mongoose=require('mongoose')
 
 const pushFile = async (req, res, next) => {
   try {
-    var file = [];
-    for (let i = 0; i < req.body.file.length; i++) {
-      const element = req.body.file[i];
-      const files = {
-        url:element.url,
-        isImage: programService.isImage(element.url),
-        isVideo: programService.isVideo(element.url),
-      };
-      file.push(files);
-    }
-    req.body.file = file;
     let conditions = {
         _id: mongoose.Types.ObjectId(req.params.programId),
       };
       let dataToUpdate = {
-        $push: {
+        $pull: {
           file:{
-            $each:file   
+            _id:mongoose.Types.ObjectId(req.body.fileId)   
           }
         },
       };  await programmModel.findByIdAndUpdate(conditions,dataToUpdate); 
@@ -34,14 +23,14 @@ const pushFile = async (req, res, next) => {
       }
       return res.status(200).json({
         success: true,
-        message: "file added successfully",
+        message: "file removed successfully",
         program: program
       });
     }
     else{
       return res.status(500).json({
         success: false,
-        message: "failed to add file",
+        message: "failed to remove file",
       });
     }
   } catch (error) {
