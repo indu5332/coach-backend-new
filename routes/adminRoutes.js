@@ -30,11 +30,14 @@ adminRouter.put("/program/pull/file/:programId", adminController.admin.programm.
 
 //programDuration
 adminRouter.post("/add/program/duration", adminController.admin.programDuration.add);
-adminRouter.get("/detail/program/duration/:programDurationId", adminController.admin.programDuration.detail);
 adminRouter.delete("/delete/program/duration/:programDurationId", adminController.admin.programDuration.delete);
 adminRouter.put("/update/program/duration/:programDurationId", adminController.admin.programDuration.update)
 adminRouter.put("/program/push/duration/file/:programDurationId", adminController.admin.programDurationLists.pushFile)
 adminRouter.put("/program/pull/duration/file/:programDurationId", adminController.admin.programDurationLists.pullFile)
+
+//detail programDuration for program
+adminRouter.get("/detail/program/duration/:programDurationId", adminController.admin.programDuration.detail);
+adminRouter.get("/program/duration/:programId/:day", adminController.admin.programDurationLists.dayDetail);
 
 //list programs
 adminRouter.get("/user/list/program", adminController.admin.programm.userProgramList);

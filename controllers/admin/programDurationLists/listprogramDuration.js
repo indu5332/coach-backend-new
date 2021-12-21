@@ -41,7 +41,7 @@ const programDurationsList = async (req, res, next) => {
      //console.log(programList)
     return res.status(200).json({
       success: true,
-      message: "program list",
+      message: "program duration list",
       totalProgramDuration: totalDurationPrograms.length,
       programDurationList: programDurationList,
     });

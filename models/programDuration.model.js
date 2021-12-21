@@ -9,9 +9,10 @@ const programDuration = new Schema(
     userId: { type: Schema.Types.ObjectId, ref: "user" },
     durationTitle: { type: String },
     durationDescription: { type: String },
-    programId: {type: Schema.Types.ObjectId, ref: "program",required:true},
-    isPublic:{type:Boolean},
-    day: { type: Number},
+    programId: { type: Schema.Types.ObjectId, ref: "program", required: true },
+    isPublic: { type: Boolean },
+    day: { type: Number },
+    next: { type: Boolean },
     durationCoverImage: {
       url: { type: String },
       isImage: { type: Boolean, default: true },
@@ -37,5 +38,8 @@ const programDuration = new Schema(
   }
 );
 
-programDuration.plugin(AutoIncrement, { inc_field: "id", id: "programDuration" });
+programDuration.plugin(AutoIncrement, {
+  inc_field: "id",
+  id: "programDuration",
+});
 module.exports = mongoose.model("programDuration", programDuration);
