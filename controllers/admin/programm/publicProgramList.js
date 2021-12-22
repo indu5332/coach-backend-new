@@ -50,20 +50,12 @@ const publicProgramList = async (req, res, next) => {
 const totalPublicPrograms=async(req,res)=>{
   try {
     const find=await programModel.find({isPublic:true})
-    if(find.length>0){
       return res.status(200).json({
         success: true,
         message: "program list",
         totalPrograms: find.length,
         programList: req.data.programList,
       });
-    }
-    else{
-      return res.status(404).json({
-        success: false,
-        message: "no public programs"
-      });
-    }
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
