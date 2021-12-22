@@ -22,7 +22,7 @@ const programSchema = new Schema(
     detail_4: { type: String },
     description: { type: String, required: true },
     durationDays: { type: Number },
-    pdfUrl:{type:String},
+    pdfUrl: { type: String },
     coverfile: {
       url: { type: String },
       isImage: { type: Boolean, default: true },

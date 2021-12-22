@@ -23,10 +23,18 @@ const programList = async (req, res, next) => {
      for (let i = 0; i < programDurationList.length; i++) {
        const element = programDurationList[i];
        if(req.params.day==element.day){
+        element.durationCoverImage.url= programDurationService.programDurationImage(element.durationCoverImage.url)
+        await Promise.all(element.durationEvent.map(async programs=>{
+        for (let i = 0; i < programs.file.length; i++) {
+          const arr = programs.file[i];
+          arr.url= programDurationService.programDurationImage(arr.url)
+        }
+       }))
+       console.log(programDurationList)
        return res.status(200).json({
          success: true,
          message: "program for the day",
-         programDurationList: element,
+         programDurationList: programDurationList,
        });
        }
      }

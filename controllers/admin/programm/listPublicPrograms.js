@@ -10,6 +10,7 @@ const programList = async (req, res, next) => {
       {
         $match: {
           isPublic: true,
+          isClose:false
         }
       },
       {

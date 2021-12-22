@@ -36,7 +36,7 @@ module.exports = {
   },
 
   programDurationImage: function (url) {
-    return config.fileUrl + "/program/" + url;
+    return config.fileUrl + "/programDuration/" + url;
   },
   
   getExtension(url) {
