@@ -19,13 +19,13 @@ const createProgram = async (req, res, next) => {
       const update=await programDurationModel.updateOne({_id:mongoose.Types.ObjectId(req.params.programDurationId),
         "durationEvent._id":mongoose.Types.ObjectId(req.body.durationEventId)},
         {
-            $pull:{
-            "durationEvent.$.file":mongoose.Types.ObjectId(req.body.fileId),
+            $push:{
+            "durationEvent.$.file":req.body.file,
           }
         }
         ); 
-        console.log(update)
        let program=await programDurationService.findprogramDuration({_id:mongoose.Types.ObjectId(req.params.programDurationId)})
+       console.log(program[0])
        program[0].durationCoverImage.url = programDurationService.programDurationImage(program[0].durationCoverImage.url)
         await Promise.all(program[0].durationEvent.map(async programs=>{
           for (let i = 0; i < programs.file.length; i++) {

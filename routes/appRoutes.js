@@ -19,7 +19,6 @@ appRouter.get("/", appController.app.home.home);
 
 appRouter.get("/about", appController.app.about.aboutDetail);
 
-
 appRouter.get("/list/gallery", appController.admin.gallery.list);
 
 appRouter.post("/upload", multer({ storage:storage }).single("file"),appController.file.upload );
@@ -49,5 +48,9 @@ appRouter.get("/user/detail/:userId", appController.app.user.userDetail);
 
 appRouter.get("/user/program/detail/:programId", appController.app.userProgram.detail);
 appRouter.get("/user/program/list", appController.app.userProgram.list);
+
+//notification
+appRouter.get("/notification-my", appController.app.notification.list);
+appRouter.get("/notification-unseen", appController.app.notification.unseenNotification);
 
 module.exports = appRouter;

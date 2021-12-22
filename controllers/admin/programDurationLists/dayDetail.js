@@ -34,7 +34,7 @@ const programList = async (req, res, next) => {
        return res.status(200).json({
          success: true,
          message: "program for the day",
-         programDurationList: programDurationList,
+         programDurationList: element,
        });
        }
      }

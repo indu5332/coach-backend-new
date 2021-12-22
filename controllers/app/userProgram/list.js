@@ -1,17 +1,18 @@
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const programModel = require("../../../models/programm.model");
+const programService=require('../../service/program.service')
 const config=require('config')
 var createError = require("http-errors");
 const mongoose=require('mongoose')
 
 const programList = async (req, res, next) => {
   try {
-    console.log(req.params.userId)
     const conditions = [
         {
             $match: {
                 userId: mongoose.Types.ObjectId(req.decoded._id),
+                isClose:false
               }
         },
       {
@@ -39,7 +40,6 @@ const programList = async (req, res, next) => {
     for (let i = 0; i < programs.file.length; i++) {
       const element = programs.file[i];
       element.url= programService.programImage(element.url)
-      console.log(element.url)
     }
    }))
    const totalPrograms= await programModel.find({userId: mongoose.Types.ObjectId(req.decoded._id)})

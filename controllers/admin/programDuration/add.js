@@ -28,7 +28,6 @@ const createProgram = async (req, res, next) => {
     }
     req.body.durationEvent=formatedProgram
     const checkday=await programDurationService.findprogramDuration({programId:mongoose.Types.ObjectId(req.body.programId)})
-    //console.log(checkday)
     for (let i = 0; i < checkday.length; i++) {
       const element = checkday[i];
       if(element.day===req.body.day){
