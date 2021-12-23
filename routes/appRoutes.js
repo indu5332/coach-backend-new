@@ -53,7 +53,7 @@ appRouter.get("/user/program/detail/:programId", appController.app.userProgram.d
 appRouter.get("/user/program/list", appController.app.userProgram.list);
 
 //notification
-appRouter.get("/notification-my", appController.app.notification.list);
+appRouter.get("/my/notification", appController.app.notification.list);
 appRouter.get("/notification-unseen", appController.app.notification.unseenNotification);
 
 module.exports = appRouter;

@@ -30,6 +30,7 @@ io.on("connection", async (socket) => {
     console.log(chalk.green(`${user.email} connected`));
     if (user) {
       socket.join(user.id);
+      console.log(user)
       console.log(chalk.green(`${user.email} is online`));
     }
   }

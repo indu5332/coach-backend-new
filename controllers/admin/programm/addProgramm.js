@@ -6,7 +6,6 @@ const userService=require('../../service/user.service')
 const createProgram = async (req, res, next) => {
   try {
     var file = [];
-    console.log("program",req.body)
     const coverfile = {
       url: req.body.coverfile.url,
       isImage: programService.isImage(req.body.coverfile.url),
@@ -34,17 +33,15 @@ const createProgram = async (req, res, next) => {
         const element = newProgram.file[i];
         element.url=programService.programImage(element.url)
       }
-      console.log("newProgram",newProgram)
       req.data={}
       req.data.newProgram=newProgram
-      return res.status(200).json({
-        success: true,
-        message: "program created",
-        program: newProgram
-      });
+      next()
     }
     else{
-      next()
+      return res.status(400).json({
+        success: false,
+        message: "failed to create program",
+      });
     }
   } catch (error) {
     console.log(error);
@@ -60,19 +57,15 @@ const addNotification = async (req, res, next) => {
     console.log("creating notification")
       const user = await userService.findUser({_id:mongoose.Types.ObjectId(req.body.userId)});
       const data = {
-        to: userToInform[0],
-        title: "Ohh no,Someone report your story",
-        payload: {
-          user: user[0],
-          userId: req.decoded._id,
-          title: "Ohh no,Someone report your story",
-          storyId: req.body.storyId,
-        },
+        to: user[0],
+        title: "your program is created",
+        body:"new program created for you by coach champion",
+        title:"new program created for you by coach champion",
         seen: false,
       };
       // console.log(data);
       const io = req.app.get("io");
-      await notificationService.createNotification(data, io, "program");
+      await notificationService.sendNotification(data, io, "program");
       return res.status(200).json({
         success: true,
         message: "program created successfully",

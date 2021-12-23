@@ -2,14 +2,27 @@ const mongoose = require("mongoose");
 const notificationModel = require("../../models/notification.model");
 const userService = require("./user.service");
 
-async function createNotification(notificationData) {
-  try {
-    const newNotification = await notificationModel.create(notificationData);
-    return newNotification;
-  } catch (error) {
-    throw new Error(error.message);
+async function sendNotification(notificationData, io, event) {
+    try {
+      const newNotification = await notificationModel.create(notificationData);
+      if (newNotification) {
+        if (io) {
+          const user = await userService.findUser(newNotification.userId);
+          const data = {
+            ...notificationData,
+            ...user._id,
+            createdAt: new Date(),
+          };
+          io.to(notificationData.to.id).emit(event, { ...data });
+          console.log(data);
+        }
+        return true;
+      }
+      return false;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
-}
 
 async function listAllNotifications(userId, skip, limit) {
   try {
@@ -33,29 +46,6 @@ async function listAllNotifications(userId, skip, limit) {
     throw new Error(error.message);
   }
 }
-async function sendNotification(notificationData, io, event) {
-  try {
-    const newNotification = await notificationModel.create(notificationData);
-    if (newNotification) {
-      if (io) {
-        const user = await userService.findUser(newNotification.user.userId);
-        const data = {
-          ...notificationData,
-          user,
-          createdAt: new Date(),
-        };
-        console.log(data);
-        console.log(notificationData.to.id);
-        io.to(notificationData.to.id).emit(event, { ...data });
-      }
-      return true;
-    }
-    return false;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-}
-
 
 // async function notificationForNewStockInTable(portfolios) {
 //   try {
@@ -111,7 +101,7 @@ async function totalNotifications(userId) {
 }
 
 module.exports = {
-  createNotification,
+  sendNotification,
   listAllNotifications,
   sendNotification,
   //notificationForNewStockInTable,
