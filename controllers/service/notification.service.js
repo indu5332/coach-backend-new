@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const notificationModel = require("../../models/notification.model");
+const userService = require("./user.service");
+
 async function createNotification(notificationData) {
   try {
     const newNotification = await notificationModel.create(notificationData);
@@ -31,27 +33,29 @@ async function listAllNotifications(userId, skip, limit) {
     throw new Error(error.message);
   }
 }
-async function sendNotification(data, users, io, allUsers) {
+async function sendNotification(notificationData, io, event) {
   try {
-    const notificationList = [];
-    await Promise.all(users.map(async (user) => {
-      notificationList.push({
-        title: data.title,
-        body: data.body,
-        seen: false,
-        user,
-        type: data.type,
-      });
-    }));
-    const notifications = await notificationModel.insertMany(notificationList);
-    await Promise.all(allUsers.map(async (user) => io.to(user.id).emit("notification", {
-      notification: 1,
-    })));
-    return notifications;
+    const newNotification = await notificationModel.create(notificationData);
+    if (newNotification) {
+      if (io) {
+        const user = await userService.findUser(newNotification.user.userId);
+        const data = {
+          ...notificationData,
+          user,
+          createdAt: new Date(),
+        };
+        console.log(data);
+        console.log(notificationData.to.id);
+        io.to(notificationData.to.id).emit(event, { ...data });
+      }
+      return true;
+    }
+    return false;
   } catch (error) {
     throw new Error(error.message);
   }
 }
+
 
 // async function notificationForNewStockInTable(portfolios) {
 //   try {

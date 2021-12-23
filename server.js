@@ -23,8 +23,8 @@ function verify(token) {
   }
 }
 
-io.on("connection", socket => {
-  console.log("socket connected")
+io.on("connection", async (socket) => {
+  const token = socket.request.headers["x-api-key"];
   if (token) {
     const user = verify(token);
     console.log(chalk.green(`${user.email} connected`));
@@ -33,15 +33,6 @@ io.on("connection", socket => {
       console.log(chalk.green(`${user.email} is online`));
     }
   }
-
-  socket.emit("greetings", "Hey!");
-
-  socket.on("disconnected", (data) => {
-    console.log(data);
-  });
-  socket.on('send-notification',(data)=>{
-    io.emit('new-notification',data)
-  })
 });
 
 app.use(bodyParser.json());

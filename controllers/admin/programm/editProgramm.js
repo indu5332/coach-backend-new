@@ -21,7 +21,7 @@ const checkCoverFile = async (req, res, next) => {
               }
             }
           );
-          console.log(update)
+          //console.log(update)
           next()
         } else {
           if (programService.isVideo(element.url)) {
@@ -35,7 +35,7 @@ const checkCoverFile = async (req, res, next) => {
                 }
               }
             );
-            console.log(update)
+            //console.log(update)
             next()
           } else {
             return res.status(400).json({
@@ -50,6 +50,7 @@ const checkCoverFile = async (req, res, next) => {
       next();
     }
   } catch (error) {
+    console.log("hey",error)
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
@@ -69,6 +70,7 @@ const checkfile = async (req, res, next) => {
       next();
     }
   } catch (error) {
+    console.log("hello",error)
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
@@ -90,7 +92,6 @@ let updateprogram = async (req, res, next) => {
       for (let i = 0; i < update.file.length; i++) {
         const element = update.file[i];
         element.url=programService.programImage(element.url)
-        
       }
       return res.status(200).json({
         success: true,
@@ -104,7 +105,7 @@ let updateprogram = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.log(error)
+    console.log("me",error)
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };

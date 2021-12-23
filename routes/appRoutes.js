@@ -26,6 +26,9 @@ appRouter.post("/upload", multer({ storage:storage }).single("file"),appControll
 //contact page Api
 appRouter.post("/contact-us", appController.app.contact.addContact);
 
+//notification
+appRouter.post("/notification/create", appController.app.notification.sendNotification);
+
 //Authentication Api
 appRouter.post("/signup", appController.app.authentication.signup);
 appRouter.post("/login", appController.app.authentication.login);

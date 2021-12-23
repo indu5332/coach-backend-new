@@ -5,6 +5,7 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const notificationSchema = new Schema({
     id: { type: Number },
+    to: {},
     title: { type: String },
     body: { type: String },
     seen: { type: Boolean, default: false },

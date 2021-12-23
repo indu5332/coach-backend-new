@@ -53,10 +53,6 @@ adminRouter.get("/list/user/program/duration/:userId", adminController.admin.pro
 adminRouter.post("/about-us", adminController.admin.about.create);
 adminRouter.put("/edit/about", adminController.admin.about.edit);
 
-//notification
-adminRouter.put("/notification", adminController.admin.about.edit);
-// adminRouter.post("/notification-custom", adminController.admin.notification.sendNotification);
-
 //gallery
 adminRouter.post("/create/gallery", adminController.admin.gallery.create);
 adminRouter.get("/detail/gallery/:galleryId", adminController.admin.gallery.detail);

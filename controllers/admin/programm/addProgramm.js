@@ -1,4 +1,7 @@
 const programService = require("../../service/program.service");
+const notificationService=require('../../service/notification.service')
+const mongoose=require('mongoose');
+const userService=require('../../service/user.service')
 
 const createProgram = async (req, res, next) => {
   try {
@@ -32,6 +35,8 @@ const createProgram = async (req, res, next) => {
         element.url=programService.programImage(element.url)
       }
       console.log("newProgram",newProgram)
+      req.data={}
+      req.data.newProgram=newProgram
       return res.status(200).json({
         success: true,
         message: "program created",
@@ -39,10 +44,7 @@ const createProgram = async (req, res, next) => {
       });
     }
     else{
-      return res.status(500).json({
-        success: false,
-        message: "failed to create program",
-      });
+      next()
     }
   } catch (error) {
     console.log(error);
@@ -53,4 +55,33 @@ const createProgram = async (req, res, next) => {
   }
 };
 
-module.exports = [createProgram];
+const addNotification = async (req, res, next) => {
+  try {
+    console.log("creating notification")
+      const user = await userService.findUser({_id:mongoose.Types.ObjectId(req.body.userId)});
+      const data = {
+        to: userToInform[0],
+        title: "Ohh no,Someone report your story",
+        payload: {
+          user: user[0],
+          userId: req.decoded._id,
+          title: "Ohh no,Someone report your story",
+          storyId: req.body.storyId,
+        },
+        seen: false,
+      };
+      // console.log(data);
+      const io = req.app.get("io");
+      await notificationService.createNotification(data, io, "program");
+      return res.status(200).json({
+        success: true,
+        message: "program created successfully",
+        program: req.data.newProgram,
+      });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, isError: true, error });
+  }
+};
+
+module.exports = [createProgram,addNotification];
