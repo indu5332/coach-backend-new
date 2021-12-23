@@ -3,8 +3,6 @@ const adminController = require("../controllers");
 
 adminRouter.get("/", adminController.admin.home.home);
 
-adminRouter.get("/all-programs", adminController.admin.programm.openPublicProgram);
-
 const AdminMiddleware = require("../middleware/verifyAdminToken");
 adminRouter.use(AdminMiddleware);
 
@@ -18,7 +16,6 @@ adminRouter.delete("/delete/contact/:contactId", adminController.admin.contact.d
 adminRouter.get("/detail/contact/:contactId", adminController.admin.contact.detailContact);
 
 adminRouter.delete("/user/delete/:userId", adminController.admin.user.userDelete);
-
 
 //programm
 adminRouter.post("/add/program", adminController.admin.programm.addProgramm);
