@@ -56,16 +56,16 @@ const addNotification = async (req, res, next) => {
   try {
     console.log("creating notification")
       const user = await userService.findUser({_id:mongoose.Types.ObjectId(req.body.userId)});
+      console.log(user[0])
       const data = {
         to: user[0],
         title: "your program is created",
-        body:"new program created for you by coach champion",
-        title:"new program created for you by coach champion",
+        body:`hey! ${user[0].firstName} new program created for you by coach champion`,
+        title:`hey! ${user[0].firstName} new program created for you by coach champion`,
         seen: false,
       };
-      // console.log(data);
       const io = req.app.get("io");
-      await notificationService.sendNotification(data, io, "program");
+      await notificationService.sendNotification(data, io, "program",console.log("sent!"));
       return res.status(200).json({
         success: true,
         message: "program created successfully",

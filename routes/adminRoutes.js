@@ -1,8 +1,6 @@
 const adminRouter = require("express").Router();
 const adminController = require("../controllers");
 
-adminRouter.get("/", adminController.admin.home.home);
-
 const AdminMiddleware = require("../middleware/verifyAdminToken");
 adminRouter.use(AdminMiddleware);
 

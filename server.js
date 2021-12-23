@@ -13,28 +13,28 @@ const server = require("http").createServer(app);
 
 const io = require("socket.io")(server)
 
-//app.set("io", io);
-// function verify(token) {
-//   try {
-//     const decoded = jwt.verify(token, config.secert);
-//     return decoded;
-//   } catch (error) {
-//     throw new Error(error.message);
-//   }
-// }
+app.set("io", io);
+function verify(token) {
+  try {
+    const decoded = jwt.verify(token, config.secert);
+    return decoded;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 
-// io.on("connection", async (socket) => {
-//   const token = socket.request.headers["x-api-key"];
-//   if (token) {
-//     const user = verify(token);
-//     console.log(chalk.green(`${user.email} connected`));
-//     if (user) {
-//       socket.join(user.id);
-//       console.log(user)
-//       console.log(chalk.green(`${user.email} is online`));
-//     }
-//   }
-// });
+io.on("connection", async (socket) => {
+  const token = socket.request.headers["x-api-key"];
+  if (token) {
+    const user = verify(token);
+    console.log(chalk.green(`${user.email} connected`));
+    if (user) {
+      socket.join(user.id);
+      console.log(user)
+      console.log(chalk.green(`${user.email} is online`));
+    }
+  }
+});
 
 app.use(bodyParser.json());
 
