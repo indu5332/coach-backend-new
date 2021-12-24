@@ -1,22 +1,18 @@
 const mongoose = require("mongoose");
 const notificationModel = require("../../models/notification.model");
-const userService = require("./user.service");
 
 async function sendNotification(notificationData, io, event) {
     try {
       const newNotification = await notificationModel.create(notificationData);
       if (newNotification) {
         if (io) {
-          const user = await userService.findUser(newNotification.userId);
-          console.log("data");
           const data = {
             ...notificationData,
-            ...user._id,
+            ...newNotification.to._id,
             createdAt: new Date(),
           };
-          //console.log(data);
-          io.to(notificationData.to.id).emit(event, { ...data });
-          
+          console.log(newNotification.to._id);
+          io.to(data.to.id).emit(event, { ...data },console.log("jhggddsds"));
         }
         return true;
       }

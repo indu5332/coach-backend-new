@@ -11,7 +11,6 @@ const createProgram = async (req, res, next) => {
       isImage: programService.isImage(req.body.coverfile.url),
       isVideo: programService.isVideo(req.body.coverfile.url),
     };
-
     for (let i = 0; i < req.body.file.length; i++) {
       const element = req.body.file[i];
       const files = {
@@ -56,10 +55,10 @@ const addNotification = async (req, res, next) => {
   try {
     console.log("creating notification")
       const user = await userService.findUser({_id:mongoose.Types.ObjectId(req.body.userId)});
-      console.log(user[0])
+      //console.log(user[0])
       const data = {
         to: user[0],
-        title: "your program is created",
+        title: "your program has been created",
         body:`hey! ${user[0].firstName} new program created for you by coach champion`,
         title:`hey! ${user[0].firstName} new program created for you by coach champion`,
         seen: false,

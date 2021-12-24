@@ -23,15 +23,16 @@ function verify(token) {
   }
 }
 
-io.on("connection", async (socket) => {
+io.on("connection", (socket) => {
   const token = socket.request.headers["x-api-key"];
-  if (token) {
-    const user = verify(token);
-    console.log(chalk.green(`${user.email} connected`));
-    if (user) {
-      socket.join(user.id);
-      console.log(user)
-      console.log(chalk.green(`${user.email} is online`));
+  if(token){
+    const userData = verify(token);
+    console.log(chalk.green(`${userData.email} connected`));
+    if (userData.length > 0) {
+      socket.join(userData[0].id);
+      socket.on("send_message", async (msg) => {
+        console.log("msg",msg)
+      });
     }
   }
 });
