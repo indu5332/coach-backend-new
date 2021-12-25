@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const authService = require("../../service/user.service");
+const notificationModel=require('../../../models/notification.model')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
@@ -89,4 +90,5 @@ let updateUser = async (req, res, next) => {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
+
 module.exports = [checkusername,updateUser];

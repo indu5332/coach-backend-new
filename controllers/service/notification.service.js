@@ -49,6 +49,29 @@ async function sendNotification(notificationData, io, event) {
     return data;
   }
 
+  async function listAllNotification(userId, skip, limit) {
+    const conditions = [
+      {
+        $match: {
+          $or: [
+            { "to._id": userId },
+            { "to._id": mongoose.Types.ObjectId(userId) },
+          ],
+        },
+      },
+      {
+        $sort: {
+          createdAt: -1,
+
+        },
+      }
+    ];
+    const data = await notificationModel.aggregate(conditions);
+    return data;
+  }
+
+
+
 async function updateNotification(notificationId) {
     const conditions = {
       _id: mongoose.Types.ObjectId(notificationId),
@@ -64,6 +87,7 @@ async function updateNotification(notificationId) {
 module.exports = {
   sendNotification,
   listNotification,
+  listAllNotification,
   sendNotification,
   updateNotification,
 };

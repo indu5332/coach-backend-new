@@ -1,4 +1,5 @@
 const notificationService = require("../../service/notification.service");
+const userService=require('../../service/user.service')
 
 const listNotifications = async (req, res) => {
     try {
@@ -7,7 +8,10 @@ const listNotifications = async (req, res) => {
         const notifications = await notificationService.listNotification(
           req.decoded._id, skip, limit,
         );
-        //const totalNotification=await notificationService.totalNotifications()
+        for (let i = 0; i < notifications.length; i++) {
+            const element = notifications[i];
+            element.to.imagePath=userService.userImage(element.to.imagePath)
+        }
         return res.status(200).send({
           success: true,
           isError: false,

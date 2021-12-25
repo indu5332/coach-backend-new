@@ -40,8 +40,7 @@ const programList = async (req, res, next) => {
      }
      return res.status(400).json({
       success: false,
-      message: "no program for the day",
-      next:false
+      message: "no program for the day"
     });
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);

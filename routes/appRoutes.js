@@ -56,6 +56,8 @@ appRouter.get("/user/program/list", appController.app.userProgram.list);
 //notification
 appRouter.get("/my/notification", appController.app.notification.list);
 appRouter.get("/notification-unseen", appController.app.notification.unseenNotification);
+appRouter.delete("/delete/notification/:notificationId", appController.app.notification.delete);
+appRouter.delete("/delete/notification", appController.app.notification.deleteAll);
 
 //userDuration
 appRouter.get("/user/duration/detail/:programDurationId", appController.app.programDuration.programDurationDetail);
