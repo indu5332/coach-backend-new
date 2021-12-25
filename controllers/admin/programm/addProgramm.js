@@ -32,9 +32,11 @@ const createProgram = async (req, res, next) => {
         const element = newProgram.file[i];
         element.url=programService.programImage(element.url)
       }
-      req.data={}
-      req.data.newProgram=newProgram
-      next()
+      return res.status(200).json({
+        success: true,
+        message: "program created successfully",
+        program: newProgram,
+      });
     }
     else{
       return res.status(400).json({
@@ -51,29 +53,29 @@ const createProgram = async (req, res, next) => {
   }
 };
 
-const addNotification = async (req, res, next) => {
-  try {
-    console.log("creating notification")
-      const user = await userService.findUser({_id:mongoose.Types.ObjectId(req.body.userId)});
-      //console.log(user[0])
-      const data = {
-        to: user[0],
-        title: "your program has been created",
-        body:`hey! ${user[0].firstName} new program created for you by coach champion`,
-        title:`hey! ${user[0].firstName} new program created for you by coach champion`,
-        seen: false,
-      };
-      const io = req.app.get("io");
-      await notificationService.sendNotification(data, io, "program",console.log("sent!"));
-      return res.status(200).json({
-        success: true,
-        message: "program created successfully",
-        program: req.data.newProgram,
-      });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ success: false, isError: true, error });
-  }
-};
+// const addNotification = async (req, res, next) => {
+//   try {
+//     console.log("creating notification")
+//       const user = await userService.findUser({_id:mongoose.Types.ObjectId(req.body.userId)});
+//       console.log(user)
+//       const data = {
+//         to: user[0],
+//         title: "your program has been created",
+//         body:`hey! ${user[0].firstName} new program created for you by coach champion`,
+//         title:`hey! ${user[0].firstName} new program created for you by coach champion`,
+//         seen: false,
+//       };
+//       const io = req.app.get("io");
+//       await notificationService.sendNotification(data, io, "program",console.log("sent!"));
+//       return res.status(200).json({
+//         success: true,
+//         message: "program created successfully",
+//         program: req.data.newProgram,
+//       });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ success: false, isError: true, error });
+//   }
+// };
 
-module.exports = [createProgram,addNotification];
+module.exports = [createProgram];
