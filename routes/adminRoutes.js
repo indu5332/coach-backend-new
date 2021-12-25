@@ -41,7 +41,6 @@ adminRouter.get("/user/all-programs/:userId", adminController.admin.programm.use
 
 //list programDurations
 adminRouter.get("/list/program/duration/:programId", adminController.admin.programDurationLists.listprogramDuration);
-adminRouter.get("/list/user/program/duration", adminController.admin.programDuration.userDurationList);
 adminRouter.get("/list/user/program/duration/:userId", adminController.admin.programDuration.userDurationDetail);
 
 //about-us

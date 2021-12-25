@@ -3,13 +3,14 @@ const httpStatus = require("http-status-codes").StatusCodes;
 const programDurationModel = require("../../../models/programDuration.model");
 const programDurationService=require('../../service/programDuration.service')
 var createError = require("http-errors");
+const mongoose=require('mongoose')
 
 const programDurationList = async (req, res, next) => {
   try {
     const conditions = [
         {
             $match: {
-              isPublic: false,
+              userId: mongoose.Types.ObjectId(req.decoded._id),
             }
           },
       {
@@ -36,7 +37,7 @@ const programDurationList = async (req, res, next) => {
          }))
       }
      }))
-     const totalPrograms= await programDurationModel.find({isPublic:false})
+     const totalPrograms= await programDurationModel.find({userId: mongoose.Types.ObjectId(req.decoded._id)})
      //console.log(programList)
     return res.status(200).json({
       success: true,

@@ -57,4 +57,8 @@ appRouter.get("/user/program/list", appController.app.userProgram.list);
 appRouter.get("/my/notification", appController.app.notification.list);
 appRouter.get("/notification-unseen", appController.app.notification.unseenNotification);
 
+//userDuration
+appRouter.get("/user/duration/detail/:programDurationId", appController.app.programDuration.programDurationDetail);
+appRouter.get("/list/user/program/duration", appController.app.programDuration.userDurationList);
+
 module.exports = appRouter;
