@@ -11,9 +11,6 @@ let detailProgramDuration = async (req, res, next) => {
     if (userProgramDuration.length > 0) {
       if (userProgramDuration[0].userId === req.decoded._id) {
         userProgramDuration = JSON.parse(JSON.stringify(userProgramDuration[0]));
-        userProgramDuration.pdfUrl = await programDurationService.programDurationImage(
-          userProgramDuration.pdfUrl
-        );
         userProgramDuration.durationCoverImage.url = programDurationService.programDurationImage(
           userProgramDuration.durationCoverImage.url
         );
