@@ -18,16 +18,16 @@ const programDuration = new Schema(
       isImage: { type: Boolean, default: true },
       isVideo: { type: Boolean, default: false },
     },
-    durationEventTitle: { type: String },
     durationEvent: [
       {
-        title: { type: String },
-        description: { type: String },
+        durationTitle: { type: String },
         file: [
           {
             url: { type: String },
             isImage: { type: Boolean, default: true },
             isVideo: { type: Boolean, default: false },
+            title: { type: String },
+            description: { type: String },
           },
         ],
       },

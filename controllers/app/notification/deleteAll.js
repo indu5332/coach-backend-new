@@ -9,18 +9,10 @@ let deleteAllNotification = async (req, res, next) => {
     const notifications = await notificationService.listAllNotification(
       req.decoded._id
     );
+    console.log(notifications)
     for (let i = 0; i < notifications.length; i++) {
       const element = notifications[i];
-      if (element.to._id === req.decoded._id) {
-        const deleteNotification = await notificationModel.deleteOne({
-          _id: mongoose.Types.ObjectId(element._id),
-        });
-        console.log(element._id)
-        return res.status(200).json({
-            success: true,
-            message: "notification deleted successfully",
-          });
-      }
+      console.log(element._id)
     }
   } catch (error) {
     console.log(error);
@@ -29,3 +21,14 @@ let deleteAllNotification = async (req, res, next) => {
 };
 
 module.exports = [deleteAllNotification];
+
+//   if (element.to._id == req.decoded._id) {
+    //     await notificationModel.deleteOne({
+    //       _id: mongoose.Types.ObjectId(element._id),
+    //     });
+    //   }
+//}
+// return res.status(200).json({
+//     success: true,
+//     message: "notification deleted successfully",
+// });
