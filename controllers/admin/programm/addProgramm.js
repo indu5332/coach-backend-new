@@ -74,9 +74,10 @@ const addNotification = async (req, res, next) => {
       });
     }
     else{
-      return res.status(400).json({
+      return res.status(200).json({
         success: true,
-        message: " fail program created successfully",
+        message: "program created",
+        program: req.data.newProgram,
       });
     }
   } catch (error) {

@@ -15,6 +15,7 @@ let deleteAllNotification = async (req, res, next) => {
         const deleteNotification = await notificationModel.deleteOne({
           _id: mongoose.Types.ObjectId(element._id),
         });
+        console.log(element._id)
         return res.status(200).json({
             success: true,
             message: "notification deleted successfully",

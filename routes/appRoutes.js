@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 
 appRouter.get("/", appController.app.home.home);
 appRouter.get("/all-programs", appController.admin.programm.openPublicProgram);
+appRouter.get("/detail/program/:programId", appController.admin.programm.detailProgramm);
 
 appRouter.get("/about", appController.app.about.aboutDetail);
 

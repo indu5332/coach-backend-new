@@ -11,7 +11,7 @@ async function sendNotification(notificationData, io, event) {
             ...newNotification.to._id,
             createdAt: new Date(),
           };
-          console.log(newNotification.to._id);
+          //console.log(newNotification.to._id);
           io.to(data.to.id).emit(event, { ...data },console.log("jhggddsds"));
         }
         return true;
