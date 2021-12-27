@@ -32,7 +32,6 @@ adminRouter.put("/program/pull/duration/file/:programDurationId", adminControlle
 
 //detail programDuration for program
 adminRouter.get("/detail/program/duration/:programDurationId", adminController.admin.programDuration.detail);
-adminRouter.get("/program/duration/:programId/:day", adminController.admin.programDurationLists.dayDetail);
 
 //list programs
 adminRouter.get("/user/list/program", adminController.admin.programm.userProgramList);
