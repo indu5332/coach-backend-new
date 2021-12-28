@@ -20,6 +20,8 @@ const createProgram = async (req, res, next) => {
             url:felement.url,
             isImage:programDurationService.isImage(felement.url),
             isVideo:programDurationService.isVideo(felement.url),
+            title:felement.title,
+            description:felement.description
           }
           element.file[j]=file;
         }

@@ -16,9 +16,15 @@ const storage = multer.diskStorage({
 });
 
 appRouter.get("/", appController.app.home.home);
+
+//public program
 appRouter.get("/all-programs", appController.admin.programm.openPublicProgram);
 appRouter.get("/admin/detail/program/:programId", appController.admin.programm.detailProgramm);
+
+//public program duration
 appRouter.get("/admin/program/duration/:programId/:day", appController.admin.programDurationLists.dayDetail);
+appRouter.get("/admin/list/program/duration/:programId", appController.admin.programDurationLists.listprogramDuration);
+appRouter.get("/admin/detail/program/duration/:programDurationId", appController.admin.programDuration.detail);
 
 appRouter.get("/about", appController.app.about.aboutDetail);
 
@@ -30,7 +36,7 @@ appRouter.post("/upload", multer({ storage:storage }).single("file"),appControll
 appRouter.post("/contact-us", appController.app.contact.addContact);
 
 //notification
-appRouter.post("/notification/create", appController.app.notification.sendNotification);
+//appRouter.post("/notification/create", appController.app.notification.sendNotification);
 
 //Authentication Api
 appRouter.post("/signup", appController.app.authentication.signup);

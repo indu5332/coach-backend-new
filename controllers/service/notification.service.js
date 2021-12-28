@@ -8,11 +8,11 @@ async function sendNotification(notificationData, io, event) {
         if (io) {
           const data = {
             ...notificationData,
-            ...newNotification.to._id,
+            ...newNotification.to,
             createdAt: new Date(),
           };
-          //console.log(newNotification.to._id);
-          io.to(data.to.id).emit(event, { ...data },console.log("jhggddsds"));
+          console.log(data);
+          io.to(notificationData.to.id).emit(event, { ...data });
         }
         return true;
       }

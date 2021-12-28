@@ -1,5 +1,5 @@
 const programService = require("../../service/program.service");
-const notificationService=require('../../service/notification.service')
+const notificationModel=require('../../service/notification.service')
 const mongoose=require('mongoose');
 const userService=require('../../service/user.service')
 
@@ -53,11 +53,9 @@ const createProgram = async (req, res, next) => {
 
 const addNotification = async (req, res, next) => {
   try {
-    console.log(req.body.userId)
     if(req.body.userId){
       console.log("creating notification")
       const user = await userService.findUser({_id:mongoose.Types.ObjectId(req.body.userId)});
-      console.log(user)
       const data = {
         to: user[0],
         title: "your program has been created",
@@ -66,7 +64,7 @@ const addNotification = async (req, res, next) => {
         seen: false,
       };
       const io = req.app.get("io");
-      await notificationService.sendNotification(data, io, "program",console.log("sent!"));
+      await notificationModel.sendNotification(data, io, "program");
       return res.status(200).json({
         success: true,
         message: "program created successfully",
