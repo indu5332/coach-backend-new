@@ -10,8 +10,6 @@ const routes = require("./routes/appRoutes");
 const Adminroutes = require("./routes/adminRoutes");
 
 const app = express();
-
-const socketIO = require("./controllers/app/socket/sendNotification");
 const server = require("http").createServer(app);
 
 const io = require("socket.io")(server);
@@ -32,13 +30,9 @@ io.on("connection", (socket) => {
   if (token) {
     const userData = verify(token);
     if (userData.length > 0) {
-      socketIO.joinSocket(socket, userData[0]._id, userData[0].id);
-      socket.on("recieve", (data) => {
-        socketIO.msg(data, userData[0]._id, io);
-      });
-      socket.on("disconnect", (reason) => {
-        socketIO.disconnectServer(socket, userData[0]._id, reason);
-      });
+      socket.join(userData[0].id);
+      io.to(userData[0].id).emit("connected")
+      console.log("userData")
     }
   }
 });
