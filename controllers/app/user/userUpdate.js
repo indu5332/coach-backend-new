@@ -69,9 +69,11 @@ let updateUser = async (req, res, next) => {
           delete updateRes.password;
           delete updateRes.verificationToken;
           delete updateRes.Duration;
-          req.data={}
-          req.data.updateRes=updateRes
-          next()
+          return res.status(200).json({
+            success: true,
+            message: "user updated",
+            user: req.data.updateRes,
+          });
         } else {
           return res.status(404).json({
             success: false,
@@ -90,29 +92,4 @@ let updateUser = async (req, res, next) => {
   }
 };
 
-let updatenotification=async(req,res)=>{
-  try {
-    if(req.body.imagePath){
-      const find=await notificationService.listAllNotification(req.decoded._id)
-      console.log(find)
-      const notification=await notificationModel.updateOne({"to._id":mongoose.Types.ObjectId(req.decoded._id)})
-      console.log(notification)
-      return res.status(200).json({
-        success: true,
-        message: "user updated",
-        user: req.data.updateRes,
-      });
-    }
-    else{
-      return res.status(200).json({
-        success: true,
-        message: "user updated",
-        user: req.data.updateRes,
-      });
-    }
-  } catch (error) {
-    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
-  }
-}
-
-module.exports = [checkusername,updateUser,updatenotification];
+module.exports = [checkusername,updateUser];

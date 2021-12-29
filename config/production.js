@@ -1,6 +1,6 @@
 const path=require('path')
 module.exports = {
-  allowedOrigins: ["https://coach-backend-new.herokuapp.com","http://localhost:3000","http://localhost:3002"],
+  allowedOrigins: ["https://coach-backend-new.herokuapp.com","http://localhost:3001","http://localhost:3000","http://localhost:3002"],
   DB_HOST:process.env.DB_HOST,
   HOST:"https://coach-backend-new.herokuapp.com",
   host:"https://coach-champion-admin.web.app",
