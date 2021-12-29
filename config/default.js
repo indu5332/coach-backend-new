@@ -5,7 +5,7 @@ module.exports = {
   secret: process.env.secret,
   bucket: "coach",
   hosts: [
-    "https://e058-150-129-238-127.ngrok.io"
+    "https://e058-150-129-238-127.ngrok.io","http://localhost:3000","http://localhost:3002"
   ],
   HOST:"https://e058-150-129-238-127.ngrok.io",
   host:"https://coach-champion-admin.web.app",
