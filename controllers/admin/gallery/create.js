@@ -5,6 +5,7 @@ const httpStatus = require("http-status-codes").StatusCodes;
 const mongoose=require('mongoose');
 const { isVideo } = require("../../service/gallery.service");
 
+//create gallery
 let addGallery = async (req, res) => {
   try {
     const gallery = await galleryModel.create({ ...req.body });

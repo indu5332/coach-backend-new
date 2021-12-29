@@ -2,6 +2,7 @@ var createError = require('http-errors')
 const httpStatus=require('http-status-codes').StatusCodes;
 const userModel = require('../../../models/user.model');
 
+//list users
 const userList = async (req, res, next) => {
    try {
      const conditions = [

@@ -4,6 +4,8 @@ const programModel = require("../../../models/programm.model");
 const programService=require('../../service/program.service')
 var createError = require("http-errors");
 
+
+//open public programs list 
 const programList = async (req, res, next) => {
   try {
     const conditions = [
@@ -35,13 +37,11 @@ const programList = async (req, res, next) => {
       for (let i = 0; i < programs.file.length; i++) {
         const element = programs.file[i];
         element.url= programService.programImage(element.url)
-        console.log(element.url)
       }
      }))
      req.data={}
     req.data.programList=programList
     next()
-     console.log(programList)
     
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);

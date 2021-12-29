@@ -4,6 +4,7 @@ const programModel = require("../../../models/programm.model");
 const programService=require('../../service/program.service')
 var createError = require("http-errors");
 
+//public programs list open/closed 
 const publicProgramList = async (req, res, next) => {
   try {
     const conditions = [

@@ -4,6 +4,7 @@ const httpStatus = require("http-status-codes").StatusCodes;
 const galleryModel = require("../../../models/gallery.model");
 const galleryService=require('../../service/gallery.service')
 
+//list gallery
 let galleries = async (req, res) => {
   try {
     const conditions = [

@@ -4,6 +4,8 @@ const programModel=require('../../../models/programm.model')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+
+//update program details
 const checkCoverFile = async (req, res, next) => {
   try {
     if (req.body.file) {

@@ -5,6 +5,7 @@ const programDurationService=require('../../service/programDuration.service')
 var createError = require("http-errors");
 const mongoose=require('mongoose')
 
+//program duration list accoring to program
 const programDurationsList = async (req, res, next) => {
   try {
     const conditions = [

@@ -12,7 +12,14 @@ const Adminroutes = require("./routes/adminRoutes");
 const app = express();
 const server = require("http").createServer(app);
 
-const io = require("socket.io")(server);
+const io = require("socket.io")(server,{
+  cors: {
+    origin: ['http://localhost:3000'],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["x-api-key"],
+    credentials: true,
+  },
+});
 
 app.set("io", io);
 function verify(token) {
@@ -25,26 +32,34 @@ function verify(token) {
   }
 }
 
-io.on("connection", (socket) => {
-  const token = socket.request.headers["x-api-key"];
-  if (token) {
-    const userData = verify(token);
-    if (userData) {
-      socket.join(userData.id);
-      console.log(userData)
-    }
-  }
-});
-
 app.use(bodyParser.json());
 
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
+app.use(cors( {
+  credentials: true,
+  allowedHeaders: ["Content-Type", "x-api-key"],
+  exposedHeaders: ["sessionId"],
+  origin: config.allowedOrigins,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+}));
 
 app.use(express.static(path.join(__dirname, "./uploads")));
+
+io.on("connection", (socket) => {
+  const token = socket.request.headers["x-api-key"];
+  if (token) {
+    const userData = verify(token);
+    if (userData) {
+      socket.join(userData.id);
+      console.log(userData.id)
+      io.to(userData.id).emit("welcome",{message:'You are joined now'})
+    }
+  }
+});
 
 //Routes
 app.use("/api/v1", routes);

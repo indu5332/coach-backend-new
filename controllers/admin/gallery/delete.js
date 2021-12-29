@@ -3,6 +3,7 @@ const mongoose=require('mongoose')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+//delete gallery
 let deleteGallery = async (req, res) => {
   try {
     const deletedRes = await galleryModel.deleteOne({_id:mongoose.Types.ObjectId(req.params.galleryId) });

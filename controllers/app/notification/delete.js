@@ -3,6 +3,7 @@ const notificationModel = require("../../../models/notification.model");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+//delete a notification
 let deleteNotification = async (req, res, next) => {
   try {
     const deleteNotification = await notificationModel.deleteOne({

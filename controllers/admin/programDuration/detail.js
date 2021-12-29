@@ -3,6 +3,8 @@ const programDurationService = require("../../service/programDuration.service");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+
+//detail for program duration
 let detailProgram = async (req, res, next) => {
   try {
     let program = await programDurationService.findprogramDuration({

@@ -4,6 +4,8 @@ const programDurationModel = require("../../../models/programDuration.model");
 const programDurationService=require('../../service/programDuration.service')
 var createError = require("http-errors");
 
+
+//public program duration list
 const programDurationList = async (req, res, next) => {
   try {
     const conditions = [

@@ -3,6 +3,7 @@ const mongoose=require('mongoose')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+//gallery detail
 let detail = async (req, res) => {
   try {
     let gallery = await galleryService.findgallery({_id:mongoose.Types.ObjectId(req.params.galleryId)});

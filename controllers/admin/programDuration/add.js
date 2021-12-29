@@ -1,6 +1,7 @@
 const  mongoose  = require("mongoose");
 const programDurationService = require("../../service/programDuration.service");
 
+//create a program duration public/for user
 const createProgram = async (req, res, next) => {
   try {
     const durationCoverImage = {

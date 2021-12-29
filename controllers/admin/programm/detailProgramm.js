@@ -3,6 +3,7 @@ const programService = require("../../service/program.service");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+//find detail for any program
 let detailPRogram = async (req, res, next) => {
   try {
     let program = await programService.findprogram({

@@ -2,6 +2,7 @@ const programmModel = require("../../../models/programm.model");
 const programService = require("../../service/program.service");
 const mongoose=require('mongoose')
 
+//remove file from program
 const pushFile = async (req, res, next) => {
   try {
     var file = [];

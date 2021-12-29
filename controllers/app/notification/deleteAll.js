@@ -4,6 +4,7 @@ const notificationService = require("../../service/notification.service");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+//delete all notifications of specific user
 let deleteAllNotification = async (req, res, next) => {
   try {
     const notifications = await notificationService.listAllNotification(

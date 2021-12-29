@@ -4,6 +4,7 @@ const programDurationModel = require("../../../models/programDuration.model");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+//update any program duration
 const checkdurationCoverImage = async (req, res, next) => {
   try {
     if (req.body.durationEvent) {

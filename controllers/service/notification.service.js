@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
 const notificationModel = require("../../models/notification.model");
+const userService=require("../service/user.service")
 
-async function sendNotification(notificationData, io, event) {
+async function sendNotification(notificationData, io,event) {
     try {
       const newNotification = await notificationModel.create(notificationData);
-      console.log(notificationData.to.id)
       if (newNotification) {
         if (io) {
-          io.to(notificationData.to.id);
+            newNotification.to.imagePath=userService.userImage(newNotification.to.imagePath)
+            console.log(newNotification)
+          io.to(notificationData.to.id).emit(event, { newNotification });
         }
         return true;
       }
@@ -44,7 +46,7 @@ async function sendNotification(notificationData, io, event) {
     return data;
   }
 
-  async function listAllNotification(userId, skip, limit) {
+  async function listAllNotification(userId) {
     const conditions = [
       {
         $match: {
@@ -53,21 +55,12 @@ async function sendNotification(notificationData, io, event) {
             { "to._id": mongoose.Types.ObjectId(userId) },
           ],
         },
-      },
-      {
-        $sort: {
-          createdAt: -1,
-
-        },
       }
     ];
     const data = await notificationModel.aggregate(conditions);
     return data;
   }
-
-
-
-async function updateNotification(notificationId) {
+  async function updateNotification(notificationId) {
     const conditions = {
       _id: mongoose.Types.ObjectId(notificationId),
     };
@@ -77,12 +70,22 @@ async function updateNotification(notificationId) {
       return true;
     }
     return false;
-}
+  }
+  async function unseenNotification(userId) {
+    try {
+      const unseen = await notificationModel.countDocuments({ "to._id": userId, seen: false });
+      return unseen;
+    } catch (error) {
+      return error;
+    }
+  }
+
 
 module.exports = {
   sendNotification,
   listNotification,
   listAllNotification,
-  sendNotification,
   updateNotification,
+  updateNotification,
+  unseenNotification
 };

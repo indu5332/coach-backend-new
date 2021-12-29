@@ -2,6 +2,7 @@ const aboutModel = require("../../../models/aboutUs.model");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+//about detail
 let aboutDetail = async (req, res, next) => {
   try {
     const about = await aboutModel.find({});

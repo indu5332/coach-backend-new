@@ -4,8 +4,7 @@ const notificationModel=require('../../../models/notification.model')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
-//user update
-
+//check username
 let checkusername=async(req,res,next)=>{
   try {
     if(req.body.username){
@@ -34,6 +33,7 @@ let checkusername=async(req,res,next)=>{
   }
 }
 
+//update user
 let updateUser = async (req, res, next) => {
   try {
     if (req.params.userId === "me") {

@@ -3,6 +3,7 @@ const programModel = require("../../../models/programm.model");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+//delete a program
 let deleteProgram = async (req, res, next) => {
   try {
     const deleteProgram = await programModel.deleteOne({

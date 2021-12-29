@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const programDurationModel = require("../../../models/programDuration.model");
 const programDurationService = require("../../service/programDuration.service");
 
+//remove new file from program duration 
 const createProgram = async (req, res, next) => {
   try {
     const update = await programDurationModel.updateOne(

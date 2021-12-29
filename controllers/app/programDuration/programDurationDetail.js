@@ -3,6 +3,7 @@ var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const mongoose = require("mongoose");
 
+//detail for user program duration
 let detailProgramDuration = async (req, res, next) => {
   try {
     let userProgramDuration = await programDurationService.findprogramDuration({

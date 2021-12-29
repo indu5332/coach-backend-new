@@ -3,6 +3,7 @@ const mongoose=require('mongoose')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+//update gallery
 let updategallery = async (req, res) => {
   try {
     let updatedRes=await galleryService.updategallery({_id:mongoose.Types.ObjectId(req.params.galleryId)},{$set:req.body})

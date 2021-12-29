@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+//delete user
 let deleteUser = async (req, res, next) => {
   try {
     let deleteRes = await userModel.deleteOne({

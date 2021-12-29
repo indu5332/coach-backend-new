@@ -4,6 +4,7 @@ const programDurationModel = require("../../../models/programm.model");
 var createError = require("http-errors");
 const mongoose=require('mongoose')
 
+//program duration list for users or private program's duration list
 const programList = async (req, res, next) => {
   try {
     console.log(req.params.userId)

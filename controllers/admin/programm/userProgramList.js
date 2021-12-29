@@ -3,6 +3,7 @@ const httpStatus = require("http-status-codes").StatusCodes;
 const programModel = require("../../../models/programm.model");
 var createError = require("http-errors");
 
+//program list for users / private programs list
 const programList = async (req, res, next) => {
   try {
     const conditions = [

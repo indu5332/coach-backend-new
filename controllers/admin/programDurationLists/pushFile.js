@@ -2,6 +2,8 @@ const  mongoose  = require("mongoose");
 const programDurationModel = require("../../../models/programDuration.model");
 const programDurationService = require("../../service/programDuration.service");
 
+
+//add new file to program duration 
 const createProgram = async (req, res, next) => {
   try {
     var file = [];

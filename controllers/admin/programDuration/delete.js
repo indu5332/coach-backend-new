@@ -3,6 +3,8 @@ const programDurationModel = require("../../../models/programDuration.model");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+
+//delete a duration for any program
 let deleteDurationProgram = async (req, res, next) => {
   try {
     const deleteProgram = await programDurationModel.deleteOne({
