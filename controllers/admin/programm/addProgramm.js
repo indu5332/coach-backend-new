@@ -65,7 +65,8 @@ const addNotification = async (req, res, next) => {
         seen: false,
       };
       const io = req.app.get("io");
-      await notificationModel.sendNotification(data, io, "program");
+      const notification=await notificationModel.sendNotification(data, io, "program");
+      console.log(notification)
       return res.status(200).json({
         success: true,
         message: "program created successfully",
