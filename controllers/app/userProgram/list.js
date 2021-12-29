@@ -13,7 +13,6 @@ const programList = async (req, res, next) => {
         {
             $match: {
                 userId: mongoose.Types.ObjectId(req.decoded._id),
-                isClose:false
               }
         },
       {
