@@ -8,10 +8,9 @@ const listNotifications = async (req, res) => {
         const notifications = await notificationService.listNotification(
           req.decoded._id, skip, limit,
         );
-        for (let i = 0; i < notifications.length; i++) {
-            const element = notifications[i];
+        await Promise.all(notifications.map(async element => {
             element.to.imagePath=userService.userImage(element.to.imagePath)
-        }
+        }));
         return res.status(200).send({
           success: true,
           isError: false,

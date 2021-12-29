@@ -4,14 +4,9 @@ const notificationModel = require("../../models/notification.model");
 async function sendNotification(notificationData, io, event) {
     try {
       const newNotification = await notificationModel.create(notificationData);
+      console.log(notificationData.to.id)
       if (newNotification) {
         if (io) {
-          const data = {
-            ...notificationData,
-            ...newNotification.to,
-            createdAt: new Date(),
-          };
-          console.log(notificationData.to.id);
           io.to(notificationData.to.id);
         }
         return true;

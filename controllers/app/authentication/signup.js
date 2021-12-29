@@ -89,6 +89,7 @@ const generateToken = async (req, res) => {
   try {
     const payload = {
       _id: req.data.newUser._id,
+      id: req.data.newUser.id,
       email: req.data.newUser.email,
       firstName: req.data.newUser.firstName,
       lastName: req.data.newUser.lastName,

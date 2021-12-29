@@ -56,6 +56,7 @@ const addNotification = async (req, res, next) => {
     if(req.body.userId){
       console.log("creating notification")
       const user = await userService.findUser({_id:mongoose.Types.ObjectId(req.body.userId)});
+      //console.log(user)
       const data = {
         to: user[0],
         title: "your program has been created",

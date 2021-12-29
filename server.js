@@ -29,10 +29,11 @@ io.on("connection", (socket) => {
   const token = socket.request.headers["x-api-key"];
   if (token) {
     const userData = verify(token);
-    if (userData.length > 0) {
-      socket.join(userData[0].id);
-      io.to(userData[0].id).emit("connected")
-      console.log("userData")
+    console.log(userData)
+    if (userData) {
+      socket.join(userData.id);
+      io.to(userData.id).emit("connected")
+      console.log(userData)
     }
   }
 });
