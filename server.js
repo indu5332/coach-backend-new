@@ -14,7 +14,7 @@ const server = require("http").createServer(app);
 
 const io = require("socket.io")(server,{
   cors: {
-    origin: config.hosts,
+    origin: ['http://localhost:3000','*'],
     methods: ["GET", "POST"],
     allowedHeaders: ["x-api-key"],
     credentials: true,
@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors( {
   credentials: true,
-  allowedHeaders: ["Content-Type", "x-api-key", "Access-Control-Allow-Origin"],
+  allowedHeaders: ["Content-Type", "x-api-key","Access-Control-Allow-Origin"],
   exposedHeaders: ["sessionId"],
   origin: config.allowedOrigins,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
