@@ -1,3 +1,5 @@
+
+   
 const path=require('path')
 module.exports = {
   allowedOrigins: ["https://coach-backend-new.herokuapp.com","http://localhost:3001","http://localhost:3000","http://localhost:3002"],
