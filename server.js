@@ -38,14 +38,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors( {
-  credentials: true,
-  allowedHeaders: ["Content-Type", "x-api-key","Access-Control-Allow-Origin"],
-  exposedHeaders: ["sessionId"],
-  origin: config.allowedOrigins,
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  preflightContinue: false,
-}));
+app.use(cors( ));
 
 app.use(express.static(path.join(__dirname, "./uploads")));
 
