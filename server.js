@@ -14,7 +14,7 @@ const server = require("http").createServer(app);
 
 const io = require("socket.io")(server,{
   cors: {
-    origin: ["http://localhost:3001","http://localhost:3000","https://coachfabienchampion.web.app","https://coach-champion-admin.web.app","https://coach-backend-new.herokuapp.com"],
+    origin: ["http://localhost:3001","http://localhost:3000","https://coachfabienchampion.web.app","https://coach-champion-admin.web.app"],
     methods: ["GET", "POST"],
     allowedHeaders: ["x-api-key"],
     credentials: true,
@@ -22,15 +22,8 @@ const io = require("socket.io")(server,{
 });
 
 app.set("io", io);
-function verify(token) {
-  try {
-    const decoded = jwt.verify(token, config.secret);
-    return decoded;
-  } catch (error) {
-    console.log(error);
-    throw new Error(error.message);
-  }
-}
+
+const verifyToken=require('./middleware/authentication')
 
 app.use(bodyParser.json());
 
@@ -42,14 +35,27 @@ app.use(cors( ));
 
 app.use(express.static(path.join(__dirname, "./uploads")));
 
+function verify(token) {
+  try {
+    const decoded = jwt.verify(token, config.secert);
+    return decoded;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
 io.on("connection", (socket) => {
-  const token = socket.request.headers["x-api-key"];
-  if (token) {
-    const userData = verify(token);
-    if (userData) {
-      socket.join(userData.id);
-      console.log(userData.id)
-      io.to(userData.id).emit("welcome",{message:'You are joined now'})
+  if (!socket.request.headers["x-api-key"] || socket.request.headers["x-api-key"]===null  || socket.request.headers["x-api-key"]===undefined) {
+    io.to(socket.id).emit("error",{message:'login to join socket'})
+    console.log("khgfd")
+  }
+  else{
+    console.log(socket.request.headers["x-api-key"])
+    const userData = verifyToken.authentication(socket.request.headers["x-api-key"]);
+    if (userData.length>0) {
+      socket.join(userData[0].id);
+      console.log(userData[0].id)
+      io.to(userData[0].id).emit("welcome",{message:'You are joined now'})
     }
   }
 });
