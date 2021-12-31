@@ -6,7 +6,7 @@ var createError = require("http-errors");
 
 
 //open public programs list 
-const programList = async (req, next) => {
+const programList = async (req,res, next) => {
   try {
     const conditions = [
       {

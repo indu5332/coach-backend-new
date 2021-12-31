@@ -3,7 +3,7 @@ var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
 //about detail
-let aboutDetail = async ( res) => {
+let aboutDetail = async (req, res) => {
   try {
     const about = await aboutModel.find({});
     if (about.length > 0) {
