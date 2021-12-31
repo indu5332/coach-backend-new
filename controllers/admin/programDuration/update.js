@@ -8,32 +8,32 @@ const httpStatus = require("http-status-codes").StatusCodes;
 const checkdurationCoverImage = async (req, res, next) => {
   try {
     if (req.body.durationEvent) {
-          let newProgram=req.body;
-          const formatedProgram=[]
-          for (let index = 0; index < newProgram.durationEvent.length; index++) {
-            const element = newProgram.durationEvent[index];
-            if(element.file.length>0){
-              for (let j = 0; j < element.file.length; j++) {
-                const felement = element.file[j];
-                const file= {
-                  url:felement.url,
-                  isImage:programDurationService.isImage(felement.url),
-                  isVideo:programDurationService.isVideo(felement.url),
-                }
-                element.file[j]=file;
-              }
-            }
-            formatedProgram.push(element);
+      let newProgram = req.body;
+      const formatedProgram = [];
+      for (let index = 0; index < newProgram.durationEvent.length; index++) {
+        const element = newProgram.durationEvent[index];
+        if (element.file.length > 0) {
+          for (let j = 0; j < element.file.length; j++) {
+            const felement = element.file[j];
+            const file = {
+              url: felement.url,
+              isImage: programDurationService.isImage(felement.url),
+              isVideo: programDurationService.isVideo(felement.url),
+            };
+            element.file[j] = file;
           }
-          req.body.durationEvent=formatedProgram
-      const update = await programDurationModel.updateOne({_id:mongoose.Types.ObjectId(req.params.programDurationId)},
-      {
-          $set:{
-              durationEvent:formatedProgram
-          }
+        }
+        formatedProgram.push(element);
       }
+      req.body.durationEvent = formatedProgram;
+      const update = await programDurationModel.updateOne(
+        { _id: mongoose.Types.ObjectId(req.params.programDurationId) },
+        {
+          $set: {
+            durationEvent: formatedProgram,
+          },
+        }
       );
-      //console.log(update)
       next();
     } else {
       next();
@@ -86,12 +86,16 @@ let updateprogram = async (req, res, next) => {
         programDurationService.programDurationImage(
           update.durationCoverImage.url
         );
-        await Promise.all(update.durationEvent.map(async programs=>{
-            for (let i = 0; i < programs.file.length; i++) {
-              const element = programs.file[i];
-              element.url= programDurationService.programDurationImage(element.url)
-            }
-           }))
+      await Promise.all(
+        update.durationEvent.map(async (programs) => {
+          for (let i = 0; i < programs.file.length; i++) {
+            const element = programs.file[i];
+            element.url = programDurationService.programDurationImage(
+              element.url
+            );
+          }
+        })
+      );
       return res.status(200).json({
         success: true,
         message: "updated",

@@ -1,7 +1,7 @@
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const programModel = require("../../models/programm.model");
-const config = require("config")
+const config = require("config");
 
 module.exports = {
   async findprogram(data) {
@@ -25,12 +25,10 @@ module.exports = {
 
   updateProgram: async (_id, data) => {
     try {
-      const updateResult = await programModel.findByIdAndUpdate(
-        _id,
-        data,
-        {new:true}
-      );
-      return updateResult
+      const updateResult = await programModel.findByIdAndUpdate(_id, data, {
+        new: true,
+      });
+      return updateResult;
     } catch (error) {
       createError(httpStatus.INTERNAL_SERVER_ERROR, error);
     }
@@ -39,12 +37,12 @@ module.exports = {
   programImage: function (url) {
     return config.fileUrl + "/programs/" + url;
   },
-  
+
   getExtension(url) {
     const parts = url.split(".");
     return parts[parts.length - 1];
   },
-  
+
   isImage(url) {
     if (url === null || url === undefined) {
       return false;
@@ -76,5 +74,5 @@ module.exports = {
         return true;
     }
     return false;
-  }
+  },
 };

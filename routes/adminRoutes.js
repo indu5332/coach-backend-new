@@ -5,7 +5,6 @@ const AdminMiddleware = require("../middleware/verifyAdminToken");
 adminRouter.use(AdminMiddleware);
 
 adminRouter.get("/all-users", adminController.admin.user.usersList);
-//adminRouter.get("/list/public/program/duration", adminController.admin.programDuration.publicDurationList);
 
 //contacts
 adminRouter.get("/contacts", adminController.admin.contact.contactList);

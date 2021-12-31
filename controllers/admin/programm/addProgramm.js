@@ -55,7 +55,6 @@ const createProgram = async (req, res, next) => {
 
 //send notification to user for which program created
 const addNotification = async (req, res) => {
-  console.log("ljkhgqwretytuyio")
   try {
     if(req.body.userId){
       console.log("creating notification")

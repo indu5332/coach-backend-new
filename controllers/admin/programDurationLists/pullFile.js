@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const programDurationModel = require("../../../models/programDuration.model");
 const programDurationService = require("../../service/programDuration.service");
 
-//remove new file from program duration 
-const createProgram = async (req, res, next) => {
+//remove new file from program duration
+const createProgram = async (req, res) => {
   try {
     const update = await programDurationModel.updateOne(
       {
@@ -12,9 +12,9 @@ const createProgram = async (req, res, next) => {
       },
       {
         $pull: {
-            "durationEvent.$.file":{
-                _id:mongoose.Types.ObjectId(req.body.fileId)
-            }
+          "durationEvent.$.file": {
+            _id: mongoose.Types.ObjectId(req.body.fileId),
+          },
         },
       }
     );

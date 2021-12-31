@@ -12,9 +12,14 @@ const Adminroutes = require("./routes/adminRoutes");
 const app = express();
 const server = require("http").createServer(app);
 
-const io = require("socket.io")(server,{
+const io = require("socket.io")(server, {
   cors: {
-    origin: ["http://localhost:3001","http://localhost:3000","https://coachfabienchampion.web.app","https://coach-champion-admin.web.app"],
+    origin: [
+      "http://localhost:3001",
+      "http://localhost:3000",
+      "https://coachfabienchampion.web.app",
+      "https://coach-champion-admin.web.app",
+    ],
     methods: ["GET", "POST"],
     allowedHeaders: ["x-api-key"],
     credentials: true,
@@ -23,7 +28,7 @@ const io = require("socket.io")(server,{
 
 app.set("io", io);
 
-const verifyToken=require('./middleware/authentication')
+const verifyToken = require("./middleware/authentication");
 
 app.use(bodyParser.json());
 
@@ -31,31 +36,26 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors( ));
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, "./uploads")));
 
-function verify(token) {
-  try {
-    const decoded = jwt.verify(token, config.secert);
-    return decoded;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-}
-
 io.on("connection", (socket) => {
-  if (!socket.request.headers["x-api-key"] || socket.request.headers["x-api-key"]===null  || socket.request.headers["x-api-key"]===undefined) {
-    io.to(socket.id).emit("error",{message:'login to join socket'})
-    console.log("khgfd")
-  }
-  else{
-    console.log(socket.request.headers["x-api-key"])
-    const userData = verifyToken.authentication(socket.request.headers["x-api-key"]);
-    if (userData.length>0) {
+  if (
+    !socket.request.headers["x-api-key"] ||
+    socket.request.headers["x-api-key"] === null ||
+    socket.request.headers["x-api-key"] === undefined
+  ) {
+    console.log("login to join");
+    io.to(socket.id).emit("error", { message: "login to join socket" });
+  } else {
+    const userData = verifyToken.authentication(
+      socket.request.headers["x-api-key"]
+    );
+    if (userData.length > 0) {
       socket.join(userData[0].id);
-      console.log(userData[0].id)
-      io.to(userData[0].id).emit("welcome",{message:'You are joined now'})
+      console.log(userData[0].id);
+      io.to(userData[0].id).emit("welcome", { message: "You are joined now" });
     }
   }
 });

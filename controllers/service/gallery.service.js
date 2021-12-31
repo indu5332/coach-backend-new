@@ -36,22 +36,26 @@ module.exports = {
 
   updategallery: async (conditions, dataToUpdate) => {
     try {
-      const updateResult = await galleryModel.findByIdAndUpdate(conditions, dataToUpdate,{new:true});
-      return updateResult
+      const updateResult = await galleryModel.findByIdAndUpdate(
+        conditions,
+        dataToUpdate,
+        { new: true }
+      );
+      return updateResult;
     } catch (error) {
       createError(httpStatus.INTERNAL_SERVER_ERROR, error);
     }
   },
 
-  galleryImage: function (url){
-    return config.fileUrl+"/gallery/" + url;
+  galleryImage: function (url) {
+    return config.fileUrl + "/gallery/" + url;
   },
 
   getExtension(file) {
     const parts = file.split(".");
     return parts[parts.length - 1];
   },
-  
+
   isImage(file) {
     if (file === null || file === undefined) {
       return false;
@@ -85,7 +89,7 @@ module.exports = {
     return false;
   },
 
-  totalGallery:async function(){
+  totalGallery: async function () {
     return await galleryModel.countDocuments({});
-},
-}
+  },
+};
