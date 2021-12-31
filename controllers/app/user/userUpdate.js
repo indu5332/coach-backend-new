@@ -3,6 +3,34 @@ const authService = require("../../service/user.service");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
+//check username
+let checkusername=async(req,res,next)=>{
+  try {
+    if(req.body.username){
+      const find=await authService.findUser({username:req.body.username})
+      if(!find || find.length === 0){
+        next()
+      }
+      else{
+        if(req.body.username===find[0].username){
+          next()
+        }
+        else{
+          console.log(req.decoded)
+          return res.status(400).json({
+            success: false,
+            message: "username already exists",
+          });
+        }
+      }
+    }
+    else{
+      next()
+    }
+  } catch (error) {
+    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
+  }
+}
 
 //update user
 let updateUser = async (req, res) => {
@@ -62,4 +90,4 @@ let updateUser = async (req, res) => {
   }
 };
 
-module.exports = [updateUser];
+module.exports = [checkusername,updateUser];
