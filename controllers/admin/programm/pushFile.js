@@ -25,26 +25,19 @@ const pushFile = async (req, res, next) => {
             $each:file   
           }
         },
-      };  await programmModel.findByIdAndUpdate(conditions,dataToUpdate); 
-      const program=await programService.findprogram({_id:mongoose.Types.ObjectId(req.params.programId)})
-    if (program.length>0) {
-        program[0].coverfile.url = programService.programImage(program[0].coverfile.url)
-      for (let i = 0; i < program[0].file.length; i++) {
-        const element = program[0].file[i];
+      };  
+      const update=await programmModel.findByIdAndUpdate(conditions,dataToUpdate); 
+      console.log(update)
+      update.coverfile.url = programService.programImage(update.coverfile.url)
+      for (let i = 0; i < update.file.length; i++) {
+        const element = update.file[i];
         element.url=programService.programImage(element.url)
       }
       return res.status(200).json({
         success: true,
         message: "file added successfully",
-        program: program
+        program: update
       });
-    }
-    else{
-      return res.status(500).json({
-        success: false,
-        message: "failed to add file",
-      });
-    }
   } catch (error) {
     console.log(error);
     return res.status(500).json({

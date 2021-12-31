@@ -18,7 +18,7 @@ const createProgram = async (req, res, next) => {
       file.push(files);
     }
     req.body.file = file;
-      const update=await programDurationModel.updateOne({_id:mongoose.Types.ObjectId(req.params.programDurationId),
+      const update=await programDurationModel.findOneAndUpdate({_id:mongoose.Types.ObjectId(req.params.programDurationId),
         "durationEvent._id":mongoose.Types.ObjectId(req.body.durationEventId)},
         {
             $push:{
@@ -26,10 +26,9 @@ const createProgram = async (req, res, next) => {
           }
         }
         ); 
-       let program=await programDurationService.findprogramDuration({_id:mongoose.Types.ObjectId(req.params.programDurationId)})
-       console.log(program[0])
-       program[0].durationCoverImage.url = programDurationService.programDurationImage(program[0].durationCoverImage.url)
-        await Promise.all(program[0].durationEvent.map(async programs=>{
+        console.log(update)
+       update.durationCoverImage.url = programDurationService.programDurationImage(update.durationCoverImage.url)
+        await Promise.all(update.durationEvent.map(async programs=>{
           for (let i = 0; i < programs.file.length; i++) {
             const element = programs.file[i];
             element.url= programDurationService.programDurationImage(element.url)
@@ -38,7 +37,7 @@ const createProgram = async (req, res, next) => {
        return res.status(200).json({
         success: true,
         message: "file added successfully",
-        program:program
+        program:update
       });
     } catch (error) {
     console.log(error);

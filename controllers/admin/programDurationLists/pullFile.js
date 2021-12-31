@@ -5,7 +5,7 @@ const programDurationService = require("../../service/programDuration.service");
 //remove new file from program duration 
 const createProgram = async (req, res, next) => {
   try {
-    const update = await programDurationModel.updateOne(
+    const update = await programDurationModel.findOneAndUpdate(
       {
         _id: mongoose.Types.ObjectId(req.params.programDurationId),
         "durationEvent._id": mongoose.Types.ObjectId(req.body.durationEventId),
@@ -19,15 +19,12 @@ const createProgram = async (req, res, next) => {
       }
     );
     console.log(update);
-    let program = await programDurationService.findprogramDuration({
-      _id: mongoose.Types.ObjectId(req.params.programDurationId),
-    });
-    program[0].durationCoverImage.url =
+    update.durationCoverImage.url =
       programDurationService.programDurationImage(
-        program[0].durationCoverImage.url
+        update.durationCoverImage.url
       );
     await Promise.all(
-      program[0].durationEvent.map(async (programs) => {
+      update.durationEvent.map(async (programs) => {
         for (let i = 0; i < programs.file.length; i++) {
           const element = programs.file[i];
           element.url = programDurationService.programDurationImage(
@@ -39,7 +36,7 @@ const createProgram = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       message: "file removed successfully",
-      program: program,
+      program: update,
     });
   } catch (error) {
     console.log(error);
