@@ -31,7 +31,6 @@ const userList = async (req,res, next) => {
       },
      ];
      const userList = await userModel.aggregate(conditions);
-     console.log(userList)
      req.data={}
      req.data.userList=userList
      next()
@@ -43,7 +42,6 @@ const userList = async (req,res, next) => {
  const totalUser=async(req,res)=>{
   try {
     const totalUsers = await userModel.find({});
-    console.log(totalUsers.length)
     return res.status(200).json({
       success: true,
       message: "users list",
