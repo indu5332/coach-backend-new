@@ -54,6 +54,7 @@ appRouter.use(middleware);
 appRouter.post("/change/password",appController.app.authentication.change_paassword);
 appRouter.put("/update/user/:userId", appController.app.user.userUpdate);
 appRouter.get("/user/detail/:userId", appController.app.user.userDetail);
+
 //user program
 appRouter.get("/user/program/detail/:programId", appController.app.userProgram.detail);
 appRouter.get("/user/program/list", appController.app.userProgram.list);
@@ -66,6 +67,6 @@ appRouter.delete("/delete/notification", appController.app.notification.deleteAl
 
 //userDuration
 appRouter.get("/user/duration/detail/:programDurationId", appController.app.programDuration.programDurationDetail);
-appRouter.get("/list/user/program/duration", appController.app.programDuration.userDurationList);
+appRouter.get("/list/user/program/duration/:programId", appController.app.programDuration.userDurationList);
 
 module.exports = appRouter;

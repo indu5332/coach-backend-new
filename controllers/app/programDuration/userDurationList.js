@@ -11,7 +11,7 @@ const programDurationList = async (req, res, next) => {
     const conditions = [
       {
         $match: {
-          userId: mongoose.Types.ObjectId(req.decoded._id),
+          programId: mongoose.Types.ObjectId(req.params.programId),
         },
       },
       {
@@ -29,6 +29,7 @@ const programDurationList = async (req, res, next) => {
       },
     ];
     let programList = await programDurationModel.aggregate(conditions);
+    console.log(programList)
     await Promise.all(
       programList.map(async (programs) => {
         programs.durationCoverImage.url =
@@ -52,7 +53,7 @@ const programDurationList = async (req, res, next) => {
       })
     );
     const totalPrograms = await programDurationModel.find({
-      userId: mongoose.Types.ObjectId(req.decoded._id),
+      programId: mongoose.Types.ObjectId(req.params.programId),
     });
     return res.status(200).json({
       success: true,
