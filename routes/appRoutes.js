@@ -54,7 +54,7 @@ appRouter.use(middleware);
 appRouter.post("/change/password",appController.app.authentication.change_paassword);
 appRouter.put("/update/user/:userId", appController.app.user.userUpdate);
 appRouter.get("/user/detail/:userId", appController.app.user.userDetail);
-
+//user program
 appRouter.get("/user/program/detail/:programId", appController.app.userProgram.detail);
 appRouter.get("/user/program/list", appController.app.userProgram.list);
 

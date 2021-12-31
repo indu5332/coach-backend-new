@@ -4,7 +4,7 @@ const httpStatus = require("http-status-codes").StatusCodes;
 const mongoose = require("mongoose");
 
 //detail for user program duration
-let detailProgramDuration = async (req, res, next) => {
+let detailProgramDuration = async (req, res) => {
   try {
     let userProgramDuration = await programDurationService.findprogramDuration({
       _id: mongoose.Types.ObjectId(req.params.programDurationId),

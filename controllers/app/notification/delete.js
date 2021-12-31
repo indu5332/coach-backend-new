@@ -4,7 +4,7 @@ var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
 //delete a notification
-let deleteNotification = async (req, res, next) => {
+let deleteNotification = async (req, res) => {
   try {
     const deleteNotification = await notificationModel.deleteOne({
       _id: mongoose.Types.ObjectId(req.params.notificationId),

@@ -4,7 +4,7 @@ var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
 //find user by email
-const findUser = async (req, res, next) => {
+const findUser = async (req,  next) => {
   try {
     const conditions = {
       _id: mongoose.Types.ObjectId(req.decoded._id),

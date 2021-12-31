@@ -6,7 +6,7 @@ var createError = require("http-errors");
 const mongoose=require('mongoose')
 
 //program list fo specific user
-const programList = async (req, res, next) => {
+const programList = async (req, res) => {
   try {
     const conditions = [
         {

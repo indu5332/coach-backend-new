@@ -1,41 +1,11 @@
 const mongoose = require("mongoose");
 const authService = require("../../service/user.service");
-const notificationService=require('../../service/notification.service')
-const notificationModel=require('../../../models/notification.model')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
-//check username
-let checkusername=async(req,res,next)=>{
-  try {
-    if(req.body.username){
-      const find=await authService.findUser({username:req.body.username})
-      if(!find || find.length === 0){
-        next()
-      }
-      else{
-        if(req.body.username===find[0].username){
-          next()
-        }
-        else{
-          console.log(req.decoded)
-          return res.status(400).json({
-            success: false,
-            message: "username already exists",
-          });
-        }
-      }
-    }
-    else{
-      next()
-    }
-  } catch (error) {
-    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
-  }
-}
 
 //update user
-let updateUser = async (req, res, next) => {
+let updateUser = async (req, res) => {
   try {
     if (req.params.userId === "me") {
       const updateRes = await authService.updateUser(
@@ -92,4 +62,4 @@ let updateUser = async (req, res, next) => {
   }
 };
 
-module.exports = [checkusername,updateUser];
+module.exports = [updateUser];

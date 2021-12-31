@@ -4,7 +4,7 @@ var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
 //delete user
-let deleteUser = async (req, res, next) => {
+let deleteUser = async (req, res) => {
   try {
     let deleteRes = await userModel.deleteOne({
       _id: mongoose.Types.ObjectId(req.params.userId),
