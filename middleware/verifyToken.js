@@ -19,7 +19,6 @@ const authentication = async (req, res, next) => {
         next();
       });
     } else {
-      console.log("ljhjg");
       res.status(404).send({
         success: false,
         message: "No Token provided",

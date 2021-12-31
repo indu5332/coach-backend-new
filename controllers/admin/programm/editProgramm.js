@@ -12,7 +12,7 @@ const checkCoverFile = async (req, res, next) => {
       for (let i = 0; i < req.body.file.length; i++) {
         const element = req.body.file[i];
         if (programService.isImage(element.url)) {
-          const update=await programModel.updateOne(
+          await programModel.updateOne(
             {_id:mongoose.Types.ObjectId(req.params.programId),
             "file._id":mongoose.Types.ObjectId(req.body.fileId)},
             {
@@ -23,11 +23,10 @@ const checkCoverFile = async (req, res, next) => {
               }
             }
           );
-          //console.log(update)
           next()
         } else {
           if (programService.isVideo(element.url)) {
-            const update=await programModel.updateOne(
+            await programModel.updateOne(
               {_id:mongoose.Types.ObjectId(req.params.programId),"file._id":mongoose.Types.ObjectId(req.body.fileId)},
               {
                 $set:{
@@ -37,7 +36,6 @@ const checkCoverFile = async (req, res, next) => {
                 }
               }
             );
-            //console.log(update)
             next()
           } else {
             return res.status(400).json({
@@ -52,7 +50,7 @@ const checkCoverFile = async (req, res, next) => {
       next();
     }
   } catch (error) {
-    console.log("hey",error)
+    console.log("error",error)
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
@@ -72,7 +70,7 @@ const checkfile = async (req, res, next) => {
       next();
     }
   } catch (error) {
-    console.log("hello",error)
+    console.log("error",error)
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }
 };
