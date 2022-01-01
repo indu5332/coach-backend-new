@@ -28,9 +28,6 @@ adminRouter.put("/update/program/duration/:programDurationId", adminController.a
 //list programs
 adminRouter.get("/user/all-programs/:userId", adminController.admin.programm.userProgramList);
 
-//list programDurations
-adminRouter.get("/list/user/program/duration/:userId", adminController.admin.programDuration.userDurationDetail);
-
 //about-us
 adminRouter.post("/about-us", adminController.admin.about.create);
 adminRouter.put("/edit/about", adminController.admin.about.edit);

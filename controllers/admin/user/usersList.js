@@ -1,6 +1,7 @@
 var createError = require('http-errors')
 const httpStatus=require('http-status-codes').StatusCodes;
 const userModel = require('../../../models/user.model');
+const userService=require('../../service/user.service')
 
 //list users
 const userList = async (req,res, next) => {
@@ -27,6 +28,7 @@ const userList = async (req,res, next) => {
           email: 1,
           phone: 1,
           createdAt: 1,
+          imagePath: 1,
         },
       },
      ];
@@ -42,6 +44,13 @@ const userList = async (req,res, next) => {
  const totalUser=async(req,res)=>{
   try {
     const totalUsers = await userModel.find({});
+    await Promise.all(
+      req.data.userList.map(async (users) => {
+        users.imagePath = userService.userImage(
+          users.imagePath
+        );
+      })
+    );
     return res.status(200).json({
       success: true,
       message: "users list",
