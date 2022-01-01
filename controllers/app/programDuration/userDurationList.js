@@ -11,7 +11,7 @@ const programDurationList = async (req, res, next) => {
     const conditions = [
         {
             $match: {
-              userId: mongoose.Types.ObjectId(req.decoded._id),
+              programId: mongoose.Types.ObjectId(req.params.programId),
             }
           },
       {
