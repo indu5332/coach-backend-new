@@ -1,14 +1,14 @@
 /* eslint-disable no-underscore-dangle */
-const notificationConfig = require("../../service/notification.service");
+const notificationService = require("../../service/notification.service");
 
 //unseen notifications
 const countNotification = async (req, res) => {
   try {
-    const notification = await notificationConfig.unseenNotification(req.decoded._id);
+    const unseenNotifications = await notificationService.UnseenNotification(req.decoded._id);
     return res.status(200).json({
       success: true,
       message: "Unseen message",
-      unseenNotificationCount: notification,
+      unseenNotification: unseenNotifications,
     });
   } catch (error) {
     console.log(error);

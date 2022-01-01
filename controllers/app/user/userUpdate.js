@@ -46,7 +46,6 @@ let updateUser = async (req, res) => {
             { _id: mongoose.Types.ObjectId(req.params.userId) },
             { $set: req.body }
           );
-          console.log(finduser[0]);
           updateRes.imagePath = authService.userImage(finduser[0].imagePath);
           return res.status(200).json({
             success: true,

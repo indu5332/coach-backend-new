@@ -11,14 +11,16 @@ const listNotifications = async (req, res) => {
           req.decoded._id, skip, limit,
         );
         const total=await notificationService.listAllNotification(req.decoded._id)
+        const unseenNotifications = await notificationService.UnseenNotification(req.decoded._id);
         await Promise.all(notifications.map(async element => {
             element.to.imagePath=userService.userImage(element.to.imagePath)
         }));
         return res.status(200).send({
           success: true,
           isError: false,
-          total:total.length,
-          notifications,
+          totalNotification:total.length,
+          unseenNotification:unseenNotifications,
+          notifications
         });
   } catch (error) {
     return res.status(500).json({ success: false, isError: true, error: error.message });

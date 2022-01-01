@@ -71,7 +71,7 @@ async function sendNotification(notificationData, io,event) {
     }
     return false;
   }
-  async function unseenNotification(userId) {
+  async function UnseenNotification(userId) {
     try {
       const unseen = await notificationModel.countDocuments({ "to._id": userId, seen: false });
       return unseen;
@@ -87,5 +87,5 @@ module.exports = {
   listAllNotification,
   updateNotification,
   updateNotification,
-  unseenNotification
+  UnseenNotification
 };
