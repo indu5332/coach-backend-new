@@ -43,7 +43,6 @@ const createProgram = async (req, res, next) => {
       }
     }
     let program = await programDurationService.createprogramDuration(req.body);
-    console.log(program);
     program.durationCoverImage.url =
       programDurationService.programDurationImage(
         program.durationCoverImage.url

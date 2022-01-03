@@ -16,17 +16,9 @@ const programDurationsList = async (req, res, next) => {
       },
       {
         $sort: {
-          createdAt: -1,
+          day: 1,
         },
-      },
-      {
-        $skip:
-          (req.query.page ? Number(req.query.page) : 0) *
-          (req.query.limit ? Number(req.query.limit) : 10),
-      },
-      {
-        $limit: req.query.limit ? Number(req.query.limit) : 10,
-      },
+      }
     ];
     let programDurationList = await programDurationModel.aggregate(conditions);
     await Promise.all(
@@ -51,13 +43,10 @@ const programDurationsList = async (req, res, next) => {
         }
       })
     );
-    const totalDurationPrograms = await programDurationModel.find({
-      programId: mongoose.Types.ObjectId(req.params.programId),
-    });
     return res.status(200).json({
       success: true,
       message: "program duration list",
-      totalProgramDuration: totalDurationPrograms.length,
+      totalProgramDuration: programDurationList.length,
       programDurationList: programDurationList,
     });
   } catch (error) {

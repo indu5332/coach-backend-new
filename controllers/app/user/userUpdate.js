@@ -18,6 +18,9 @@ let updateUser = async (req, res) => {
           { $set: req.body }
         );
         updateRes.imagePath = authService.userImage(finduser[0].imagePath);
+        updateRes.Duration=null
+        updateRes.password=null
+        updateRes.verificationToken=null
         return res.status(200).json({
           success: true,
           message: "user updated",
@@ -29,6 +32,9 @@ let updateUser = async (req, res) => {
           { $set: req.body }
         );
         updateRes.imagePath = authService.userImage(updateRes.imagePath);
+        updateRes.Duration=null
+        updateRes.password=null
+        updateRes.verificationToken=null
         return res.status(200).json({
           success: true,
           message: "user updated",
@@ -47,6 +53,9 @@ let updateUser = async (req, res) => {
             { $set: req.body }
           );
           updateRes.imagePath = authService.userImage(finduser[0].imagePath);
+          updateRes.Duration=null
+          updateRes.password=null
+          updateRes.verificationToken=null
           return res.status(200).json({
             success: true,
             message: "user updated",
@@ -58,6 +67,9 @@ let updateUser = async (req, res) => {
             { $set: req.body }
           );
           updateRes.imagePath = authService.userImage(updateRes.imagePath);
+          updateRes.Duration=null
+          updateRes.password=null
+          updateRes.verificationToken=null
           return res.status(200).json({
             success: true,
             message: "user updated",

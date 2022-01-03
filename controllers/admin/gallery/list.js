@@ -25,7 +25,6 @@ let galleries = async (req, res) => {
     await Promise.all(galleryList.map(async gallery=>{
         gallery.file=config.fileUrl+"/gallery/"+gallery.file
     }))
-    console.log(galleryList)
       return res.status(200).json({
         success: true,
         message: "gallery list",
