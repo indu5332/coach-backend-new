@@ -9,13 +9,10 @@ let detailProgramDuration = async (req, res) => {
     let userProgramDuration = await programDurationService.findprogramDuration({
       _id: mongoose.Types.ObjectId(req.params.programDurationId),
     });
+    console.log(userProgramDuration)
     if (userProgramDuration.length > 0) {
-      if (userProgramDuration[0].userId === req.decoded._id) {
-        userProgramDuration = JSON.parse(JSON.stringify(userProgramDuration[0]));
-        userProgramDuration.durationCoverImage.url = programDurationService.programDurationImage(
-          userProgramDuration.durationCoverImage.url
-        );
-        await Promise.all(userProgramDuration.durationEvent.map(async programs=>{
+        userProgramDuration[0].durationCoverImage.url=programDurationService.programDurationImage(userProgramDuration[0].durationCoverImage.url)
+        await Promise.all(userProgramDuration[0].durationEvent.map(async programs=>{
             for (let i = 0; i < programs.file.length; i++) {
               const element = programs.file[i];
               element.url= programDurationService.programDurationImage(element.url)
@@ -31,11 +28,6 @@ let detailProgramDuration = async (req, res) => {
           .status(404)
           .json({ message: "no user for this program found", success: false });
       }
-    } else {
-      return res
-        .status(404)
-        .json({ message: "no details found", success: false });
-    }
   } catch (error) {
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
   }

@@ -66,7 +66,7 @@ appRouter.delete("/delete/notification/:notificationId", appController.app.notif
 appRouter.delete("/delete/notification", appController.app.notification.deleteAll);
 
 //userDuration
-//appRouter.get("/user/duration/detail/:programDurationId", appController.app.programDuration.programDurationDetail);
+appRouter.get("/user/duration/detail/:programDurationId", appController.app.programDuration.programDurationDetail);
 appRouter.get("/list/user/program/duration/:programId", appController.app.programDuration.userDurationList);
 
 module.exports = appRouter;
