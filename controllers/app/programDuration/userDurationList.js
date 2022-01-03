@@ -16,7 +16,7 @@ const programDurationList = async (req, res, next) => {
       },
       {
         $sort: {
-          createdAt: -1,
+          day: 1,
         },
       }
     ];
