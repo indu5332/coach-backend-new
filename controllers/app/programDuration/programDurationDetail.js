@@ -3,16 +3,18 @@ var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const mongoose = require("mongoose");
 
-//detail for user program duration
-let detailProgramDuration = async (req, res) => {
+//detail for duration 
+let detailProgramDuration = async (req, res, next) => {
   try {
     let userProgramDuration = await programDurationService.findprogramDuration({
       _id: mongoose.Types.ObjectId(req.params.programDurationId),
     });
-    console.log(userProgramDuration)
     if (userProgramDuration.length > 0) {
-        userProgramDuration[0].durationCoverImage.url=programDurationService.programDurationImage(userProgramDuration[0].durationCoverImage.url)
-        await Promise.all(userProgramDuration[0].durationEvent.map(async programs=>{
+        userProgramDuration = JSON.parse(JSON.stringify(userProgramDuration[0]));
+        userProgramDuration.durationCoverImage.url = programDurationService.programDurationImage(
+          userProgramDuration.durationCoverImage.url
+        );
+        await Promise.all(userProgramDuration.durationEvent.map(async programs=>{
             for (let i = 0; i < programs.file.length; i++) {
               const element = programs.file[i];
               element.url= programDurationService.programDurationImage(element.url)
