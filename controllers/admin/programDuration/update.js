@@ -26,7 +26,7 @@ const checkdurationCoverImage = async (req, res, next) => {
         formatedProgram.push(element);
       }
       req.body.durationEvent = formatedProgram;
-      const update = await programDurationModel.updateOne(
+      await programDurationModel.updateOne(
         { _id: mongoose.Types.ObjectId(req.params.programDurationId) },
         {
           $set: {
@@ -56,7 +56,7 @@ const checkfile = async (req, res, next) => {
         ),
       };
       req.body.durationCoverImage = durationCoverImage;
-      const update = await programDurationService.updateprogramDuration(
+      await programDurationService.updateprogramDuration(
         { _id: mongoose.Types.ObjectId(req.params.programDurationId) },
         {
           $set: req.body.durationCoverImage,
@@ -71,7 +71,7 @@ const checkfile = async (req, res, next) => {
   }
 };
 
-let updateprogram = async (req, res, next) => {
+let updateprogram = async (req, res) => {
   try {
     delete req.body.durationEvent;
     delete req.body.durationCoverImage;

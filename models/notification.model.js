@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { unseenNotification } = require("../controllers/service/notification.service");
 
 const { Schema } = mongoose;
 const AutoIncrement = require("mongoose-sequence")(mongoose);

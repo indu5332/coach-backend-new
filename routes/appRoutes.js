@@ -51,7 +51,7 @@ const middleware = require("../middleware/verifyToken");
 appRouter.use(middleware);
 
 //user Api
-appRouter.post("/change/password",appController.app.authentication.change_paassword);
+appRouter.post("/change/password",appController.app.authentication.change_password);
 appRouter.put("/update/user/:userId", appController.app.user.userUpdate);
 appRouter.get("/user/detail/:userId", appController.app.user.userDetail);
 

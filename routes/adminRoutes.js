@@ -38,4 +38,7 @@ adminRouter.get("/detail/gallery/:galleryId", adminController.admin.gallery.deta
 adminRouter.delete("/delete/gallery/:galleryId", adminController.admin.gallery.delete);
 adminRouter.put("/update/gallery/:galleryId", adminController.admin.gallery.update);
 
+//user Events
+//adminRouter.get("/events", adminController.app.userProgram.getEvent);
+
 module.exports = adminRouter;
