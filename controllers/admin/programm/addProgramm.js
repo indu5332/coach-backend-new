@@ -30,6 +30,7 @@ const createProgram = async (req, res, next) => {
     if (newProgram) {
       newProgram.coverfile.url = programService.programImage(req.body.coverfile.url)
       newProgram.pdfUrl=programService.programImage(newProgram.pdfUrl)
+      newProgram.video=programService.programImage(newProgram.video)
       for (let i = 0; i < newProgram.file.length; i++) {
         const element = newProgram.file[i];
         element.url=programService.programImage(element.url)

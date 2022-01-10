@@ -30,6 +30,7 @@ const programList = async (req, res) => {
     await Promise.all(programList.map(async programs=>{
       programs.coverfile.url= programService.programImage(programs.coverfile.url)
       programs.pdfUrl=programService.programImage(programs.pdfUrl)
+      programs.video=programService.programImage(programs.video)
      }))
      await Promise.all(programList.map(async programs=>{
       for (let i = 0; i < programs.file.length; i++) {

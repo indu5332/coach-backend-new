@@ -35,6 +35,7 @@ const programSchema = new Schema(
         isVideo: { type: Boolean, default: false },
       },
     ],
+    video:{type:String}
   },
   {
     timestamps: true,
