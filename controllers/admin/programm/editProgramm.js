@@ -89,6 +89,7 @@ let updateprogram = async (req, res, next) => {
     );
     if (update) {
       update.coverfile.url=programService.programImage(update.coverfile.url)
+      update.video=programService.programImage(update.video)
       for (let i = 0; i < update.file.length; i++) {
         const element = update.file[i];
         element.url=programService.programImage(element.url)
