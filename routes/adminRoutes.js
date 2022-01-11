@@ -40,5 +40,6 @@ adminRouter.put("/update/gallery/:galleryId", adminController.admin.gallery.upda
 
 //user Events
 adminRouter.get("/events", adminController.admin.user.getEvent);
+adminRouter.get("/events/Detail/:uuid", adminController.admin.user.getInviteeDetail);
 
 module.exports = adminRouter;

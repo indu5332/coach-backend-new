@@ -44,7 +44,12 @@ module.exports = {
     }
   },
   userImage: function (url){
-    return config.fileUrl+"/users/" + url;
+    if(!url || url===undefined){
+      return config.fileUrl+"/users/profile.png" ;
+    }
+    else{
+      return config.fileUrl+"/users/" + url;
+    }
 }
 }
 module.exports.hash = (password, callback) => {
