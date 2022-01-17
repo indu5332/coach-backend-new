@@ -38,7 +38,12 @@ module.exports = {
   },
 
   programDurationImage: function (url) {
-    return config.fileUrl + "/programDuration/" + url;
+    if(!url || url===undefined){
+      return config.fileUrl+"/programDuration/dummy.jpg" ;
+    }
+    else{
+      return config.fileUrl+"/programDuration/" + url;
+    }
   },
 
   getExtension(url) {

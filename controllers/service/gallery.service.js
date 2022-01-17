@@ -48,7 +48,12 @@ module.exports = {
   },
 
   galleryImage: function (url) {
-    return config.fileUrl + "/gallery/" + url;
+    if(!url || url===undefined){
+      return config.fileUrl+"/gallery/dummy.jpg" ;
+    }
+    else{
+      return config.fileUrl+"/gallery/" + url;
+    }
   },
 
   getExtension(file) {
