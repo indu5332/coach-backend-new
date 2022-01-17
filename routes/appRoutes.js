@@ -30,7 +30,7 @@ appRouter.get("/about", appController.app.about.aboutDetail);
 
 appRouter.get("/list/gallery", appController.admin.gallery.list);
 
-appRouter.post("/upload", multer({ storage:storage }).single("file"),appController.file.upload );
+appRouter.post("/upload", multer({ storage }).single("file"),appController.file.upload );
 
 //contact page Api
 appRouter.post("/contact-us", appController.app.contact.addContact);
@@ -68,5 +68,9 @@ appRouter.delete("/delete/notification", appController.app.notification.deleteAl
 //userDuration
 appRouter.get("/user/duration/detail/:programDurationId", appController.app.programDuration.programDurationDetail);
 appRouter.get("/list/user/program/duration/:programId", appController.app.programDuration.userDurationList);
+
+//event
+appRouter.post("/user/create/event", appController.app.event.create);
+appRouter.get("/user/event/detail/:event_uuid/:invitee_uuid", appController.app.event.detail);
 
 module.exports = appRouter;

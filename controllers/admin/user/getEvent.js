@@ -27,6 +27,4 @@ let getdetail = async (req, res, next) => {
   }
 };
 
-
-
 module.exports = [getdetail];
