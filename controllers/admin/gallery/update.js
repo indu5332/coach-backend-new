@@ -2,6 +2,7 @@ const galleryService = require("../../service/gallery.service");
 const mongoose=require('mongoose')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
+const imageMiddleware=require('../../../middleware/image.middleware')
 
 //update gallery
 let updategallery = async (req, res) => {
@@ -9,8 +10,8 @@ let updategallery = async (req, res) => {
     let updatedRes=await galleryService.updategallery({_id:mongoose.Types.ObjectId(req.params.galleryId)},{$set:req.body})
     if(updatedRes){
       console.log(updatedRes)
-      updatedRes.image = galleryService.galleryImage(updatedRes.image)
-      updatedRes.video = galleryService.galleryImage(updatedRes.video)
+      updatedRes.image = await imageMiddleware.getFiles(`gallery/${updatedRes.image}`)
+      updatedRes.video = await imageMiddleware.getFiles(`gallery/${updatedRes.video}`)
         return res.status(200).json({
             status:true,
             message:"gallery updated successfully",

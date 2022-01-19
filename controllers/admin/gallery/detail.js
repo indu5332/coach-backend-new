@@ -9,7 +9,7 @@ let detail = async (req, res) => {
     let gallery = await galleryService.findgallery({_id:mongoose.Types.ObjectId(req.params.galleryId)});
     if (gallery.length>0) {
             gallery=JSON.parse(JSON.stringify(gallery[0]))
-            gallery.file = galleryService.galleryImage(gallery.file)
+            gallery.file = await galleryService.galleryImage(gallery.file)
       return res.status(200).json({
         success: true,
         message: "gallery list",

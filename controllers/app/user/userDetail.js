@@ -13,7 +13,7 @@ let UserDetail = async (req, res, next) => {
       });
       if (user.length > 0) {
         user = JSON.parse(JSON.stringify(user[0]));
-        user.imagePath = authService.userImage(user.imagePath);
+        user.imagePath =await authService.userImage(user.imagePath);
         delete user.password;
         delete user.verificationToken;
         delete user.Duration;
@@ -35,7 +35,7 @@ let UserDetail = async (req, res, next) => {
         });
         if (user.length > 0) {
           user = JSON.parse(JSON.stringify(user[0]));
-          user.imagePath = authService.userImage(user.imagePath);
+          user.imagePath =await authService.userImage(user.imagePath);
           delete user.password;
           delete user.verificationToken;
           delete user.Duration;

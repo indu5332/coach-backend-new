@@ -1,6 +1,7 @@
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const galleryModel = require("../../models/gallery.model");
+const imageMiddleware=require('../../middleware/image.middleware')
 const config = require("config");
 const path = require("path");
 
@@ -47,14 +48,6 @@ module.exports = {
     }
   },
 
-  galleryImage: function (url) {
-    if(!url || url===undefined){
-      return config.fileUrl+"/gallery/dummy.jpg" ;
-    }
-    else{
-      return config.fileUrl+"/gallery/" + url;
-    }
-  },
 
   getExtension(file) {
     const parts = file.split(".");
@@ -92,6 +85,15 @@ module.exports = {
         return true;
     }
     return false;
+  },
+
+  galleryImage: async function (url) {
+    if(!url || url===undefined){
+      return imageMiddleware.getFiles(`gallery/${url}`)
+    }
+    else{
+      return imageMiddleware.getFiles(`gallery/${url}`)
+    }
   },
 
   totalGallery: async function () {

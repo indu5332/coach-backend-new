@@ -17,7 +17,7 @@ let updateUser = async (req, res) => {
           { _id: mongoose.Types.ObjectId(req.decoded._id) },
           { $set: req.body }
         );
-        updateRes.imagePath = authService.userImage(finduser[0].imagePath);
+        updateRes.imagePath =await authService.userImage(finduser[0].imagePath);
         updateRes.Duration=null
         updateRes.password=null
         updateRes.verificationToken=null
@@ -31,7 +31,7 @@ let updateUser = async (req, res) => {
           { _id: mongoose.Types.ObjectId(req.decoded._id) },
           { $set: req.body }
         );
-        updateRes.imagePath = authService.userImage(updateRes.imagePath);
+        updateRes.imagePath =await authService.userImage(updateRes.imagePath);
         updateRes.Duration=null
         updateRes.password=null
         updateRes.verificationToken=null
@@ -52,7 +52,7 @@ let updateUser = async (req, res) => {
             { _id: mongoose.Types.ObjectId(req.params.userId) },
             { $set: req.body }
           );
-          updateRes.imagePath = authService.userImage(finduser[0].imagePath);
+          updateRes.imagePath =await authService.userImage(finduser[0].imagePath);
           updateRes.Duration=null
           updateRes.password=null
           updateRes.verificationToken=null
@@ -66,7 +66,7 @@ let updateUser = async (req, res) => {
             { _id: mongoose.Types.ObjectId(req.params.userId) },
             { $set: req.body }
           );
-          updateRes.imagePath = authService.userImage(updateRes.imagePath);
+          updateRes.imagePath =await authService.userImage(updateRes.imagePath);
           updateRes.Duration=null
           updateRes.password=null
           updateRes.verificationToken=null

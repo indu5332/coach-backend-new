@@ -13,7 +13,7 @@ const listNotifications = async (req, res) => {
         const total=await notificationService.listAllNotification(req.decoded._id)
         const unseenNotifications = await notificationService.UnseenNotification(req.decoded._id);
         await Promise.all(notifications.map(async element => {
-            element.to.imagePath=userService.userImage(element.to.imagePath)
+            element.to.imagePath=await userService.userImage(element.to.imagePath)
         }));
         return res.status(200).send({
           success: true,

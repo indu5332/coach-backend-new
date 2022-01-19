@@ -29,13 +29,13 @@ const programList = async (req,res, next) => {
     ];
     let programList = await programModel.aggregate(conditions);
     await Promise.all(programList.map(async programs=>{
-      programs.coverfile.url= programService.programImage(programs.coverfile.url)
+      programs.coverfile.url=await programService.programImage(programs.coverfile.url)
      }))
 
      await Promise.all(programList.map(async programs=>{
       for (let i = 0; i < programs.file.length; i++) {
         const element = programs.file[i];
-        element.url= programService.programImage(element.url)
+        element.url=await programService.programImage(element.url)
       }
      }))
      req.data={}

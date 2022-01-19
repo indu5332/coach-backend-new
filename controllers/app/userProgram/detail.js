@@ -18,12 +18,12 @@ let detailuserProgram = async (req, res) => {
         userProgram.video = await programService.programImage(
           userProgram.video
         );
-        userProgram.coverfile.url = programService.programImage(
+        userProgram.coverfile.url =await programService.programImage(
           userProgram.coverfile.url
         );
         await Promise.all(
           userProgram.file.map(async (files) => {
-            files.url = programService.programImage(files.url);
+            files.url =await programService.programImage(files.url);
           })
         );
         return res.status(200).json({

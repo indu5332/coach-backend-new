@@ -105,7 +105,7 @@ const generateToken = async (req, res) => {
       });
     } else {
       let createdUser = JSON.parse(JSON.stringify(req.data.newUser));
-      createdUser.imagePath = authService.userImage(createdUser.imagePath);
+      createdUser.imagePath =await authService.userImage(createdUser.imagePath);
       delete createdUser.password;
       return res.status(200).json({
         success: true,

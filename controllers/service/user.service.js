@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const userModel = require("../../models/user.model");
+const imageMiddleware=require('../../middleware/image.middleware')
 const jwt = require("jsonwebtoken");
 const config = require('config');
 const saltRounds = 10;
@@ -45,12 +46,12 @@ module.exports = {
   },
   userImage: function (url){
     if(!url || url===undefined){
-      return config.fileUrl+"/users/profile.png" ;
+      return imageMiddleware.getFiles(`users/profile.png`)
     }
     else{
-      return config.fileUrl+"/users/" + url;
+      return imageMiddleware.getFiles(`users/${url}`)
     }
-}
+  }
 }
 module.exports.hash = (password, callback) => {
   bcrypt.genSalt(saltRounds, (err, salt) => {

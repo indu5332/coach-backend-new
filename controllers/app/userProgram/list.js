@@ -32,14 +32,14 @@ const programList = async (req, res) => {
     const programList = await programModel.aggregate(conditions);
     await Promise.all(
       programList.map(async (program) => {
-        program.pdfUrl = config.fileUrl + "/programs/" + program.pdfUrl;
-        program.video = config.fileUrl + "/programs/" + program.video;
+        program.pdfUrl =await programService.programImage(program.pdfUrl);
+        program.video =await programService.programImage(program.video);
       })
     );
 
     await Promise.all(
       programList.map(async (programs) => {
-        programs.coverfile.url = programService.programImage(
+        programs.coverfile.url =await programService.programImage(
           programs.coverfile.url
         );
       })
@@ -49,7 +49,7 @@ const programList = async (req, res) => {
       programList.map(async (programs) => {
         for (let i = 0; i < programs.file.length; i++) {
           const element = programs.file[i];
-          element.url = programService.programImage(element.url);
+          element.url =await programService.programImage(element.url);
         }
       })
     );

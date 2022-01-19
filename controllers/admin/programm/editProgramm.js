@@ -88,11 +88,11 @@ let updateprogram = async (req, res, next) => {
       }
     );
     if (update) {
-      update.coverfile.url=programService.programImage(update.coverfile.url)
-      update.video=programService.programImage(update.video)
+      update.coverfile.url=await programService.programImage(update.coverfile.url)
+      update.video=await programService.programImage(update.video)
       for (let i = 0; i < update.file.length; i++) {
         const element = update.file[i];
-        element.url=programService.programImage(element.url)
+        element.url=await programService.programImage(element.url)
       }
       return res.status(200).json({
         success: true,

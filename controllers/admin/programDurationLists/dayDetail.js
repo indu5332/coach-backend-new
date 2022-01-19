@@ -25,14 +25,14 @@ const programList = async (req, res, next) => {
       const element = programDurationList[i];
       if (req.params.day == element.day) {
         element.durationCoverImage.url =
-          programDurationService.programDurationImage(
+          await programDurationService.programDurationImage(
             element.durationCoverImage.url
           );
         await Promise.all(
           element.durationEvent.map(async (programs) => {
             for (let i = 0; i < programs.file.length; i++) {
               const arr = programs.file[i];
-              arr.url = programDurationService.programDurationImage(arr.url);
+              arr.url =await programDurationService.programDurationImage(arr.url);
             }
           })
         );

@@ -70,7 +70,7 @@ const generateToken = async (req, res) => {
       });
     } else {
       let createdUser = req.data.user;
-      createdUser.imagePath = authService.userImage(createdUser.imagePath);
+      createdUser.imagePath =await authService.userImage(createdUser.imagePath);
       delete createdUser.password
       delete createdUser.verificationToken
       delete createdUser.Duration

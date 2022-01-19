@@ -3,7 +3,6 @@ const galleryService=require('../../service/gallery.service')
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const mongoose=require('mongoose');
-const { isVideo } = require("../../service/gallery.service");
 
 //create gallery
 let addGallery = async (req, res) => {
@@ -11,7 +10,7 @@ let addGallery = async (req, res) => {
     const gallery = await galleryModel.create({ ...req.body });
     if (gallery) {
       if(galleryService.isImage(req.body.file)){
-        gallery.file = galleryService.galleryImage(gallery.file)
+        gallery.file =await  galleryService.galleryImage(gallery.file)
         return res.status(200).json({
           success: true,
           message: "gallery added successfully",
@@ -21,7 +20,7 @@ let addGallery = async (req, res) => {
       else{
         if(galleryService.isVideo(req.body.file)){
           const update=await galleryService.updategallery({_id:mongoose.Types.ObjectId(gallery._id)},{ $set: {isImage:false,isVideo:true}})
-          update.file = galleryService.galleryImage(update.file)
+          update.file =await  galleryService.galleryImage(update.file)
           return res.status(200).json({
             success: true,
             message: "gallery added successfully",

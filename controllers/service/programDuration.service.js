@@ -1,6 +1,7 @@
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const programDurationModel = require("../../models/programDuration.model");
+const imageMiddleware=require('../../middleware/image.middleware')
 const config = require("config");
 
 module.exports = {
@@ -39,10 +40,10 @@ module.exports = {
 
   programDurationImage: function (url) {
     if(!url || url===undefined){
-      return config.fileUrl+"/programDuration/dummy.jpg" ;
+      return imageMiddleware.getFiles(`programDuration/dummy.jpg`)
     }
     else{
-      return config.fileUrl+"/programDuration/" + url;
+      return imageMiddleware.getFiles(`programDuration/${url}`)
     }
   },
 

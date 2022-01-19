@@ -23,7 +23,7 @@ let galleries = async (req, res) => {
     const galleryList = await galleryModel.aggregate(conditions);
     const totalGalleries=await galleryService.totalGallery();
     await Promise.all(galleryList.map(async gallery=>{
-        gallery.file=config.fileUrl+"/gallery/"+gallery.file
+        gallery.file=await galleryService.galleryImage(gallery.file)
     }))
       return res.status(200).json({
         success: true,

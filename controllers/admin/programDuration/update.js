@@ -83,7 +83,7 @@ let updateprogram = async (req, res) => {
     );
     if (update) {
       update.durationCoverImage.url =
-        programDurationService.programDurationImage(
+        await programDurationService.programDurationImage(
           update.durationCoverImage.url
         );
       await Promise.all(

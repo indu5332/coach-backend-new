@@ -44,14 +44,14 @@ const createProgram = async (req, res, next) => {
     }
     let program = await programDurationService.createprogramDuration(req.body);
     program.durationCoverImage.url =
-      programDurationService.programDurationImage(
+      await programDurationService.programDurationImage(
         program.durationCoverImage.url
       );
     await Promise.all(
       program.durationEvent.map(async (programs) => {
         for (let i = 0; i < programs.file.length; i++) {
           const element = programs.file[i];
-          element.url = programDurationService.programDurationImage(
+          element.url =await  programDurationService.programDurationImage(
             element.url
           );
         }

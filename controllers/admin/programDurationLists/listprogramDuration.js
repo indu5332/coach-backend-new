@@ -24,7 +24,7 @@ const programDurationsList = async (req, res, next) => {
     await Promise.all(
       programDurationList.map(async (programs) => {
         programs.durationCoverImage.url =
-          programDurationService.programDurationImage(
+          await programDurationService.programDurationImage(
             programs.durationCoverImage.url
           );
       })
@@ -35,7 +35,7 @@ const programDurationsList = async (req, res, next) => {
           const element = programs.durationEvent[i];
           await Promise.all(
             element.file.map(async (program) => {
-              program.url = programDurationService.programDurationImage(
+              program.url =await  programDurationService.programDurationImage(
                 program.url
               );
             })

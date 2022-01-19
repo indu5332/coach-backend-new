@@ -46,7 +46,7 @@ const userList = async (req,res, next) => {
     const totalUsers = await userModel.find({});
     await Promise.all(
       req.data.userList.map(async (users) => {
-        users.imagePath = userService.userImage(
+        users.imagePath =await userService.userImage(
           users.imagePath
         );
       })

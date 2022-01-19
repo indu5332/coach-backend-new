@@ -10,11 +10,11 @@ let detailPRogram = async (req, res) => {
       _id: mongoose.Types.ObjectId(req.params.programId),
     });
     if (program.length > 0) {
-      program[0].coverfile.url= programService.programImage(program[0].coverfile.url)
-      program[0].pdfUrl=programService.programImage(program[0].pdfUrl)
-      program[0].video=programService.programImage(program[0].video)
+      program[0].coverfile.url=await programService.programImage(program[0].coverfile.url)
+      program[0].pdfUrl=await programService.programImage(program[0].pdfUrl)
+      program[0].video=await programService.programImage(program[0].video)
      await Promise.all(program[0].file.map(async files=>{
-        files.url= programService.programImage(files.url)
+        files.url=await programService.programImage(files.url)
      }))
       return res
         .status(200)
