@@ -33,7 +33,7 @@ const createProgram = async (req, res, next) => {
       newProgram.video=await programService.programImage(newProgram.video)
       for (let i = 0; i < newProgram.file.length; i++) {
         const element = newProgram.file[i];
-        element.url=programService.programImage(element.url)
+        element.url=await programService.programImage(element.url)
       }
       req.data={}
       req.data.newProgram=newProgram

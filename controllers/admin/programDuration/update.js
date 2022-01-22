@@ -90,7 +90,7 @@ let updateprogram = async (req, res) => {
         update.durationEvent.map(async (programs) => {
           for (let i = 0; i < programs.file.length; i++) {
             const element = programs.file[i];
-            element.url = programDurationService.programDurationImage(
+            element.url =await programDurationService.programDurationImage(
               element.url
             );
           }
