@@ -4,8 +4,8 @@ module.exports = {
   DB_HOST: process.env.DB_HOST,
   secret: process.env.secret,
   aws: {
-    ID: "AKIAIBFLW5IGBBUSMUVA",
-    KEY: "OEZ90UPZDG3PeG2rl75bHPaYR0qQgC5WXm+hrcIQ",
+    ID: "AKIAVIVJLKCPQREO6PQS",
+    KEY: "oUgmchj+4B2k8jdXqqW3QYIQxHAbfEGYAQuHCmJP",
   },
   bucket: "coachfabienchampion",
   hosts: [
