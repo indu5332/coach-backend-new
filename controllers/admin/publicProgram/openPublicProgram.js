@@ -1,6 +1,6 @@
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
-const programModel = require("../../../models/publicProgram.model");
+const programModel = require("../../../models/programm.model");
 const programService=require('../../service/program.service')
 var createError = require("http-errors");
 
