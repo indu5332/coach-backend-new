@@ -57,7 +57,6 @@ const createProgram = async (req, res, next) => {
 //send notification to user for which program created
 const addNotification = async (req, res) => {
   try {
-    if(req.body.userId){
       console.log("creating notification")
       const user = await userService.findUser({_id:mongoose.Types.ObjectId(req.body.userId)});
       const data = {
@@ -74,14 +73,6 @@ const addNotification = async (req, res) => {
         message: "program created successfully",
         program: req.data.newProgram,
       });
-    }
-    else{
-      return res.status(200).json({
-        success: true,
-        message: "program created",
-        program: req.data.newProgram,
-      });
-    }
   } catch (error) {
     console.log(error);
     return res.status(500).json({ success: false, isError: true, error });

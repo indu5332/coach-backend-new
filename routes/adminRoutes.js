@@ -14,19 +14,23 @@ adminRouter.get("/detail/contact/:contactId", adminController.admin.contact.deta
 
 adminRouter.delete("/user/delete/:userId", adminController.admin.user.userDelete);
 
-//programm
-adminRouter.post("/add/program", adminController.admin.programm.addProgramm);
-adminRouter.get("/public/program/list", adminController.admin.programm.publicProgramList);
-adminRouter.delete("/delete/program/:programId", adminController.admin.programm.deleteProgramm);
-adminRouter.put("/update/program/:programId", adminController.admin.programm.editProgramm);
+//user programm
+adminRouter.post("/add/program", adminController.admin.UserProgramm.addUserProgram);
+adminRouter.get("/user/all-programs/:userId", adminController.admin.UserProgramm.userProgramList);
+adminRouter.delete("/delete/program/:programId", adminController.admin.UserProgramm.deleteUserProgramm);
+adminRouter.put("/update/program/:programId", adminController.admin.UserProgramm.editUserProgramm);
+adminRouter.get("/admin/detail/program/:programId", adminController.admin.UserProgramm.detailUserProgramm);
+
+//public program
+adminRouter.post("/add/public/program", adminController.admin.publicProgram.addPublicProgramm);
+adminRouter.get("/public/program/list", adminController.admin.publicProgram.publicProgramList);
+adminRouter.delete("/delete/public/program/:publicProgramId", adminController.admin.publicProgram.deletePublicProgram);
+adminRouter.put("/edit/public/program/:publicProgramId", adminController.admin.publicProgram.editPublicProgram);
 
 //programDuration
 adminRouter.post("/add/program/duration", adminController.admin.programDuration.add);
 adminRouter.delete("/delete/program/duration/:programDurationId", adminController.admin.programDuration.delete);
 adminRouter.put("/update/program/duration/:programDurationId", adminController.admin.programDuration.update)
-
-//list programs
-adminRouter.get("/user/all-programs/:userId", adminController.admin.programm.userProgramList);
 
 //about-us
 adminRouter.post("/about-us", adminController.admin.about.create);
@@ -37,7 +41,6 @@ adminRouter.post("/create/gallery", adminController.admin.gallery.create);
 adminRouter.get("/detail/gallery/:galleryId", adminController.admin.gallery.detail);
 adminRouter.delete("/delete/gallery/:galleryId", adminController.admin.gallery.delete);
 adminRouter.put("/update/gallery/:galleryId", adminController.admin.gallery.update);
-
 
 //user Events
 adminRouter.get("/events", adminController.admin.user.getEvent);

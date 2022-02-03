@@ -2,7 +2,7 @@ var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 const programModel = require("../../models/programm.model");
 const imageMiddleware=require('../../middleware/image.middleware')
-const config = require("config");
+const publicProgramModel=require('../../models/publicProgram.model')
 
 module.exports = {
   async findprogram(data) {
@@ -17,6 +17,15 @@ module.exports = {
   createProgram: async (program) => {
     try {
       const newProgram = await programModel.create(program);
+      return newProgram;
+    } catch (error) {
+      console.log(error);
+      createError(httpStatus.INTERNAL_SERVER_ERROR, error);
+    }
+  },
+  createPublicProgram: async (program) => {
+    try {
+      const newProgram = await publicProgramModel.create(program);
       return newProgram;
     } catch (error) {
       console.log(error);

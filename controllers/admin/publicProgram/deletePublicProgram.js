@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
-const programModel = require("../../../models/programm.model");
+const programModel = require("../../../models/publicProgram.model");
 var createError = require("http-errors");
 const httpStatus = require("http-status-codes").StatusCodes;
 
 //delete a program
-let deleteProgram = async (req, res, next) => {
+let deletePublicProgram = async (req, res, next) => {
   try {
     const deleteProgram = await programModel.deleteOne({
-      _id: mongoose.Types.ObjectId(req.params.programId),
+      _id: mongoose.Types.ObjectId(req.params.publicProgramId),
     });
     console.log(req.params.programId);
     if (deleteProgram.deletedCount > 0) {
@@ -24,4 +24,4 @@ let deleteProgram = async (req, res, next) => {
   }
 };
 
-module.exports = [deleteProgram];
+module.exports = [deletePublicProgram];
