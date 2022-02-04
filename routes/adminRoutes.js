@@ -19,7 +19,7 @@ adminRouter.post("/add/program", adminController.admin.UserProgramm.addUserProgr
 adminRouter.get("/user/all-programs/:userId", adminController.admin.UserProgramm.userProgramList);
 adminRouter.delete("/delete/program/:programId", adminController.admin.UserProgramm.deleteUserProgramm);
 adminRouter.put("/update/program/:programId", adminController.admin.UserProgramm.editUserProgramm);
-adminRouter.get("/admin/detail/program/:programId", adminController.admin.UserProgramm.detailUserProgramm);
+adminRouter.get("/detail/program/:programId", adminController.admin.UserProgramm.detailUserProgramm);
 
 //public program
 adminRouter.post("/add/public/program", adminController.admin.publicProgram.addPublicProgramm);
