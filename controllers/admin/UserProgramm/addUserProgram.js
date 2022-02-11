@@ -38,6 +38,7 @@ const createProgram = async (req, res, next) => {
       }
       req.data={}
       req.data.newProgram=newProgram
+      console.log(req.data.newProgram)
       next()
     }
     else{
@@ -68,7 +69,8 @@ const addNotification = async (req, res) => {
         seen: false,
       };
       const io = req.app.get("io");
-      await notificationModel.sendNotification(data, io,"program");
+      const i= await notificationModel.sendNotification(data, io,"program");
+      console.log(i)
       return res.status(200).json({
         success: true,
         message: "program created successfully",
