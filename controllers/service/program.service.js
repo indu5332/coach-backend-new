@@ -55,6 +55,7 @@ module.exports = {
 
   getExtension(url) {
     const parts = url.split(".");
+    console.log(parts)
     return parts[parts.length - 1];
   },
 
