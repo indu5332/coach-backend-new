@@ -39,7 +39,6 @@ const createPublicProgram = async (req, res, next) => {
     req.body.aboutProgramImage = aboutProgramImage;
     req.body.coverfile = coverfile;
     req.body.descriptionImage = descriptionImage;
-    console.log('coverfile',coverfile)
 
     const newProgram = await programService.createPublicProgram({
       ...req.body
