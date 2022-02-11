@@ -8,7 +8,7 @@ async function sendNotification(notificationData, io,event) {
       if (newNotification) {
         if (io) {
             newNotification.to.imagePath=userService.userImage(newNotification.to.imagePath)
-            console.log(newNotification)
+            // console.log(newNotification)
           io.to(notificationData.to.id).emit(event, { newNotification });
         }
         return true;
