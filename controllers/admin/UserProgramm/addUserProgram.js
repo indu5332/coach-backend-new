@@ -59,7 +59,7 @@ const createProgram = async (req, res, next) => {
 const addNotification = async (req, res) => {
   try {
       console.log("creating notification")
-      const user = await userService.findUser({_id:mongoose.Types.ObjectId('61d41f6fc60d3706d40f44c6')});
+      const user = await userService.findUser({_id:mongoose.Types.ObjectId(req.body.userId)});
       const data = {
         to: user[0],
         title: "your program has been created",
@@ -80,8 +80,5 @@ const addNotification = async (req, res) => {
   }
 };
 
-// cron.schedule("*/10 * * * * *", function() {
-//   console.log("running a task every 10 second");
-// });
 
 module.exports = [createProgram,addNotification];
