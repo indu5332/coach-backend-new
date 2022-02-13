@@ -9,43 +9,23 @@ const httpStatus = require("http-status-codes").StatusCodes;
 const checkCoverFile = async (req, res, next) => {
   try {
     if (req.body.file) {
+      const file=[]
       for (let i = 0; i < req.body.file.length; i++) {
         const element = req.body.file[i];
-        if (programService.isImage(element.url)) {
-          await programModel.updateOne(
-            {_id:mongoose.Types.ObjectId(req.params.programId),
-            "file._id":mongoose.Types.ObjectId(req.body.fileId)},
-            {
-              $set:{
-                "file.$.url":element.url,
-                "file.$.isImage":programService.isImage(element.url),
-                "file.$.isVideo":programService.isVideo(element.url),
-              }
-            }
-          );
-          next()
-        } else {
-          if (programService.isVideo(element.url)) {
-            await programModel.updateOne(
-              {_id:mongoose.Types.ObjectId(req.params.programId),"file._id":mongoose.Types.ObjectId(req.body.fileId)},
-              {
-                $set:{
-                  "file.$.url":element.url,
-                  "file.$.isImage":programService.isImage(element.url),
-                  "file.$.isVideo":programService.isVideo(element.url)
-                }
-              }
-            );
-            next()
-          } else {
-            return res.status(400).json({
-              success: true,
-              message: "neigther image or video",
-              update: update,
-            });
-          }
-        }
+        const coverimage = {
+          url: element.url,
+          isImage: programService.isImage(element.url),
+          isVideo: programService.isVideo(element.url),
+        };
+        file.push(coverimage)
       }
+      req.body.file=file
+      const update=await programModel.findOneAndUpdate({_id:mongoose.Types.ObjectId(req.params.programId)},{
+        $set:{
+          "file":req.body.file
+        }
+      },{new:true})
+      next()
     } else {
       next();
     }
@@ -63,8 +43,12 @@ const checkfile = async (req, res, next) => {
         isImage: programService.isImage(req.body.coverfile.url),
         isVideo: programService.isVideo(req.body.coverfile.url),
       };
-      req.data={}
-      req.data.coverfile=coverfile
+      req.body.coverfile=coverfile
+      const update=await programModel.findOneAndUpdate({_id:mongoose.Types.ObjectId(req.params.programId)},{
+        $set:{
+          "coverfile":req.body.coverfile
+        }
+      },{new:true})
       next();
     } else {
       next();
@@ -77,9 +61,7 @@ const checkfile = async (req, res, next) => {
 
 let updateprogram = async (req, res, next) => {
   try {
-    if(req.body.coverfile){
-      req.body.coverfile=req.data.coverfile
-    }
+    delete req.body.coverfile
     delete req.body.file
     const update = await programService.updateProgram(
       {_id:mongoose.Types.ObjectId(req.params.programId)},

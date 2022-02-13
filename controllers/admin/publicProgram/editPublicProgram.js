@@ -9,43 +9,23 @@ const httpStatus = require("http-status-codes").StatusCodes;
 const checkCoverFile = async (req, res, next) => {
   try {
     if (req.body.coverfile) {
+      const coverfile=[]
       for (let i = 0; i < req.body.coverfile.length; i++) {
         const element = req.body.coverfile[i];
-        if (programService.isImage(element.url)) {
-          await programModel.updateOne(
-            {_id:mongoose.Types.ObjectId(req.params.programId),
-            "coverfile._id":mongoose.Types.ObjectId(req.body.fileId)},
-            {
-              $set:{
-                "coverfile.$.url":element.url,
-                "coverfile.$.isImage":programService.isImage(element.url),
-                "coverfile.$.isVideo":programService.isVideo(element.url),
-              }
-            }
-          );
-          next()
-        } else {
-          if (programService.isVideo(element.url)) {
-            await programModel.updateOne(
-              {_id:mongoose.Types.ObjectId(req.params.programId),"coverfile._id":mongoose.Types.ObjectId(req.body.fileId)},
-              {
-                $set:{
-                  "coverfile.$.url":element.url,
-                  "coverfile.$.isImage":programService.isImage(element.url),
-                  "coverfile.$.isVideo":programService.isVideo(element.url)
-                }
-              }
-            );
-            next()
-          } else {
-            return res.status(400).json({
-              success: true,
-              message: "neigther image or video",
-              update: update,
-            });
-          }
-        }
+        const coverimage = {
+          url: element.url,
+          isImage: programService.isImage(element.url),
+          isVideo: programService.isVideo(element.url),
+        };
+        coverfile.push(coverimage)
       }
+      req.body.coverfile=coverfile
+      const update=await programModel.findOneAndUpdate({_id:mongoose.Types.ObjectId(req.params.publicProgramId)},{
+        $set:{
+          "coverfile":req.body.coverfile
+        }
+      },{new:true})
+      next()
     } else {
       next();
     }
@@ -58,46 +38,26 @@ const checkCoverFile = async (req, res, next) => {
 const aboutProgramImage = async (req, res, next) => {
   try {
     if (req.body.aboutProgramImage) {
-        for (let i = 0; i < req.body.aboutProgramImage.length; i++) {
-          const element = req.body.aboutProgramImage[i];
-          if (programService.isImage(element.url)) {
-            await programModel.updateOne(
-              {_id:mongoose.Types.ObjectId(req.params.programId),
-              "aboutProgramImage._id":mongoose.Types.ObjectId(req.body.aboutProgramImageId)},
-              {
-                $set:{
-                  "aboutProgramImage.$.url":element.url,
-                  "aboutProgramImage.$.isImage":programService.isImage(element.url),
-                  "aboutProgramImage.$.isVideo":programService.isVideo(element.url),
-                }
-              }
-            );
-            next()
-          } else {
-            if (programService.isVideo(element.url)) {
-              await programModel.updateOne(
-                {_id:mongoose.Types.ObjectId(req.params.programId),"aboutProgramImage._id":mongoose.Types.ObjectId(req.body.aboutProgramImageId)},
-                {
-                  $set:{
-                    "aboutProgramImage.$.url":element.url,
-                    "aboutProgramImage.$.isImage":programService.isImage(element.url),
-                    "aboutProgramImage.$.isVideo":programService.isVideo(element.url)
-                  }
-                }
-              );
-              next()
-            } else {
-              return res.status(400).json({
-                success: true,
-                message: "neigther image or video",
-                update: update,
-              });
-            }
-          }
-        }
-      } else {
-        next();
+      const aboutProgramImage=[]
+      for (let i = 0; i < req.body.aboutProgramImage.length; i++) {
+        const element = req.body.aboutProgramImage[i];
+        const coverimage = {
+          url: element.url,
+          isImage: programService.isImage(element.url),
+          isVideo: programService.isVideo(element.url),
+        };
+        aboutProgramImage.push(coverimage)
       }
+      req.body.aboutProgramImage=aboutProgramImage
+      const update=await programModel.findOneAndUpdate({_id:mongoose.Types.ObjectId(req.params.publicProgramId)},{
+        $set:{
+          "aboutProgramImage":req.body.aboutProgramImage
+        }
+      },{new:true})
+      next()
+    } else {
+      next();
+    }
   } catch (error) {
     console.log("error",error)
     createError(httpStatus.INTERNAL_SERVER_ERROR, error);
@@ -107,46 +67,26 @@ const aboutProgramImage = async (req, res, next) => {
 const descriptionImage = async (req, res, next) => {
     try {
       if (req.body.descriptionImage) {
-          for (let i = 0; i < req.body.descriptionImage.length; i++) {
-            const element = req.body.descriptionImage[i];
-            if (programService.isImage(element.url)) {
-              await programModel.updateOne(
-                {_id:mongoose.Types.ObjectId(req.params.programId),
-                "descriptionImage._id":mongoose.Types.ObjectId(req.body.descriptionImageId)},
-                {
-                  $set:{
-                    "descriptionImage.$.url":element.url,
-                    "descriptionImage.$.isImage":programService.isImage(element.url),
-                    "descriptionImage.$.isVideo":programService.isVideo(element.url),
-                  }
-                }
-              );
-              next()
-            } else {
-              if (programService.isVideo(element.url)) {
-                await programModel.updateOne(
-                  {_id:mongoose.Types.ObjectId(req.params.programId),"descriptionImage._id":mongoose.Types.ObjectId(req.body.descriptionImageId)},
-                  {
-                    $set:{
-                      "descriptionImage.$.url":element.url,
-                      "descriptionImage.$.isImage":programService.isImage(element.url),
-                      "descriptionImage.$.isVideo":programService.isVideo(element.url)
-                    }
-                  }
-                );
-                next()
-              } else {
-                return res.status(400).json({
-                  success: true,
-                  message: "neigther image or video",
-                  update: update,
-                });
-              }
-            }
-          }
-        } else {
-          next();
+        const descriptionImage=[]
+        for (let i = 0; i < req.body.descriptionImage.length; i++) {
+          const element = req.body.descriptionImage[i];
+          const coverimage = {
+            url: element.url,
+            isImage: programService.isImage(element.url),
+            isVideo: programService.isVideo(element.url),
+          };
+          descriptionImage.push(coverimage)
         }
+        req.body.descriptionImage=descriptionImage
+      const update=await programModel.findOneAndUpdate({_id:mongoose.Types.ObjectId(req.params.publicProgramId)},{
+        $set:{
+          "descriptionImage":req.body.descriptionImage
+        }
+      },{new:true})
+        next()
+      } else {
+        next();
+      }
     } catch (error) {
       console.log("error",error)
       createError(httpStatus.INTERNAL_SERVER_ERROR, error);
