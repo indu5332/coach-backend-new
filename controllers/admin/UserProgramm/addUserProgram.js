@@ -9,6 +9,7 @@ const userService=require('../../service/user.service')
 const createProgram = async (req, res, next) => {
   try {
     var file = [];
+    var events = [];
     const coverfile = {
       url: req.body.coverfile.url,
       isImage: programService.isImage(req.body.coverfile.url),
@@ -23,8 +24,20 @@ const createProgram = async (req, res, next) => {
       };
       file.push(files);
     }
+    for (let i = 0; i < req.body.events.length; i++) {
+      const element = req.body.events[i];
+      const event = {
+        eventName:element.eventName,
+        eventDescription:element.eventDescription,
+        url:element.url,
+        isImage: programService.isImage(element.url),
+        isVideo: programService.isVideo(element.url),
+      };
+      events.push(event);
+    }
     req.body.coverfile = coverfile;
     req.body.file = file;
+    req.body.events = events;
     const newProgram = await programService.createProgram({
       ...req.body
     });
@@ -34,6 +47,10 @@ const createProgram = async (req, res, next) => {
       newProgram.video=await programService.programImage(newProgram.video)
       for (let i = 0; i < newProgram.file.length; i++) {
         const element = newProgram.file[i];
+        element.url=await programService.programImage(element.url)
+      }
+      for (let i = 0; i < newProgram.events.length; i++) {
+        const element = newProgram.events[i];
         element.url=await programService.programImage(element.url)
       }
       req.data={}

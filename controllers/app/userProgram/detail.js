@@ -8,9 +8,9 @@ let detailuserProgram = async (req, res) => {
   try {
     let userProgram = await programService.findprogram({
       _id: mongoose.Types.ObjectId(req.params.programId),
+      userId: mongoose.Types.ObjectId(req.decoded._id)
     });
     if (userProgram.length > 0) {
-      if (userProgram[0].userId === req.decoded._id) {
         userProgram = JSON.parse(JSON.stringify(userProgram[0]));
         userProgram.pdfUrl = await programService.programImage(
           userProgram.pdfUrl
@@ -26,16 +26,16 @@ let detailuserProgram = async (req, res) => {
             files.url =await programService.programImage(files.url);
           })
         );
+        await Promise.all(
+          userProgram.events.map(async (event) => {
+            event.url =await programService.programImage(event.url);
+          })
+        );
         return res.status(200).json({
           success: true,
           message: "userProgram details",
           userProgram: userProgram,
         });
-      } else {
-        return res
-          .status(404)
-          .json({ message: "no user for this program found", success: false });
-      }
     } else {
       return res
         .status(404)

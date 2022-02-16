@@ -51,6 +51,10 @@ const programList = async (req, res) => {
           const element = programs.file[i];
           element.url =await programService.programImage(element.url);
         }
+        for (let i = 0; i < programs.events.length; i++) {
+          const element = programs.events[i];
+          element.url =await programService.programImage(element.url);
+        }
       })
     );
     const totalPrograms = await programModel.find({

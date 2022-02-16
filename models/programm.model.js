@@ -35,6 +35,15 @@ const programSchema = new Schema(
         isVideo: { type: Boolean, default: false },
       },
     ],
+    events:[
+      { 
+      eventName: { type: String },
+      eventDescription: { type: String },
+      url: { type: String },
+      isImage:{ type: Boolean, default: true },
+      isVideo:{ type: Boolean, default: false },
+      }
+    ],
     video:{type:String}
   },
   {

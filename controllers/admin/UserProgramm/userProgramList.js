@@ -38,6 +38,13 @@ const programList = async (req, res) => {
         element.url=await programService.programImage(element.url)
       }
      }))
+     await Promise.all(programList.map(async programs=>{
+      for (let i = 0; i < programs.events.length; i++) {
+        const element = programs.events[i];
+        element.url=await programService.programImage(element.url)
+      }
+     }))
+     console.log("jhgd")
     const total = await programModel.find({userId: mongoose.Types.ObjectId(req.params.userId)});
     return res.status(200).json({
         success: true,

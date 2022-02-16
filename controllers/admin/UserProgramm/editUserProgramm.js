@@ -35,6 +35,37 @@ const checkCoverFile = async (req, res, next) => {
   }
 };
 
+const checkEvents = async (req, res, next) => {
+  try {
+    if (req.body.events) {
+      const events=[]
+      for (let i = 0; i < req.body.events.length; i++) {
+        const element = req.body.events[i];
+        const event = {
+          eventName:element.eventName,
+          eventDescription:element.eventDescription,
+          url: element.url,
+          isImage: programService.isImage(element.url),
+          isVideo: programService.isVideo(element.url),
+        };
+        events.push(event)
+      }
+      req.body.events=events
+      const update=await programModel.findOneAndUpdate({_id:mongoose.Types.ObjectId(req.params.programId)},{
+        $set:{
+          "events":req.body.events
+        }
+      },{new:true})
+      next()
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.log("error",error)
+    createError(httpStatus.INTERNAL_SERVER_ERROR, error);
+  }
+};
+
 const checkfile = async (req, res, next) => {
   try {
     if (req.body.coverfile) {
@@ -63,6 +94,7 @@ let updateprogram = async (req, res, next) => {
   try {
     delete req.body.coverfile
     delete req.body.file
+    delete req.body.events
     const update = await programService.updateProgram(
       {_id:mongoose.Types.ObjectId(req.params.programId)},
       {
@@ -93,4 +125,4 @@ let updateprogram = async (req, res, next) => {
   }
 };
 
-module.exports = [checkCoverFile, checkfile, updateprogram];
+module.exports = [checkCoverFile, checkEvents,checkfile, updateprogram];

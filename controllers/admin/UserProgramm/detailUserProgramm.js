@@ -16,6 +16,9 @@ let detailPRogram = async (req, res) => {
      await Promise.all(program[0].file.map(async files=>{
         files.url=await programService.programImage(files.url)
      }))
+     await Promise.all(program[0].events.map(async event=>{
+      event.url=await programService.programImage(event.url)
+   }))
       return res
         .status(200)
         .json({ success: true, message: "program details" ,program:program[0]});
