@@ -28,15 +28,9 @@ const programList = async (req, res) => {
     ];
     const programList = await programModel.aggregate(conditions);
     await Promise.all(programList.map(async programs=>{
-      programs.coverfile.url=await programService.programImage(programs.coverfile.url)
+      programs.programCoverImageUrl=await programService.programImage(programs.programCoverImageUrl)
       programs.pdfUrl=await programService.programImage(programs.pdfUrl)
-      programs.video=await programService.programImage(programs.video)
-     }))
-     await Promise.all(programList.map(async programs=>{
-      for (let i = 0; i < programs.file.length; i++) {
-        const element = programs.file[i];
-        element.url=await programService.programImage(element.url)
-      }
+      programs.dietVideoUrl=await programService.programImage(programs.dietVideoUrl)
      }))
      await Promise.all(programList.map(async programs=>{
       for (let i = 0; i < programs.events.length; i++) {
@@ -44,7 +38,6 @@ const programList = async (req, res) => {
         element.url=await programService.programImage(element.url)
       }
      }))
-     console.log("jhgd")
     const total = await programModel.find({userId: mongoose.Types.ObjectId(req.params.userId)});
     return res.status(200).json({
         success: true,

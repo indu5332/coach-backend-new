@@ -8,22 +8,7 @@ const userService=require('../../service/user.service')
 //create a new program 
 const createProgram = async (req, res, next) => {
   try {
-    var file = [];
     var events = [];
-    const coverfile = {
-      url: req.body.coverfile.url,
-      isImage: programService.isImage(req.body.coverfile.url),
-      isVideo: programService.isVideo(req.body.coverfile.url),
-    };
-    for (let i = 0; i < req.body.file.length; i++) {
-      const element = req.body.file[i];
-      const files = {
-        url:element.url,
-        isImage: programService.isImage(element.url),
-        isVideo: programService.isVideo(element.url),
-      };
-      file.push(files);
-    }
     for (let i = 0; i < req.body.events.length; i++) {
       const element = req.body.events[i];
       const event = {
@@ -35,20 +20,14 @@ const createProgram = async (req, res, next) => {
       };
       events.push(event);
     }
-    req.body.coverfile = coverfile;
-    req.body.file = file;
     req.body.events = events;
     const newProgram = await programService.createProgram({
       ...req.body
     });
     if (newProgram) {
-      newProgram.coverfile.url =await programService.programImage(req.body.coverfile.url)
+      newProgram.programCoverImageUrl =await programService.programImage(req.body.programCoverImageUrl)
       newProgram.pdfUrl=await programService.programImage(newProgram.pdfUrl)
-      newProgram.video=await programService.programImage(newProgram.video)
-      for (let i = 0; i < newProgram.file.length; i++) {
-        const element = newProgram.file[i];
-        element.url=await programService.programImage(element.url)
-      }
+      newProgram.dietVideoUrl=await programService.programImage(newProgram.dietVideoUrl)
       for (let i = 0; i < newProgram.events.length; i++) {
         const element = newProgram.events[i];
         element.url=await programService.programImage(element.url)

@@ -15,16 +15,11 @@ let detailuserProgram = async (req, res) => {
         userProgram.pdfUrl = await programService.programImage(
           userProgram.pdfUrl
         );
-        userProgram.video = await programService.programImage(
-          userProgram.video
+        userProgram.dietVideoUrl = await programService.programImage(
+          userProgram.dietVideoUrl
         );
-        userProgram.coverfile.url =await programService.programImage(
-          userProgram.coverfile.url
-        );
-        await Promise.all(
-          userProgram.file.map(async (files) => {
-            files.url =await programService.programImage(files.url);
-          })
+        userProgram.programCoverImageUrl =await programService.programImage(
+          userProgram.programCoverImageUrl
         );
         await Promise.all(
           userProgram.events.map(async (event) => {

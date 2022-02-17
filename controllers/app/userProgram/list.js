@@ -33,24 +33,20 @@ const programList = async (req, res) => {
     await Promise.all(
       programList.map(async (program) => {
         program.pdfUrl =await programService.programImage(program.pdfUrl);
-        program.video =await programService.programImage(program.video);
+        program.dietVideoUrl =await programService.programImage(program.dietVideoUrl);
       })
     );
 
     await Promise.all(
       programList.map(async (programs) => {
-        programs.coverfile.url =await programService.programImage(
-          programs.coverfile.url
+        programs.programCoverImageUrl =await programService.programImage(
+          programs.programCoverImageUrl
         );
       })
     );
 
     await Promise.all(
       programList.map(async (programs) => {
-        for (let i = 0; i < programs.file.length; i++) {
-          const element = programs.file[i];
-          element.url =await programService.programImage(element.url);
-        }
         for (let i = 0; i < programs.events.length; i++) {
           const element = programs.events[i];
           element.url =await programService.programImage(element.url);
