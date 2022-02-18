@@ -9,6 +9,7 @@ const programSchema = new Schema(
     userId: { type: Schema.Types.ObjectId, ref: "user" },
     programName: { type: String, required: true },
     startDate: { type: Date },
+    isClose:{type:String},
     endDate: { type: Date },
     aboutProgram: { type: String },
     action: { type: Boolean },
