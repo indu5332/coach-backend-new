@@ -11,6 +11,7 @@ const programSchema = new Schema(
     startDate: { type: Date },
     isClose:{type:Boolean},
     endDate: { type: Date },
+    description:{ type: String },
     aboutProgram: { type: String },
     action: { type: Boolean },
     pdfUrl: { type: String },
