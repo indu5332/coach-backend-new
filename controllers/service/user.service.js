@@ -45,11 +45,16 @@ module.exports = {
     }
   },
   userImage: function (url){
-    if(!url || url===undefined){
-      return imageMiddleware.getFiles(`users/profile.png`)
-    }
-    else{
-      return imageMiddleware.getFiles(`users/${url}`)
+    try {
+      if(!url || url===undefined){
+        return imageMiddleware.getFiles(`users/profile.png`)
+      }
+      else{
+        return imageMiddleware.getFiles(`users/${url}`)
+      }
+    } catch (error) {
+      console.log(error)
+      return error
     }
   }
 }

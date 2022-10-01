@@ -1,5 +1,4 @@
 /* eslint-disable consistent-return */
-const config = require("config");
 const AWS = require("aws-sdk");
 const path = require("path");
 const fs = require("fs");
@@ -21,9 +20,9 @@ module.exports = {
   async uploadS3(file, folderWhereToUpload) {
     const s3 = this.getS3();
     console.log(path.join(p, `/${folderWhereToUpload}/${file}`))
-    console.log(config.bucket)
+    console.log(cred.bucket)
     const params = {
-      Bucket: config.bucket,
+      Bucket: cred.bucket,
       Key: String(`${folderWhereToUpload}/${file}`),
       Body: fs.createReadStream(
         path.join(p, `/${folderWhereToUpload}/${file}`),
@@ -42,7 +41,7 @@ module.exports = {
   async getFiles(folderPath) {
     try {
       const s3 =  this.getS3();
-      const params =  { Bucket: config.bucket, Key: folderPath };
+      const params =  { Bucket: cred.bucket, Key: folderPath };
       const files = await s3.getSignedUrl("getObject", params);
       return files;
     } catch (error) {
@@ -54,7 +53,7 @@ module.exports = {
     try {
       const s3 = this.getS3();
       const params = {
-        Bucket: config.bucket,
+        Bucket: cred.bucket,
         Delimiter: "",
         Prefix: prefix,
       };
@@ -71,7 +70,7 @@ module.exports = {
   },
   async sizeOf(key) {
     const s3 = this.getS3();
-    return s3.headObject({ Key: key, Bucket: config.bucket })
+    return s3.headObject({ Key: key, Bucket: cred.bucket })
       .promise()
       .then((res) => res.ContentLength).catch((err) => console.log(err));
   },

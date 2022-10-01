@@ -12,7 +12,6 @@ module.exports = {
           return [decode];
         });
       }
-
       return ["no token found"];
     } catch (error) {
       return [error];

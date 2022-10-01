@@ -29,7 +29,7 @@ const io = require("socket.io")(server, {
 app.set("io", io);
 
 const verifyToken = require("./middleware/authentication");
-
+// mongodb+srv://indu:<password>@cluster0.wimhf.mongodb.net/test
 app.use(bodyParser.json());
 
 app.use(express.json());
